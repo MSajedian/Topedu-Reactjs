@@ -18,12 +18,12 @@ class MainNavbar extends Component {
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
-                        style={{ maxHeight: '100px'}}
+                        style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
                         <NavDropdown
                             title="Solutions" id="navbarScrollingDropdown"
-                            // style={{ color: 'rgba(0,0,0,1)!important' }}
+                            // style={{ color: 'rgb(0, 0, 0, 1)!important' }}
                         >
                             <NavDropdown.Item href="#">Pricing</NavDropdown.Item>
                             <NavDropdown.Item href="#">Log in</NavDropdown.Item>
@@ -35,7 +35,6 @@ class MainNavbar extends Component {
                         <Nav.Link href="#" className="btn btn-primary text-white" role="button">Create a course</Nav.Link>
                     </Nav>
                     <Form
-                        // className="d-flex"
                         className="d-flex ms-auto my-2 my-lg-0"
                     >
                         <FormControl
