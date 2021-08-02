@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { FcAbout } from 'react-icons/fc';
+import { Container } from 'react-bootstrap';
+// import { Row, Col, Form, Button } from 'react-bootstrap';
+// import { FcAbout } from 'react-icons/fc';
 import MainNavbar from './MainNavbar'
 
 class HomePage extends Component {
