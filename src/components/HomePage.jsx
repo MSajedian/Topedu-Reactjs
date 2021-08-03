@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Container } from 'react-bootstrap';
-import { Row, Col, Form } from 'react-bootstrap';
-import { FcReadingEbook } from 'react-icons/fc';
+import { Row, Col, CardGroup, Card } from 'react-bootstrap';
+// import { FcReadingEbook } from 'react-icons/fc';
 // import { FcAbout } from 'react-icons/fc';
 import MainNavbar from './MainNavbar'
 
@@ -34,6 +34,75 @@ class HomePage extends Component {
                             Fast & easy course creation
                             Engage learners with collaborative activities
                             Track learner progress & measure engagement
+                        </Col>
+                    </Row>
+                    <Row className="p-4 p-md-5 mb-4 text-center">
+                        <Col>
+                            <div>Built to empower every instructor
+                                With our expansive and flexible platform, Eduflow supports a wide range of learning experiences.
+                                USE CASE EXAMPLES
+                                University courses
+                                Online courses
+                                Employee onboarding & sales training
+                                Extending your LMS’s capabilities</div>
+                        </Col>
+                        <Col>
+                            <CardGroup >
+                                <Card className="mx-2 rounded">
+                                    <Card.Img variant="top" src="https://via.placeholder.com/150" />
+                                    <Card.Body>
+                                        <Card.Title>Card title</Card.Title>
+                                        <Card.Text>
+                                            This is a wider card with supporting text below as a natural lead-in to
+                                            additional content. This content is a little bit longer.
+                                        </Card.Text>
+                                    </Card.Body>
+                                    <Card.Footer>
+                                        <small className="text-muted">Last updated 3 mins ago</small>
+                                    </Card.Footer>
+                                </Card>
+                                <Card className="mx-2 rounded">
+                                    <Card.Img variant="top" src="https://via.placeholder.com/150" />
+                                    <Card.Body>
+                                        <Card.Title>Card title</Card.Title>
+                                        <Card.Text>
+                                            This card has supporting text below as a natural lead-in to additional
+                                            content.{' '}
+                                        </Card.Text>
+                                    </Card.Body>
+                                    <Card.Footer>
+                                        <small className="text-muted">Last updated 3 mins ago</small>
+                                    </Card.Footer>
+                                </Card>
+                            </CardGroup>
+                            <CardGroup >
+                                <Card className="mx-2 rounded">
+                                    <Card.Img variant="top" src="https://via.placeholder.com/150" />
+                                    <Card.Body>
+                                        <Card.Title>Card title</Card.Title>
+                                        <Card.Text>
+                                            This is a wider card with supporting text below as a natural lead-in to
+                                            additional content. This content is a little bit longer.
+                                        </Card.Text>
+                                    </Card.Body>
+                                    <Card.Footer>
+                                        <small className="text-muted">Last updated 3 mins ago</small>
+                                    </Card.Footer>
+                                </Card>
+                                <Card className="mx-2 rounded">
+                                    <Card.Img variant="top" src="https://via.placeholder.com/150" />
+                                    <Card.Body>
+                                        <Card.Title>Card title</Card.Title>
+                                        <Card.Text>
+                                            This card has supporting text below as a natural lead-in to additional
+                                            content.{' '}
+                                        </Card.Text>
+                                    </Card.Body>
+                                    <Card.Footer>
+                                        <small className="text-muted">Last updated 3 mins ago</small>
+                                    </Card.Footer>
+                                </Card>
+                            </CardGroup>
                         </Col>
                     </Row>
                 </Container>
