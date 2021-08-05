@@ -1,7 +1,8 @@
 import { Component } from 'react';
 import { Container } from 'react-bootstrap';
 import { Button, Nav } from 'react-bootstrap';
-// import { Row, Col, CardGroup, Card } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
+// import { CardGroup } from 'react-bootstrap';
 // import { FcReadingEbook } from 'react-icons/fc';
 // import { FcAbout } from 'react-icons/fc';
 import CompanyNavbar from './CompanyNavbar'
@@ -26,16 +27,77 @@ class CompanyPage extends Component {
                         <div><Button>+ Create Course</Button></div>
                     </div>
 
+                    <div className="UserOverview__searchInputContainer___2icrK">
+                        <span className="Input__inputContainer___2mE_-"
+                        ><input
+                                name="Search courses"
+                                placeholder="Search courses"
+                                aria-label="Search courses"
+                                input="[object Object]"
+                                id="course-search"
+                                className="Input__input___2FFQo Input__inputWithIcon___3vENU"
+                                type="text"
+                                value="" /><svg
+                                    width="16px"
+                                    height="16px"
+                                    viewBox="0 0 16 16"
+                                    className="Input__searchIcon___1yYMv Icons__icon-size___3XuUV"
+                                >
+                                <path
+                                    className="fill"
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M11.0895 11.7965C10.0747 12.6515 8.76417 13.1667 7.33333 13.1667C4.11167 13.1667 1.5 10.555 1.5 7.33333C1.5 4.11167 4.11167 1.5 7.33333 1.5C10.555 1.5 13.1667 4.11167 13.1667 7.33333C13.1667 8.76413 12.6515 10.0746 11.7966 11.0894L14.3537 13.6465C14.5489 13.8417 14.5489 14.1583 14.3537 14.3536C14.1584 14.5488 13.8418 14.5488 13.6465 14.3536L11.0895 11.7965ZM2.5 7.33333C2.5 4.66396 4.66396 2.5 7.33333 2.5C10.0027 2.5 12.1667 4.66396 12.1667 7.33333C12.1667 8.64055 11.6477 9.82655 10.8046 10.6966C10.7843 10.7115 10.7649 10.7281 10.7465 10.7465C10.7282 10.7648 10.7116 10.7842 10.6967 10.8045C9.82663 11.6477 8.64059 12.1667 7.33333 12.1667C4.66396 12.1667 2.5 10.0027 2.5 7.33333Z"
+                                ></path></svg></span
+                        ><span className="UserOverview__keyboardCommand___3CbVC" >/</span>
+                    </div>
+
                     <Nav variant="tabs" defaultActiveKey="/company">
                         <Nav.Item>
-                            <Nav.Link eventKey="link-1">
+                            <Nav.Link eventKey="link-1" >
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="blue"><path class="fill" d="M10,9 L14,9 C14.5522847,9 15,9.44771525 15,10 L15,14 C15,14.5522847 14.5522847,15 14,15 L10,15 C9.44771525,15 9,14.5522847 9,14 L9,10 C9,9.44771525 9.44771525,9 10,9 Z M10,10 L10,14 L14,14 L14,10 L10,10 Z M2,9 L6,9 C6.55228475,9 7,9.44771525 7,10 L7,14 C7,14.5522847 6.55228475,15 6,15 L2,15 C1.44771525,15 1,14.5522847 1,14 L1,10 C1,9.44771525 1.44771525,9 2,9 Z M2,10 L2,14 L6,14 L6,10 L2,10 Z M10,1 L14,1 C14.5522847,1 15,1.44771525 15,2 L15,6 C15,6.55228475 14.5522847,7 14,7 L10,7 C9.44771525,7 9,6.55228475 9,6 L9,2 C9,1.44771525 9.44771525,1 10,1 Z M10,2 L10,6 L14,6 L14,2 L10,2 Z M2,1 L6,1 C6.55228475,1 7,1.44771525 7,2 L7,6 C7,6.55228475 6.55228475,7 6,7 L2,7 C1.44771525,7 1,6.55228475 1,6 L1,2 C1,1.44771525 1.44771525,1 2,1 Z M2,2 L2,6 L6,6 L6,2 L2,2 Z"></path></svg>
-                                &nbsp;My Courses</Nav.Link>
+                                &nbsp; My Courses</Nav.Link>
                         </Nav.Item>
                         {/* <Nav.Item>
-                            <Nav.Link href="/home">Active</Nav.Link>
+                            <Nav.Link href="/home" eventKey="link-1">Active</Nav.Link>
                         </Nav.Item> */}
                     </Nav>
+
+                    
+
+                    <Row xs={1} md={2} className="m-2 g-4" id="link-1" >
+                        <Col>
+                            <Card>
+                                <Card.Img variant="top" src="https://via.placeholder.com/200x150/0000FF" />
+                                <Card.Body>
+                                    <Card.Title>Card title</Card.Title>
+                                    <Card.Text>
+                                        This is a wider card with supporting text below as a natural lead-in to
+                                        additional content. This content is a little bit longer.
+                                    </Card.Text>
+                                </Card.Body>
+                                <Card.Footer>
+                                    <small className="text-muted">Last updated 3 mins ago</small>
+                                </Card.Footer>
+                            </Card>
+                        </Col>
+                        <Col>
+                            <Card>
+                                <Card.Img variant="top" src="https://via.placeholder.com/200x150/00FF00" />
+                                <Card.Body>
+                                    <Card.Title>Card title</Card.Title>
+                                    <Card.Text>
+                                        This card has supporting text below as a natural lead-in to additional
+                                        content.{' '}
+                                    </Card.Text>
+                                </Card.Body>
+                                <Card.Footer>
+                                    <small className="text-muted">Last updated 3 mins ago</small>
+                                </Card.Footer>
+                            </Card>
+                        </Col>
+                    </Row>
+
                 </Container>
             </>
         );
