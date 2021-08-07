@@ -23,7 +23,7 @@ class MainNavbar extends Component {
                     >
                         <NavDropdown
                             title="Solutions" id="navbarScrollingDropdown"
-                            // style={{ color: 'rgb(0, 0, 0, 1)!important' }}
+                        // style={{ color: 'rgb(0, 0, 0, 1)!important' }}
                         >
                             <NavDropdown.Item href="#">Pricing</NavDropdown.Item>
                             <NavDropdown.Item href="#">Log in</NavDropdown.Item>
