@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import LogInPage from './components/LogInPage'
 import HomePage from './components/HomePage'
-import CompanyPage from './components/CompanyPage'
+import InstitutionPage from './components/InstitutionPage'
 
 class App extends Component {
   render() {
@@ -18,8 +18,8 @@ class App extends Component {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route exact path="/company">
-            <CompanyPage />
+          <Route exact path="/institution">
+            <InstitutionPage />
           </Route>
           <Route exact path="/log-in">
             <LogInPage />

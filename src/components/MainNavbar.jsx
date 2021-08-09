@@ -31,7 +31,7 @@ class MainNavbar extends Component {
                             <NavDropdown.Item href="#">Something else here</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link href="#" className="text-dark">Pricing</Nav.Link>
-                        <Nav.Link href="/company" className="text-dark">Log in</Nav.Link>
+                        <Nav.Link href="/institution" className="text-dark">Log in</Nav.Link>
                         <Nav.Link href="#" className="btn btn-primary text-white" role="button">Create a course</Nav.Link>
                     </Nav>
                     <Form
