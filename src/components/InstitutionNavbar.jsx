@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Nav, Navbar, Form, FormControl, Button } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
+// import { Form, FormControl, Button } from 'react-bootstrap';
 // import { FcAbout } from 'react-icons/fc';
 // import { Container, Row, Col } from 'react-bootstrap';
 import { Dropdown } from 'react-bootstrap';
@@ -22,14 +23,11 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         {children}
     </a>
 ));
-
 // ***************************************************
 
 class InstitutionNavbar extends Component {
     render() {
         return (
-
-
             <Navbar bg="light" expand="lg" className="mx-3">
                 <Dropdown>
                     <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" >
@@ -65,7 +63,7 @@ class InstitutionNavbar extends Component {
                     >
                     </Nav>
                     <Nav.Link href="#" className="text-dark alert-dismissible fade show">Institution Name</Nav.Link>
-                    <Form className="d-flex ms-auto my-2 my-lg-0" >
+                    {/* <Form className="d-flex ms-auto my-2 my-lg-0" >
                         <FormControl
                             type="search"
                             placeholder="Search"
@@ -73,13 +71,16 @@ class InstitutionNavbar extends Component {
                             aria-label="Search"
                         />
                         <Button variant="outline-success">Search</Button>
-                    </Form>
-                    <button variant="outline-success" className="notifly-target" aria-label="Notifications" id="notifly-widget-button"><svg width="16px" height="16px" viewBox="0 0 16 16"><path d="M14.2939 10.3418C13.7629 9.81731 13.2143 9.27488 13.2143 6.71425C13.2143 4.11969 11.3094 1.96194 8.82469 1.56544C8.93914 1.39911 9.00028 1.2019 9.00001 1C9.00001 0.447719 8.55229 0 8.00001 0C7.44773 0 7.00001 0.447719 7.00001 1C6.99972 1.20191 7.06086 1.39912 7.17529 1.56547C4.69066 1.96197 2.78573 4.11972 2.78573 6.71428C2.78573 9.27469 2.23726 9.81716 1.70626 10.3417C0.203257 11.8263 1.30394 14 3.09123 14H6.00001C6.00001 15.1046 6.89544 16 8.00001 16C9.10457 16 10 15.1046 10 14H12.9088C14.6959 14 15.7967 11.8255 14.2939 10.3418V10.3418ZM8.00001 14.75C7.58644 14.75 7.25001 14.4136 7.25001 14H8.75001C8.75001 14.4136 8.41357 14.75 8.00001 14.75ZM12.9091 12.5H3.09063C2.56682 12.5 2.30516 11.8628 2.67394 11.494C3.56723 10.6007 4.28573 9.75266 4.28573 6.71428C4.28573 4.66622 5.95194 3 8.00001 3C10.0481 3 11.7143 4.66622 11.7143 6.71428C11.7143 9.76584 12.4399 10.6072 13.3258 11.494C13.6962 11.8644 13.4307 12.5 12.9091 12.5Z"></path></svg></button>
-                    <button variant="outline-success" aria-label="User options"><div className="UserBadge__userBadge___1Hu-F" style={{ backgroundColor: "rgb(255, 224, 194)" }}>User Name</div></button>
+                    </Form> */}
+
+                    <Nav.Link href="#" className="d-flex ms-auto notifly-target">
+                        <svg width="16px" height="16px" viewBox="0 0 16 16"><path d="M14.2939 10.3418C13.7629 9.81731 13.2143 9.27488 13.2143 6.71425C13.2143 4.11969 11.3094 1.96194 8.82469 1.56544C8.93914 1.39911 9.00028 1.2019 9.00001 1C9.00001 0.447719 8.55229 0 8.00001 0C7.44773 0 7.00001 0.447719 7.00001 1C6.99972 1.20191 7.06086 1.39912 7.17529 1.56547C4.69066 1.96197 2.78573 4.11972 2.78573 6.71428C2.78573 9.27469 2.23726 9.81716 1.70626 10.3417C0.203257 11.8263 1.30394 14 3.09123 14H6.00001C6.00001 15.1046 6.89544 16 8.00001 16C9.10457 16 10 15.1046 10 14H12.9088C14.6959 14 15.7967 11.8255 14.2939 10.3418V10.3418ZM8.00001 14.75C7.58644 14.75 7.25001 14.4136 7.25001 14H8.75001C8.75001 14.4136 8.41357 14.75 8.00001 14.75ZM12.9091 12.5H3.09063C2.56682 12.5 2.30516 11.8628 2.67394 11.494C3.56723 10.6007 4.28573 9.75266 4.28573 6.71428C4.28573 4.66622 5.95194 3 8.00001 3C10.0481 3 11.7143 4.66622 11.7143 6.71428C11.7143 9.76584 12.4399 10.6072 13.3258 11.494C13.6962 11.8644 13.4307 12.5 12.9091 12.5Z"></path></svg>
+                    </Nav.Link>
+
+                    <Nav.Link href="#" type="button" className="btn btn-primary text-white">
+                        User Name
+                    </Nav.Link>
                 </Navbar.Collapse>
-
-
-
             </Navbar>
         );
     }
