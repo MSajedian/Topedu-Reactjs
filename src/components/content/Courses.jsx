@@ -36,7 +36,7 @@ const Courses = () => {
               </Card.Text>
             </Card.Body>
             <Card.Footer>
-              <small className="text-muted">Create by</small>
+              <small className="text-muted">Create by ...</small>
             </Card.Footer>
           </Card>
           <Card>
@@ -48,7 +48,7 @@ const Courses = () => {
               </Card.Text>
             </Card.Body>
             <Card.Footer>
-              <small className="text-muted">Create by</small>
+              <small className="text-muted">Create by ...</small>
             </Card.Footer>
           </Card>
           <Card>
@@ -60,7 +60,7 @@ const Courses = () => {
               </Card.Text>
             </Card.Body>
             <Card.Footer>
-              <small className="text-muted">Create by</small>
+              <small className="text-muted">Create by ...</small>
             </Card.Footer>
           </Card>
         </CardGroup>

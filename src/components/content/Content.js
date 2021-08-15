@@ -5,6 +5,8 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 import Participants from "./Participants";
 import Courses from "./Courses";
+import Subscription from "./Subscription";
+import Settings from "./Settings";
 import Topbar from "./Topbar";
 
 const Content = ({ sidebarIsOpen, toggleSidebar }) => {
@@ -19,8 +21,8 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => {
         <Route exact path={path} component={() => ""} />
         <Route exact path={`${path}/participants`} component={Participants} />
         <Route exact path={`${path}/courses`} component={Courses} />
-        <Route exact path={`${path}/subscription`} component={() => "Subscription"} />
-        <Route exact path={`${path}/settings`} component={() => "Settings"} />
+        <Route exact path={`${path}/subscription`} component={Subscription} />
+        <Route exact path={`${path}/settings`} component={Settings} />
         <Route exact path={`${path}/notifications`} component={() => "notifications"} />
         <Route exact path={`${path}/user-settings`} component={() => "user-settings"} />
         <Route exact path={`${path}/feedback-roadmap`} component={() => "feedback-roadmap"} />
