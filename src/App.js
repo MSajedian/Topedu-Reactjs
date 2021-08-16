@@ -7,8 +7,8 @@ import {
   // Link,
 } from "react-router-dom";
 import LogInPage from './components/LogInPage'
+import MainPage from './components/MainPage'
 import HomePage from './components/HomePage'
-import InstitutionPage from './components/InstitutionPage'
 import Dashboard from './components/Dashboard'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -18,10 +18,10 @@ class App extends Component {
       <Router>
         <Switch>
           <Route exact path="/">
-            <HomePage />
+            <MainPage />
           </Route>
-          <Route exact path="/institution">
-            <InstitutionPage />
+          <Route exact path="/home">
+            <HomePage />
           </Route>
           <Route exact path="/log-in">
             <LogInPage />

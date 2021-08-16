@@ -15,6 +15,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => {
     <Container
       fluid
       className={classNames("content", { "is-open": sidebarIsOpen })}
+      style={{borderTop:"1px black solid"}}
     >
       <Topbar toggleSidebar={toggleSidebar} />
       <Switch>
