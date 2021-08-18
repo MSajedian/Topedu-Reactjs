@@ -1,9 +1,10 @@
 import { Component } from 'react';
-import { Nav, Navbar, Form, FormControl, Button } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
+import { Form, FormControl, Button } from 'react-bootstrap';
 // import { FcAbout } from 'react-icons/fc';
 // import { Container, Row, Col } from 'react-bootstrap';
 
-class ModulePage extends Component {
+class Courses extends Component {
     render() {
         return (
             <Navbar bg="light" expand="lg" className="mx-3">
@@ -32,4 +33,4 @@ class ModulePage extends Component {
     }
 }
 
-export default ModulePage;
+export default Courses;

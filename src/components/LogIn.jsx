@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { FcAbout } from 'react-icons/fc';
 
-class LogInPage extends Component {
+class LogIn extends Component {
     constructor(props) {
         super(props);
         this.state = {}
@@ -39,4 +39,4 @@ class LogInPage extends Component {
     }
 }
 
-export default LogInPage;
+export default LogIn;

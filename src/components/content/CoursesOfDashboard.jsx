@@ -2,10 +2,11 @@ import React from "react";
 
 import { Container, Row, Col, CardGroup, Card, Form, FormControl, Button } from 'react-bootstrap';
 
-const Courses = () => {
+const CoursesOfDashboard = () => {
 
   return (
     <Container>
+      <h2>Courses</h2>
       <Row>
         <Col>
           <Form className="d-flex">
@@ -69,4 +70,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default CoursesOfDashboard;

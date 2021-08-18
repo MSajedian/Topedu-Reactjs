@@ -6,6 +6,7 @@ const Participants = () => {
 
   return (
     <Container>
+      <h2>Participants</h2>
       <Row>
         <Col>
           <Form className="d-flex">

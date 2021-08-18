@@ -6,10 +6,11 @@ import {
   Route,
   // Link,
 } from "react-router-dom";
-import LogInPage from './components/LogInPage'
-import MainPage from './components/MainPage'
-import HomePage from './components/HomePage'
+import LogIn from './components/LogIn'
+import Main from './components/Main'
+import Home from './components/Home'
 import Dashboard from './components/Dashboard'
+import Courses from './components/Courses'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
@@ -18,16 +19,19 @@ class App extends Component {
       <Router>
         <Switch>
           <Route exact path="/">
-            <MainPage />
+            <Main />
           </Route>
           <Route exact path="/home">
-            <HomePage />
+            <Home />
           </Route>
           <Route exact path="/log-in">
-            <LogInPage />
+            <LogIn />
           </Route>
           <Route path="/dashboard">
             <Dashboard />
+          </Route>
+          <Route path="/courses">
+            <Courses />
           </Route>
         </Switch>
       </Router>

@@ -5,7 +5,7 @@ import { Row, Col, CardGroup, Card } from 'react-bootstrap';
 // import { FcAbout } from 'react-icons/fc';
 import MainNavbar from './MainNavbar'
 
-class MainPage extends Component {
+class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {}
@@ -183,4 +183,4 @@ class MainPage extends Component {
     }
 }
 
-export default MainPage;
+export default Main;
