@@ -5,7 +5,6 @@ import { Nav, Navbar } from 'react-bootstrap';
 // import { Container, Row, Col } from 'react-bootstrap';
 import { Dropdown } from 'react-bootstrap';
 
-
 // ***************************************************
 // The forwardRef is important!!
 // Dropdown needs access to the DOM node in order to position the Menu
