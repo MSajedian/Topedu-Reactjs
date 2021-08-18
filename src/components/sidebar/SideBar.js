@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const SideBar = ({ isOpen, toggle }) => (
   <div className={classNames("sidebar", { "is-open": isOpen })}>
-    <div className="side-menu" style={{borderTop:"1px black solid"}}>
+    <div className="side-menu">
       <Nav vertical className="list-unstyled pb-3">
         <NavItem>
           <NavLink tag={Link} to={"/dashboard/participants"}>

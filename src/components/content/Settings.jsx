@@ -6,11 +6,9 @@ const Settings = () => {
 
   return (
     <Container>
+      <h2>Settings</h2>
       <Tabs defaultActiveKey="general" id="uncontrolled-tab-example" className="mb-3">
         <Tab eventKey="general" title="General">
-
-
-
           <Form>
             <Form.Group className="mb-3" controlId="formInstitutionName">
               <Form.Label><b>Institution name</b></Form.Label>

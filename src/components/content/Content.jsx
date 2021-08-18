@@ -7,7 +7,7 @@ import Participants from "./Participants";
 import Courses from "./Courses";
 import Subscription from "./Subscription";
 import Settings from "./Settings";
-import Topbar from "./Topbar";
+// import Topbar from "./Topbar";
 
 const Content = ({ sidebarIsOpen, toggleSidebar }) => {
   let { path } = useRouteMatch();
@@ -15,9 +15,8 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => {
     <Container
       fluid
       className={classNames("content", { "is-open": sidebarIsOpen })}
-      style={{borderTop:"1px black solid"}}
     >
-      <Topbar toggleSidebar={toggleSidebar} />
+      {/* <Topbar toggleSidebar={toggleSidebar} /> */}
       <Switch>
         <Route exact path={path} component={() => ""} />
         <Route exact path={`${path}/participants`} component={Participants} />
