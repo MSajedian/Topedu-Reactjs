@@ -2,7 +2,9 @@ import { Component } from 'react';
 // import { Form, FormControl, Button } from 'react-bootstrap';
 // import { FcAbout } from 'react-icons/fc';
 // import { Container, Row, Col } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import CoursesNavbar from './CoursesNavbar';
+import CoursesContent from './CoursesContent';
 
 import React from "react";
 import {
@@ -16,15 +18,15 @@ import {
 const routes = [
     {
         path: "/courses/home",
-        main: () => <h2>Home</h2>
+        main: () => <CoursesContent title='home' />
     },
     {
         path: "/courses/bubblegum",
-        main: () => <h2>Bubblegum</h2>
+        main: () => <CoursesContent title='bubblegum'/>
     },
     {
         path: "/courses/shoelaces",
-        main: () => <h2>Shoelaces</h2>
+        main: () => <CoursesContent title='shoelaces'/>
     }
 ];
 class Courses extends Component {
@@ -42,6 +44,13 @@ class Courses extends Component {
                                 background: "#f0f0f0"
                             }}
                         >
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Img variant="top" src="https://via.placeholder.com/300x150/0000FF" />
+                                <Card.Body>
+                                    <Card.Title>Course title</Card.Title>
+                                </Card.Body>
+                            </Card>
+                            <hr />
                             <ul
                                 style={{
                                     listStyleType: "none",
@@ -58,13 +67,6 @@ class Courses extends Component {
                         </div>
                         <Switch>
                             {routes.map((route, index) => (
-                                // You can render a <Route> in as many places
-                                // as you want in your app. It will render along
-                                // with any other <Route>s that also match the URL.
-                                // So, a sidebar or breadcrumbs or anything else
-                                // that requires you to render multiple things
-                                // in multiple places at the same URL is nothing
-                                // more than multiple <Route>s.
                                 <Route
                                     key={index}
                                     path={route.path}
@@ -76,8 +78,6 @@ class Courses extends Component {
                         <div style={{ flex: 1, padding: "10px" }}>
                             <Switch>
                                 {routes.map((route, index) => (
-                                    // Render more <Route>s with the same paths as
-                                    // above, but different components this time.
                                     <Route
                                         key={index}
                                         path={route.path}
