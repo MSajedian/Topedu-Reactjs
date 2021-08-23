@@ -41,7 +41,7 @@ class Courses extends Component {
                             style={{
                                 padding: "10px",
                                 width: "20vw",
-                                height: "100vh",
+                                height: "calc(100vh - 55.989583px)",
                                 background: "#f0f0f0"
                             }}
                         >
@@ -54,7 +54,7 @@ class Courses extends Component {
                                 style={{
                                     listStyleType: "none",
                                     padding: 0,
-                                    height: "calc(100vh - 150px)",
+                                    // height: "100%",
                                     background: "#f0f0f0",
                                     overflowY: "auto",
                                 }}

@@ -62,7 +62,7 @@ class CodePlayground extends Component {
                                     id="iFrame"
                                     title="iFrame"
                                     width='100%'
-                                    // height='100%'
+                                    height='130%'
                                     // ref={this.onIframeRef}
                                     // sandbox="allow-same-origin"
                                     srcDoc={this.state.srcdocOfIframe}
