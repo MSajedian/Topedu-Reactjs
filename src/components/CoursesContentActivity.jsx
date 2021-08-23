@@ -21,7 +21,7 @@ class CoursesContentActivity extends Component {
                         <Col className="mb-1">
                         </Col>
                     </Row>
-                    <Row >
+                    <Row>
                         <Col xs={10}>
                             <Form.Control value={this.props.title} className="border-0" />
                         </Col>
