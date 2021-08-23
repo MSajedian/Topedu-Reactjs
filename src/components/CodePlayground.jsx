@@ -16,36 +16,18 @@ class CodePlayground extends Component {
             <title>Document</title> 
             </head> 
             <body> 
-            <p>this is a paraghraph</p> 
+            <p id='p1'>this is a paraghraph</p> 
             </body> 
             </html>`,
-            cssTextArea: `p{color:red}`,
-            jsTextArea: ``
+            cssTextAreaValue: `p{ color: red }`,
+            jsTextAreaValue: `document.querySelector('body').style.backgroundColor='yellow'
+            `
         };
     }
 
     runCodes = () => {
-        this.setState({ srcdocOfIframe: this.state.htmlTextAreaValue + '<style>' + this.state.cssTextArea + '</style><script>' + this.state.jsTextArea + '</script>' })
+        this.setState({ srcdocOfIframe: this.state.htmlTextAreaValue + '<style>' + this.state.cssTextAreaValue + '</style><script>' + this.state.jsTextAreaValue + '</script>' })
     }
-
-    // let iFrame = document.getElementById('iFrame').contentWindow.document
-    // let htmlTextArea = document.getElementById('htmlTextarea')
-    // let cssTextArea = document.getElementById('cssTextarea')
-    // let jsTextArea = document.getElementById('jsTextarea')
-
-    // runCodes = () => {
-    //     srcOfIframe.open()
-    //     srcOfIframe.writeln(
-    //         htmlTextArea.value +
-    //         '<style>' +
-    //         cssTextArea.value +
-    //         '</style>' +
-    //         '<script>' +
-    //         jsTextArea.value +
-    //         '</script>'
-    //     )
-    //     srcOfIframe.close()
-    // }
 
     render() {
         return (
@@ -57,21 +39,20 @@ class CodePlayground extends Component {
                         <Col>
                             <Form.Group className="mb-3" controlId="htmlTextArea">
                                 <Form.Label>HTML</Form.Label>
-                                <Form.Control as="textarea" rows={8} value={this.state.htmlTextAreaValue} />
+                                <Form.Control as="textarea" rows={8} value={this.state.htmlTextAreaValue} onChange={(e) => (this.setState({ htmlTextAreaValue: e.target.value }))} />
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" controlId="cssTextArea">
                                 <Form.Label>CSS</Form.Label>
-                                <Form.Control as="textarea" rows={8} />
+                                <Form.Control as="textarea" rows={8} value={this.state.cssTextAreaValue} onChange={(e) => (this.setState({ cssTextAreaValue: e.target.value }))} />
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" controlId="jsTextArea">
                                 <Form.Label>JavaScript</Form.Label>
-                                <Form.Control as="textarea" rows={8} />
+                                <Form.Control as="textarea" rows={8} value={this.state.jsTextAreaValue} onChange={(e) => (this.setState({ jsTextAreaValue: e.target.value }))} />
                             </Form.Group>
-
                         </Col>
                         <Row>
                             <Col>
@@ -84,7 +65,7 @@ class CodePlayground extends Component {
                                     // height='100%'
                                     // ref={this.onIframeRef}
                                     // sandbox="allow-same-origin"
-                                    srcdoc={this.state.srcdocOfIframe}
+                                    srcDoc={this.state.srcdocOfIframe}
                                 ></iframe>
                             </Col>
                         </Row>
