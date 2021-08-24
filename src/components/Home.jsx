@@ -69,7 +69,7 @@ class Home extends Component {
                             <Card onClick={() => (this.props.history.push("/courses"))} className="btn">
                                 <Card.Img variant="top" src="https://via.placeholder.com/300x150/0000FF" />
                                 <Card.Body>
-                                    <Card.Title>Course title</Card.Title>
+                                    <Card.Title>Course Title</Card.Title>
                                     <Card.Text>
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa excepturi ducimus odit quae itaque dolores velit, cumque vitae aliquid molestias voluptas saepe beatae esse ad quos cupiditate doloremque blanditiis atque?
                                     </Card.Text>

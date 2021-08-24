@@ -29,7 +29,7 @@ class LogIn extends Component {
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" placeholder="" />
                             </Form.Group>
-                            <Button variant="primary" type="submit">
+                            <Button variant="primary" type="submit" href="/home">
                                 Log in
                             </Button>
                         </Form>
