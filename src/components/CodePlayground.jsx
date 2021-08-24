@@ -1,23 +1,27 @@
 import { Component } from 'react';
 import { Container, Form, Row, Col } from 'react-bootstrap';
-// import { Tabs, Tab } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import Editor from "@monaco-editor/react";
 
 class CodePlayground extends Component {
     constructor(props) {
         super(props);
         this.state = {
             srcdocOfIframe: ``,
-            htmlTextAreaValue: `<!DOCTYPE html> 
-            <html lang="en"> 
-            <head> 
-            <meta charset="UTF-8"> 
-            <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-            <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-            <title>Document</title> 
-            </head> 
-            <body> 
-            <p id='p1'>this is a paraghraph</p> 
-            </body> 
+            htmlTextAreaValue: `<!DOCTYPE html>
+            <html lang="en">
+            
+            <head>
+                <meta charset="UTF-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Document</title>
+            </head>
+            
+            <body>
+                <p id='p1'>this is a paraghraph</p>
+            </body>
+            
             </html>`,
             cssTextAreaValue: `p{ color: red }`,
             jsTextAreaValue: `document.querySelector('body').style.backgroundColor='yellow'
@@ -28,6 +32,10 @@ class CodePlayground extends Component {
     runCodes = () => {
         this.setState({ srcdocOfIframe: this.state.htmlTextAreaValue + '<style>' + this.state.cssTextAreaValue + '</style><script>' + this.state.jsTextAreaValue + '</script>' })
     }
+    handleEditorDidMount = (editor, monaco) => {
+        // editorRef.current = editor;
+    }
+
 
     render() {
         return (
@@ -36,26 +44,42 @@ class CodePlayground extends Component {
                 <Form>
                     <Row>
                         <Col>
-                            <Form.Group className="mb-3" controlId="htmlTextArea">
-                                <Form.Label>HTML</Form.Label>
-                                <Form.Control as="textarea" rows={8} value={this.state.htmlTextAreaValue} onChange={(e) => (this.setState({ htmlTextAreaValue: e.target.value }))} />
-                            </Form.Group>
+                            <Form.Label>HTML</Form.Label>
+                            <Editor
+                                height="40vh"
+                                defaultLanguage="html"
+                                defaultValue={this.state.htmlTextAreaValue}
+                                onChange={(value, event) => (this.setState({ htmlTextAreaValue: value }))}
+                                theme="vs-dark"
+                            />
                         </Col>
                         <Col>
-                            <Form.Group className="mb-3" controlId="cssTextArea">
-                                <Form.Label>CSS</Form.Label>
-                                <Form.Control as="textarea" rows={8} value={this.state.cssTextAreaValue} onChange={(e) => (this.setState({ cssTextAreaValue: e.target.value }))} />
-                            </Form.Group>
+                            <Form.Label>CSS</Form.Label>
+                            <Editor
+                                height="40vh"
+                                defaultLanguage="css"
+                                defaultValue={this.state.cssTextAreaValue}
+                                onChange={(value, event) => (this.setState({ cssTextAreaValue: value }))}
+                                theme="vs-dark"
+                            />
                         </Col>
                         <Col>
-                            <Form.Group className="mb-3" controlId="jsTextArea">
-                                <Form.Label>JavaScript</Form.Label>
-                                <Form.Control as="textarea" rows={8} value={this.state.jsTextAreaValue} onChange={(e) => (this.setState({ jsTextAreaValue: e.target.value }))} />
-                            </Form.Group>
+                            <Form.Label>javascript</Form.Label>
+                            <Editor
+                                height="40vh"
+                                defaultLanguage="javascript"
+                                defaultValue={this.state.jsTextAreaValue}
+                                onChange={(value, event) => (this.setState({ jsTextAreaValue: value }))}
+                                onMount={this.state.handleEditorDidMount}
+                                theme="vs-dark"
+                            />
                         </Col>
                     </Row>
-                    <input type="button" onClick={this.runCodes} value="Run Codes" id="run-codes" />
+                    <Button onClick={this.runCodes} className="mt-2">Run Codes</Button>
                     <hr />
+                    <Row>
+
+                    </Row>
                     <Row>
                         <Col>
                             <h2>Result</h2>
@@ -64,7 +88,7 @@ class CodePlayground extends Component {
                                 id="iFrame"
                                 title="iFrame"
                                 width='100%'
-                                height='120%'
+                                height='100%'
                                 // ref={this.onIframeRef}
                                 // sandbox="allow-same-origin"
                                 srcDoc={this.state.srcdocOfIframe}
