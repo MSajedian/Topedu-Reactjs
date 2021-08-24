@@ -19,7 +19,7 @@ import {
 const routes = [
     {
         path: "/courses/code-playground",
-        main: () => (<><CoursesContentActivity title='code playground' /><CodePlayground title='code playground' /></>)
+        main: () => (<><CodePlayground title='code playground' /></>)
     },
     {
         path: "/courses/bubblegum",

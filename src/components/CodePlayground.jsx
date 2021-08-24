@@ -34,7 +34,6 @@ class CodePlayground extends Component {
             <Container>
                 <h3>HTML/CSS/JS Playground</h3>
                 <Form>
-                    <input type="button" onClick={this.runCodes} value="Run" id="run-codes" />
                     <Row>
                         <Col>
                             <Form.Group className="mb-3" controlId="htmlTextArea">
@@ -54,21 +53,23 @@ class CodePlayground extends Component {
                                 <Form.Control as="textarea" rows={8} value={this.state.jsTextAreaValue} onChange={(e) => (this.setState({ jsTextAreaValue: e.target.value }))} />
                             </Form.Group>
                         </Col>
-                        <Row>
-                            <Col>
-                                <h2>Result</h2>
-                                <iframe
-                                    className='border'
-                                    id="iFrame"
-                                    title="iFrame"
-                                    width='100%'
-                                    height='130%'
-                                    // ref={this.onIframeRef}
-                                    // sandbox="allow-same-origin"
-                                    srcDoc={this.state.srcdocOfIframe}
-                                ></iframe>
-                            </Col>
-                        </Row>
+                    </Row>
+                    <input type="button" onClick={this.runCodes} value="Run Codes" id="run-codes" />
+                    <hr />
+                    <Row>
+                        <Col>
+                            <h2>Result</h2>
+                            <iframe
+                                className='border'
+                                id="iFrame"
+                                title="iFrame"
+                                width='100%'
+                                height='120%'
+                                // ref={this.onIframeRef}
+                                // sandbox="allow-same-origin"
+                                srcDoc={this.state.srcdocOfIframe}
+                            ></iframe>
+                        </Col>
                     </Row>
                 </Form>
             </Container>
