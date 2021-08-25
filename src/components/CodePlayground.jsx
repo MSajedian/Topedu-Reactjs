@@ -1,31 +1,17 @@
 import { Component } from 'react';
-import { Container, Form, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import Editor from "@monaco-editor/react";
+
 
 class CodePlayground extends Component {
     constructor(props) {
         super(props);
         this.state = {
             srcdocOfIframe: ``,
-            htmlTextAreaValue: `<!DOCTYPE html>
-            <html lang="en">
-            
-            <head>
-                <meta charset="UTF-8">
-                <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Document</title>
-            </head>
-            
-            <body>
-                <p id='p1'>this is a paraghraph</p>
-            </body>
-            
-            </html>`,
-            cssTextAreaValue: `p{ color: red }`,
-            jsTextAreaValue: `document.querySelector('body').style.backgroundColor='yellow'
-            `
+            htmlTextAreaValue: `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>Document</title>\n</head>\n\n<body>\n<p id='p1'>this is a paraghraph</p>\n</body>\n\n</html>`,
+            cssTextAreaValue: `p{\ncolor: red\n}`,
+            jsTextAreaValue: `let body=document.querySelector('body')\nbody.style.backgroundColor='yellow'`
         };
     }
 
