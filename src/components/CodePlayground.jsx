@@ -27,10 +27,9 @@ class CodePlayground extends Component {
         return (
             <Container>
                 <h3>Code Playground</h3>
-                <Form>
                     <Row>
                         <Col xs={12} md={4}>
-                            <Form.Label>HTML</Form.Label>
+                            <label>HTML</label>
                             <Editor
                                 height="300px"
                                 defaultLanguage="html"
@@ -40,7 +39,7 @@ class CodePlayground extends Component {
                             />
                         </Col>
                         <Col xs={12} md={4}>
-                            <Form.Label>CSS</Form.Label>
+                            <label>CSS</label>
                             <Editor
                                 height="300px"
                                 defaultLanguage="css"
@@ -50,7 +49,7 @@ class CodePlayground extends Component {
                             />
                         </Col>
                         <Col xs={12} md={4}>
-                            <Form.Label>JavaScript</Form.Label>
+                            <label>JavaScript</label>
                             <Editor
                                 height="300px"
                                 defaultLanguage="javascript"
@@ -81,7 +80,6 @@ class CodePlayground extends Component {
                             ></iframe>
                         </Col>
                     </Row>
-                </Form>
             </Container>
         )
     }
