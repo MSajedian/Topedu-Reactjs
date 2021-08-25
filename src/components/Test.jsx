@@ -48,6 +48,8 @@ class Courses extends Component {
                             style={{
                                 // padding: "10px",
                                 // height: "calc(100vh - 55.989583px)",
+                                // minHeight: "calc(100vh - 55.989583px)",
+                                // minHeight: "100vh",
                                 background: "#f0f0f0",
                                 // overflowY: "auto"
                             }}
@@ -81,8 +83,8 @@ class Courses extends Component {
                             </ul>
                         </Col>
                         <Col xs={12} md={9} lg={10} style={{
-                            backgroundColor: "red",
-                            // overflowY: "auto",
+                            // backgroundColor: "red",
+                            overflowY: "auto",
                         }}>
                             <Switch>
                                 {routes.map((route, index) => (

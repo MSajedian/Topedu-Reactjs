@@ -26,33 +26,33 @@ class CodePlayground extends Component {
     render() {
         return (
             <Container>
-                <h3>HTML/CSS/JS Playground</h3>
+                <h3>Code Playground</h3>
                 <Form>
                     <Row>
-                        <Col xs={12} md={3}>
+                        <Col xs={12} md={4}>
                             <Form.Label>HTML</Form.Label>
                             <Editor
-                                height="40vh"
+                                height="300px"
                                 defaultLanguage="html"
                                 defaultValue={this.state.htmlTextAreaValue}
                                 onChange={(value, event) => (this.setState({ htmlTextAreaValue: value }))}
                                 theme="vs-dark"
                             />
                         </Col>
-                        <Col xs={12} md={3}>
+                        <Col xs={12} md={4}>
                             <Form.Label>CSS</Form.Label>
                             <Editor
-                                height="40vh"
+                                height="300px"
                                 defaultLanguage="css"
                                 defaultValue={this.state.cssTextAreaValue}
                                 onChange={(value, event) => (this.setState({ cssTextAreaValue: value }))}
                                 theme="vs-dark"
                             />
                         </Col>
-                        <Col xs={12} md={3}>
-                            <Form.Label>javascript</Form.Label>
+                        <Col xs={12} md={4}>
+                            <Form.Label>JavaScript</Form.Label>
                             <Editor
-                                height="40vh"
+                                height="300px"
                                 defaultLanguage="javascript"
                                 defaultValue={this.state.jsTextAreaValue}
                                 onChange={(value, event) => (this.setState({ jsTextAreaValue: value }))}
@@ -67,7 +67,7 @@ class CodePlayground extends Component {
 
                     </Row>
                     <Row>
-                        <Col xs={12} md={9}>
+                        <Col>
                             <h2>Result</h2>
                             <iframe
                                 className='border'
