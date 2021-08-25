@@ -29,7 +29,7 @@ class CodePlayground extends Component {
                 <h3>HTML/CSS/JS Playground</h3>
                 <Form>
                     <Row>
-                        <Col>
+                        <Col xs={12} md={3}>
                             <Form.Label>HTML</Form.Label>
                             <Editor
                                 height="40vh"
@@ -39,7 +39,7 @@ class CodePlayground extends Component {
                                 theme="vs-dark"
                             />
                         </Col>
-                        <Col>
+                        <Col xs={12} md={3}>
                             <Form.Label>CSS</Form.Label>
                             <Editor
                                 height="40vh"
@@ -49,7 +49,7 @@ class CodePlayground extends Component {
                                 theme="vs-dark"
                             />
                         </Col>
-                        <Col>
+                        <Col xs={12} md={3}>
                             <Form.Label>javascript</Form.Label>
                             <Editor
                                 height="40vh"
@@ -67,7 +67,7 @@ class CodePlayground extends Component {
 
                     </Row>
                     <Row>
-                        <Col>
+                        <Col xs={12} md={9}>
                             <h2>Result</h2>
                             <iframe
                                 className='border'

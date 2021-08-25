@@ -1,7 +1,7 @@
 import { Component } from 'react';
 // import { Form, FormControl, Button } from 'react-bootstrap';
 // import { FcAbout } from 'react-icons/fc';
-// import { Container, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import CoursesNavbar from './CoursesNavbar';
 import CoursesContentActivity from './CoursesContentActivity';
