@@ -26,12 +26,12 @@ class MainNavbar extends Component {
                         // style={{ color: 'rgb(0, 0, 0, 1)!important' }}
                         >
                             <NavDropdown.Item href="#">Pricing</NavDropdown.Item>
-                            <NavDropdown.Item href="/log-in">Log in</NavDropdown.Item>
+                            <NavDropdown.Item href="/login">Log in</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#">Something else here</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link href="#" className="text-dark">Pricing</Nav.Link>
-                        <Nav.Link href="/log-in" className="text-dark">Log in</Nav.Link>
+                        <Nav.Link href="/login" className="text-dark">Log in</Nav.Link>
                         <Nav.Link href="#" className="btn btn-primary text-white" role="button">Create a course</Nav.Link>
                     </Nav>
                     <Form
