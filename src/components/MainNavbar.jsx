@@ -1,10 +1,12 @@
 import { Component } from 'react';
-import { Nav, Navbar, Form, FormControl, Button, NavDropdown } from 'react-bootstrap';
+import { Nav, Navbar, Form, FormControl, Button } from 'react-bootstrap';
 import { FcAbout } from 'react-icons/fc';
 
 // import { Container, Row, Col } from 'react-bootstrap';
 // import { FcAbout } from 'react-icons/fc';
-
+import {
+    Link,
+} from "react-router-dom";
 class MainNavbar extends Component {
     constructor(props) {
         super(props);
@@ -21,17 +23,10 @@ class MainNavbar extends Component {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <NavDropdown
-                            title="Solutions" id="navbarScrollingDropdown"
-                        // style={{ color: 'rgb(0, 0, 0, 1)!important' }}
-                        >
-                            <NavDropdown.Item href="#">Pricing</NavDropdown.Item>
-                            <NavDropdown.Item href="/login">Log in</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#">Something else here</NavDropdown.Item>
-                        </NavDropdown>
+                        <Link to="/home">Home Page</Link>
+                        <Link to="/login">Log in1</Link>
                         <Nav.Link href="#" className="text-dark">Pricing</Nav.Link>
-                        <Nav.Link href="/login" className="text-dark">Log in</Nav.Link>
+                        <Nav.Link href="/login" className="text-dark">Log in2</Nav.Link>
                         <Nav.Link href="#" className="btn btn-primary text-white" role="button">Create a course</Nav.Link>
                     </Nav>
                     <Form

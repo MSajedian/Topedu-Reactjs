@@ -6,10 +6,11 @@ import {
   Link,
   Redirect,
   useHistory,
-  useLocation
+  // useLocation
 } from "react-router-dom";
 
 import Main from './components/Main'
+import LogIn from './components/LogIn'
 import Home from './components/Home'
 import Courses from './components/Courses'
 import Dashboard from './components/Dashboard'
@@ -22,16 +23,14 @@ export default function App() {
           <AuthButton />
           <ul>
             <li>
-              <Link to="/">Main Page</Link>
-            </li>
-            <li>
               <Link to="/home">Home Page</Link>
             </li>
           </ul>
+
           <hr />
           <Switch>
             <Route exact path="/"> <Main /> </Route>
-            <Route path="/login"> <LoginPage /> </Route>
+            <Route path="/login"> <LogIn /> </Route>
             <PrivateRoute path="/home"> <Home /> </PrivateRoute>
             <PrivateRoute path="/courses"> <Courses /> </PrivateRoute>
             <PrivateRoute path="/dashboard"> <Dashboard /> </PrivateRoute>
@@ -42,14 +41,14 @@ export default function App() {
   );
 }
 
-const fakeAuth = {
+const checkAuth = {
   isAuthenticated: false,
   signin(cb) {
-    fakeAuth.isAuthenticated = true;
+    checkAuth.isAuthenticated = true;
     setTimeout(cb, 100); // fake async
   },
   signout(cb) {
-    fakeAuth.isAuthenticated = false;
+    checkAuth.isAuthenticated = false;
     setTimeout(cb, 100);
   }
 };
@@ -57,7 +56,6 @@ const fakeAuth = {
 const authContext = createContext();
 
 function ProvideAuth({ children }) {
-  console.log('children:', children)
   const auth = useProvideAuth();
   return (
     <authContext.Provider value={auth}>
@@ -66,22 +64,26 @@ function ProvideAuth({ children }) {
   );
 }
 
-function useAuth() {
+export function useAuth() {
   return useContext(authContext);
 }
 
 function useProvideAuth() {
   const [user, setUser] = useState(null);
 
-  const signin = cb => {
-    return fakeAuth.signin(() => {
-      setUser("user");
-      cb();
-    });
+  const signin = (email, password, cb) => {
+    if (email === 'abc@abc.com' && password === 'newpassword') {
+      return checkAuth.signin(() => {
+        setUser(email);
+        cb();
+      });
+    } else {
+      return `Authentication failed`
+    }
   };
 
-  const signout = cb => {
-    return fakeAuth.signout(() => {
+  const signout = (cb) => {
+    return checkAuth.signout(() => {
       setUser(null);
       cb();
     });
@@ -99,8 +101,8 @@ function AuthButton() {
   let auth = useAuth();
 
   return auth.user ? (
-    <p>
-      Welcome!{" "}
+    <>
+      <span>{`Welcome ${auth.user} `}</span>
       <button
         onClick={() => {
           auth.signout(() => history.push("/"));
@@ -108,7 +110,7 @@ function AuthButton() {
       >
         Sign out
       </button>
-    </p>
+    </>
   ) : (
     <p>You are not logged in.</p>
   );
@@ -132,26 +134,5 @@ function PrivateRoute({ children, ...rest }) {
         )
       }
     />
-  );
-}
-
-
-function LoginPage() {
-  let history = useHistory();
-  let location = useLocation();
-  let auth = useAuth();
-
-  let { from } = location.state || { from: { pathname: "/" } };
-  let login = () => {
-    auth.signin(() => {
-      history.replace(from);
-    });
-  };
-
-  return (
-    <div>
-      <p>You must log in to view the page at {from.pathname}</p>
-      <button onClick={login}>Log in</button>
-    </div>
   );
 }
