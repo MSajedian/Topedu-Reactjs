@@ -26,7 +26,7 @@ class Home extends Component {
                     </div>
 
                     <div className="d-flex">
-                        <span className="ms-auto pt-1 px-1">&#128269;</span>
+                        <span className="ml-auto pt-1 px-1">&#128269;</span>
                         <span>
                             <input
                                 name="Search courses"

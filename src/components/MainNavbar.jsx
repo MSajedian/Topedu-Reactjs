@@ -30,7 +30,7 @@ class MainNavbar extends Component {
                         <Nav.Link href="#" className="btn btn-primary text-white" role="button">Create a course</Nav.Link>
                     </Nav>
                     <Form
-                        className="d-flex ms-auto my-2 my-lg-0"
+                        className="d-flex ml-auto my-2 my-lg-0"
                     >
                         <FormControl
                             type="search"
