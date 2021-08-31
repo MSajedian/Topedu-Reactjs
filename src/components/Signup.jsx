@@ -4,27 +4,18 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { FcAbout } from 'react-icons/fc';
 // import React, { useContext, createContext, useState } from "react";
 
-import {
-    // BrowserRouter as Router,
-    // Switch,
-    // Route,
-    // Link,
-    // Redirect,
-    useHistory,
-    useLocation
-} from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useAuth } from '../App'
 
-export default function LogIn() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+export default function Signup() {
+    const [email, setEmail] = useState('abc@abc.com');
+    const [password, setPassword] = useState('newpassword');
 
     let history = useHistory();
     let location = useLocation();
     let auth = useAuth();
 
     let { from } = location.state || { from: { pathname: "/home" } };
-
     let login = () => {
         auth.signin(email, password, () => {
             history.replace(from);

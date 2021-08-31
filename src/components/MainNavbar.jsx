@@ -1,12 +1,10 @@
 import { Component } from 'react';
-import { Nav, Navbar, Form, FormControl, Button } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import { FcAbout } from 'react-icons/fc';
 
 // import { Container, Row, Col } from 'react-bootstrap';
 // import { FcAbout } from 'react-icons/fc';
-import {
-    Link,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 class MainNavbar extends Component {
     constructor(props) {
         super(props);
@@ -15,22 +13,21 @@ class MainNavbar extends Component {
     render() {
         return (
             <Navbar bg="light" expand="lg" className="mx-3">
-                <Navbar.Brand href="/">
-                    <FcAbout style={{ fontSize: 40 }} className="mb-3" />TopEdu</Navbar.Brand>
+                <Link to="/">
+                    <Navbar.Brand> <FcAbout style={{ fontSize: 40 }} className="mb-3" />TopEdu </Navbar.Brand>
+                </Link>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
                         style={{ maxHeight: '100px' }}
                         navbarScroll
+                        className="ml-auto px-2"
                     >
-                        <Link to="/home">Home Page</Link>
-                        <Link to="/login">Log in1</Link>
-                        <Nav.Link href="#" className="text-dark">Pricing</Nav.Link>
-                        <Nav.Link href="/login" className="text-dark">Log in2</Nav.Link>
-                        <Nav.Link href="#" className="btn btn-primary text-white" role="button">Create a course</Nav.Link>
+                        <Link to="/login" className="btn font-weight-bold">Log in</Link>
+                        <Link to="/signup" className="btn btn-primary text-white" role="button">Sign up</Link>
                     </Nav>
-                    <Form
-                        className="d-flex ml-auto my-2 my-lg-0"
+                    {/* <Form
+                        className="d-flex my-2 my-lg-0"
                     >
                         <FormControl
                             type="search"
@@ -39,7 +36,7 @@ class MainNavbar extends Component {
                             aria-label="Search"
                         />
                         <Button variant="outline-success">Search</Button>
-                    </Form>
+                    </Form> */}
                 </Navbar.Collapse>
             </Navbar>
         );

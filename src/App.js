@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
   useHistory,
   // useLocation
@@ -11,6 +10,7 @@ import {
 
 import Main from './components/Main'
 import LogIn from './components/LogIn'
+import Signup from './components/Signup'
 import Home from './components/Home'
 import Courses from './components/Courses'
 import Dashboard from './components/Dashboard'
@@ -21,16 +21,11 @@ export default function App() {
       <Router>
         <div>
           <AuthButton />
-          <ul>
-            <li>
-              <Link to="/home">Home Page</Link>
-            </li>
-          </ul>
-
           <hr />
           <Switch>
             <Route exact path="/"> <Main /> </Route>
             <Route path="/login"> <LogIn /> </Route>
+            <Route path="/signup"> <Signup /> </Route>
             <PrivateRoute path="/home"> <Home /> </PrivateRoute>
             <PrivateRoute path="/courses"> <Courses /> </PrivateRoute>
             <PrivateRoute path="/dashboard"> <Dashboard /> </PrivateRoute>
@@ -68,18 +63,32 @@ export function useAuth() {
   return useContext(authContext);
 }
 
+let url = "http://localhost:3001/users/login";
+
 function useProvideAuth() {
   const [user, setUser] = useState(null);
 
   const signin = (email, password, cb) => {
-    if (email === 'abc@abc.com' && password === 'newpassword') {
-      return checkAuth.signin(() => {
-        setUser(email);
-        cb();
-      });
-    } else {
-      return `Authentication failed`
+    try {
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ "email": email, "password": password }) // body data type must match "Content-Type" header
+      })
+        .then(res => res.json())
+        .then(
+          (result) => {
+            console.log('result:', result)
+            return checkAuth.signin(() => {
+              setUser(email);
+              cb();
+            });
+          }
+        )
+    } catch (error) {
+      console.log('error:', error)
     }
+
   };
 
   const signout = (cb) => {
