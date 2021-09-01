@@ -1,4 +1,5 @@
-import React, { useContext, createContext, useState } from "react";
+import React, { useContext, createContext } from "react";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,7 +16,10 @@ import Home from './components/Home'
 import Courses from './components/Courses'
 import Dashboard from './components/Dashboard'
 
-export default function App() {
+import { setUsernameAction } from './actions';
+import { useSelector, useDispatch } from 'react-redux'
+
+function App() {
   return (
     <ProvideAuth>
       <Router>
@@ -36,11 +40,14 @@ export default function App() {
   );
 }
 
+export default App;
+
+
 const checkAuth = {
   isAuthenticated: false,
   signin(cb) {
     checkAuth.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
+    setTimeout(cb, 100);
   },
   signout(cb) {
     checkAuth.isAuthenticated = false;
@@ -65,8 +72,10 @@ export function useAuth() {
 
 let url = "http://localhost:3001/users/login";
 
+
 function useProvideAuth() {
-  const [user, setUser] = useState(null);
+  const userName = useSelector((state) => state.user.userName)
+  const dispatch = useDispatch()
 
   const signin = (email, password, cb) => {
     try {
@@ -79,9 +88,10 @@ function useProvideAuth() {
         .then(res => res.json())
         .then(
           (result) => {
-            console.log('result:', result)
             return checkAuth.signin(() => {
-              setUser(email);
+              console.log('result.name:', result.name)
+              dispatch(setUsernameAction(result.name))
+              // setUserName(result.name);
               cb();
             });
           }
@@ -89,30 +99,31 @@ function useProvideAuth() {
     } catch (error) {
       console.log('error:', error)
     }
-
   };
 
   const signout = (cb) => {
     return checkAuth.signout(() => {
-      setUser(null);
+      dispatch(setUsernameAction(null))
+      // setUserName(null);
       cb();
     });
   };
 
   return {
-    user,
+    userName,
     signin,
     signout
   };
 }
 
+
 function AuthButton() {
   let history = useHistory();
   let auth = useAuth();
 
-  return auth.user ? (
+  return auth.userName ? (
     <>
-      <span>{`Welcome ${auth.user} `}</span>
+      <span>{`Welcome ${auth.userName} `}</span>
       <button
         onClick={() => {
           auth.signout(() => history.push("/"));
@@ -132,7 +143,7 @@ function PrivateRoute({ children, ...rest }) {
     <Route
       {...rest}
       render={({ location }) =>
-        auth.user ? (
+        auth.userName ? (
           children
         ) : (
           <Redirect

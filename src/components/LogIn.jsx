@@ -41,7 +41,7 @@ export default function LogIn() {
                 <Col>
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Email or username</Form.Label>
+                            <Form.Label>Email</Form.Label>
                             <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                         </Form.Group>
 
