@@ -19,7 +19,7 @@ import Dashboard from './components/Dashboard'
 import { setUsernameAction } from './actions';
 import { useSelector, useDispatch } from 'react-redux'
 
-function App() {
+export default function App() {
   return (
     <ProvideAuth>
       <Router>
@@ -40,7 +40,6 @@ function App() {
   );
 }
 
-export default App;
 
 
 const checkAuth = {
@@ -126,7 +125,7 @@ function AuthButton() {
       <span>{`Welcome ${auth.userName} `}</span>
       <button
         onClick={() => {
-          auth.signout(() => history.push("/"));
+          auth.signout(() => history.push("/login"));
         }}
       >
         Sign out
