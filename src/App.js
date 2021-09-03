@@ -16,7 +16,8 @@ import Home from './components/Home'
 import Courses from './components/Courses'
 import Dashboard from './components/Dashboard'
 
-import { setUsernameAction } from './actions';
+import { setUsernameAction, setUserSurnameAction } from './actions';
+import { addItemToInstitutionsAction } from './actions';
 import { useSelector, useDispatch } from 'react-redux'
 
 export default function App() {
@@ -88,18 +89,19 @@ function useProvideAuth() {
         .then(
           (result) => {
             return checkAuth.signin(() => {
-              console.log('result.name:', result.name)
               dispatch(setUsernameAction(result.name))
+              dispatch(setUserSurnameAction(result.surname))
+              dispatch(addItemToInstitutionsAction(result.institutions))
               // setUserName(result.name);
               cb();
             });
           }
-        )
+          )
     } catch (error) {
       console.log('error:', error)
     }
   };
-
+  
   const signout = (cb) => {
     return checkAuth.signout(() => {
       dispatch(setUsernameAction(null))

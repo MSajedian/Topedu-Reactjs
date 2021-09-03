@@ -7,6 +7,11 @@ const userReducer = (state = initialState.user, action) => {
         ...state,
         userName: action.payload,
       }
+    case 'SET_USERSURNAME':
+      return {
+        ...state,
+        userSurname: action.payload,
+      }
 
     default:
       return state

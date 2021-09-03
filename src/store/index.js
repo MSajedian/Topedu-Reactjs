@@ -1,8 +1,8 @@
 // what the initial state of the application will be?
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+import institutionsReducer from '../reducers/institution'
 // import bookReducer from '../reducers/book'
-// import cartReducer from '../reducers/cart'
 import userReducer from '../reducers/user'
 
 import thunk from 'redux-thunk'
@@ -12,10 +12,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 export const initialState = {
   user: {
     userName: '',
+    userSurname: '',
   },
-  // cart: {
-  //   products: [],
-  // },
+  institutions: {
+    institutionNames: [],
+  },
   // books: {
   //   stock: [],
   //   error: false,
@@ -24,8 +25,8 @@ export const initialState = {
 }
 
 const bigReducer = combineReducers({
-  // cart: cartReducer,
   user: userReducer,
+  institutions: institutionsReducer,
   // books: bookReducer,
 })
 
