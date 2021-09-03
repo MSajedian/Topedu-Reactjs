@@ -105,6 +105,8 @@ function useProvideAuth() {
   const signout = (cb) => {
     return checkAuth.signout(() => {
       dispatch(setUsernameAction(null))
+      dispatch(setUserSurnameAction(null))
+      dispatch(addItemToInstitutionsAction(null))
       // setUserName(null);
       cb();
     });

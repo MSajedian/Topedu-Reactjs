@@ -62,7 +62,7 @@ function Home(props) {
                         </Nav.Item> */}
                 </Nav>
 
-                <Row xs={1} md={2} className="m-2 g-4" id="link-1" >
+                <Row xs={1} md={2} className="mt-4 g-4" id="link-1" >
                     <Col>
                         <Card onClick={() => (props.history.push("/courses"))} className="btn">
                             <Card.Img variant="top" src="https://via.placeholder.com/300x150/0000FF" />
