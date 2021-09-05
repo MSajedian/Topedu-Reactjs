@@ -1,13 +1,6 @@
 import React, { useContext, createContext } from "react";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-  useHistory,
-  // useLocation
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect, useHistory, } from "react-router-dom";
 
 import Main from './components/Main'
 import LogIn from './components/LogIn'
@@ -40,8 +33,6 @@ export default function App() {
     </ProvideAuth >
   );
 }
-
-
 
 const checkAuth = {
   isAuthenticated: false,
