@@ -13,6 +13,7 @@ import { withRouter } from "react-router";
 
 function Home(props) {
     const [query, setQuery] = useState('');
+    // const [institutions, setInstitutions] = useState([]);
     const userName = useSelector((state) => state.user.userName)
     return (
         <>

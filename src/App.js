@@ -10,7 +10,7 @@ import Courses from './components/Courses'
 import Dashboard from './components/Dashboard'
 
 import { setUsernameAction, setUserSurnameAction } from './actions';
-import { addItemToInstitutionsAction } from './actions';
+// import { addItemToInstitutionsAction, removeItemFromInstitutionsAction } from './actions';
 import { useSelector, useDispatch } from 'react-redux'
 
 export default function App() {
@@ -82,22 +82,22 @@ function useProvideAuth() {
             return checkAuth.signin(() => {
               dispatch(setUsernameAction(result.name))
               dispatch(setUserSurnameAction(result.surname))
-              dispatch(addItemToInstitutionsAction(result.institutions))
+              // dispatch(addItemToInstitutionsAction(result.institutions))
               // setUserName(result.name);
               cb();
             });
           }
-          )
+        )
     } catch (error) {
       console.log('error:', error)
     }
   };
-  
+
   const signout = (cb) => {
     return checkAuth.signout(() => {
       dispatch(setUsernameAction(null))
       dispatch(setUserSurnameAction(null))
-      dispatch(addItemToInstitutionsAction(null))
+      // dispatch(removeItemFromInstitutionsAction(null))
       // setUserName(null);
       cb();
     });
