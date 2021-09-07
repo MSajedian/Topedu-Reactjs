@@ -1,6 +1,6 @@
 // import React, { Component } from 'react';
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from 'react-bootstrap';
 import { Button, Nav } from 'react-bootstrap';
 import { Row, Col, Card } from 'react-bootstrap';
@@ -11,13 +11,44 @@ import { useSelector } from 'react-redux'
 import HomeNavbar from './HomeNavbar'
 import { withRouter } from "react-router";
 
+let urlUserMe = "http://localhost:3001/users/me";
+// let urlInstitutionsMe = "http://localhost:3001/institutions/me";
+
+
 function Home(props) {
     const [query, setQuery] = useState('');
-    // const [institutions, setInstitutions] = useState([]);
+    const [institutions, setInstitutions] = useState([]);
     const userName = useSelector((state) => state.user.userName)
+
+    const getUser = () => {
+        try {
+            fetch(urlUserMe, {
+                credentials: 'include',
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                // body: JSON.stringify({ "email": email, "password": password }) // body data type must match "Content-Type" header
+            })
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        console.log('result:', result)
+                        setInstitutions(result.institutions)
+                    }
+                )
+        } catch (error) {
+            console.log('error:', error)
+        }
+    };
+
+    useEffect(() => {
+        getUser()
+        // eslint-disable-next-line
+    }, [])
+
+
     return (
         <>
-            <HomeNavbar />
+            <HomeNavbar institutions={institutions} />
             <Container>
                 <div className="d-flex">
                     <div className="me-auto p-2 h1">Good to see you're back at it, {userName}! 💪</div>
