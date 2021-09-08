@@ -14,7 +14,6 @@ import { withRouter } from "react-router";
 let urlUserMe = "http://localhost:3001/users/me";
 // let urlInstitutionsMe = "http://localhost:3001/institutions/me";
 
-
 function Home(props) {
     const [query, setQuery] = useState('');
     const [institutions, setInstitutions] = useState([]);
