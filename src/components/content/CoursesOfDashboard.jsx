@@ -20,7 +20,7 @@ const CoursesOfDashboard = () => {
           </Form>
         </Col>
         <Col>
-        <Button variant="info" className=" d-flex ml-auto" type="button" data-test="" data-clipboard-text="">
+        <Button variant="info" className=" d-flex ms-auto" type="button" data-test="" data-clipboard-text="">
             <span>+ Create Courses</span>
             </Button>
         </Col>

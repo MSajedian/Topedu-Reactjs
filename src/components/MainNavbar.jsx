@@ -21,7 +21,7 @@ class MainNavbar extends Component {
                     <Nav
                         style={{ maxHeight: '100px' }}
                         navbarScroll
-                        className="ml-auto px-2"
+                        className="ms-auto px-2"
                     >
                         <Link to="/login" className="btn font-weight-bold">Log in</Link>
                         <Link to="/signup" className="btn btn-primary text-white" role="button">Sign up</Link>
