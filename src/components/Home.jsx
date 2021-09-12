@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useDebugValue } from "react";
 import { Container } from 'react-bootstrap';
 import { Button, Tabs, Tab } from 'react-bootstrap';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card, Placeholder } from 'react-bootstrap';
 import { useSelector } from 'react-redux'
 import { withRouter } from "react-router";
 import HomeNavbar from './HomeNavbar'
@@ -114,20 +114,63 @@ function Home(props) {
                         <Row xs={1} md={2} className="mt-4 g-4" id="link-1">
                             {courses.length > 0 ? courses.map(course => (
                                 <Col>
-                                    <Card onClick={() => (props.history.push("/courses"))} className="btn">
+                                    <Card onClick={() => (props.history.push(`/courses/${course._id}`))} className="btn">
                                         <Card.Img variant="top" src="https://picsum.photos/640/360" />
                                         <Card.Body>
                                             <Card.Title>{course.title}</Card.Title>
                                         </Card.Body>
                                     </Card>
                                 </Col>
-                            )) : <strong className='text-center'>You don't have any courses yet</strong>}
+                            )) :
+                                <>
+                                    <Col>
+                                        <Card className="btn">
+                                            <Card.Body>
+                                                <Card.Title>
+                                                    <Placeholder as={Card.Title} animation="glow">
+                                                        <Placeholder xs={12} />
+                                                        <Placeholder xs={12} bg="primary" />
+                                                        <Placeholder xs={12} bg="secondary" />
+                                                        <Placeholder xs={12} bg="success" />
+                                                        <Placeholder xs={12} bg="danger" />
+                                                        <Placeholder xs={12} bg="warning" />
+                                                        <Placeholder xs={12} bg="info" />
+                                                        <Placeholder xs={12} bg="light" />
+                                                        <Placeholder xs={12} bg="dark" />
+                                                    </Placeholder>
+                                                </Card.Title>
+                                            </Card.Body>
+                                        </Card>
+                                        {/* <strong className='text-center'>You don't have any courses yet</strong> */}
+                                    </Col>
+                                    <Col>
+                                        <Card className="btn">
+                                            <Card.Body>
+                                                <Card.Title>
+                                                    <Placeholder as={Card.Title} animation="glow">
+                                                        <Placeholder xs={12} />
+                                                        <Placeholder xs={12} bg="primary" />
+                                                        <Placeholder xs={12} bg="secondary" />
+                                                        <Placeholder xs={12} bg="success" />
+                                                        <Placeholder xs={12} bg="danger" />
+                                                        <Placeholder xs={12} bg="warning" />
+                                                        <Placeholder xs={12} bg="info" />
+                                                        <Placeholder xs={12} bg="light" />
+                                                        <Placeholder xs={12} bg="dark" />
+                                                    </Placeholder>
+                                                </Card.Title>
+                                            </Card.Body>
+                                        </Card>
+                                        {/* <strong className='text-center'>You don't have any courses yet</strong> */}
+                                    </Col>
+                                </>
+                            }
                         </Row>
                     </Tab>
                     <Tab eventKey="codePlayground" title={codePlaygroundTabTitle()}>
                         <Row xs={1} md={2} className="mt-4 g-4" id="link-1" >
                             <Col>
-                                <Card onClick={() => (props.history.push("/courses"))} className="btn">
+                                <Card onClick={() => (props.history.push(`/code-playground`))} className="btn">
                                     <Card.Img variant="top" src={window.location.origin + '/code-playground.jpg'} />
                                     < Card.Body >
                                         <Card.Title>Code Playground</Card.Title>

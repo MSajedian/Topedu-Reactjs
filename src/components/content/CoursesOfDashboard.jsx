@@ -13,7 +13,7 @@ const CoursesOfDashboard = () => {
             <FormControl
               type="SearchForCourses"
               placeholder="Search for Courses"
-              className="mr-2"
+              className="me-2"
               aria-label="SearchForCourses"
             />
             <Button variant="outline-success">Search</Button>

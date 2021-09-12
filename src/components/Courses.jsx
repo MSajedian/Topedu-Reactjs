@@ -1,70 +1,119 @@
-import { Component } from 'react';
-import { Tab, Row, Col, Accordion, Nav } from 'react-bootstrap';
+import React, { useState, useEffect, useDebugValue } from "react";
+import { Tab, Row, Col, Accordion, Nav, Card, Placeholder } from 'react-bootstrap';
 // import { FcAbout } from 'react-icons/fc';
 // import { Row, Col } from 'react-bootstrap';
 // import { Card } from 'react-bootstrap';
-import CoursesNavbar from './CoursesNavbar';
-// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import CoursesNavbar from './Courses/CoursesNavbar';
+import { useParams } from "react-router-dom";
 
-class Courses extends Component {
-    render() {
-        return (
-            <>
-                <CoursesNavbar />
-                <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                    <Row>
-                        <Col sm={3}>
+let urlCourses = "http://localhost:3001/courses";
 
+function Courses() {
+    const [course, setCourse] = useStateWithLabel({}, "course");
+
+    let { courseId } = useParams();
+
+    function useStateWithLabel(initialValue, name) {
+        const [value, setValue] = useState(initialValue);
+        useDebugValue(`${name}: ${value}`);
+        return [value, setValue];
+    }
+
+    const getCourse = () => {
+        try {
+            fetch(urlCourses + "/" + courseId, {
+                credentials: 'include',
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                // body: JSON.stringify({ "institutionsId": institutions[0]._id }) // body data type must match "Content-Type" header
+            })
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        console.log('result of getCourse:', result)
+                        setCourse(result)
+                    }
+                )
+        } catch (error) {
+            console.log('error:', error)
+        }
+    };
+
+    useEffect(() => {
+        getCourse()
+        // eslint-disable-next-line
+    }, [])
+    return (
+        <>
+            <CoursesNavbar />
+            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                <Row>
+                    <Col sm={3}>
+                        <Card>
+                            <Card.Img variant="top" src="https://via.placeholder.com/300x150/0000FF" />
+                        </Card>
+
+                        {course.flowsAndActivities ?
                             <Accordion>
-                                <Accordion.Item eventKey="0">
-                                    <Accordion.Header>Accordion Item #1</Accordion.Header>
+                                {course.flowsAndActivities.map((flow) => (
+                                    <Accordion.Item eventKey={flow.eventKey}>
+                                        <Accordion.Header>{flow.name}</Accordion.Header>
+                                        <Accordion.Body>
+                                            <Nav variant="pills" className="flex-column">
+                                                {flow.activities.map((activity) => (
+                                                    <Nav.Item>
+                                                        <Nav.Link eventKey={activity.eventKey}>{activity.name}</Nav.Link>
+                                                    </Nav.Item>
+                                                ))}
+                                            </Nav>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                ))}
+                            </Accordion>
+                            :
+                            <Accordion>
+                                <Accordion.Item>
+                                    <Accordion.Header>
+                                        <Placeholder animation="glow">
+                                            <Placeholder xs={10} />
+                                        </Placeholder>
+                                    </Accordion.Header>
                                     <Accordion.Body>
                                         <Nav variant="pills" className="flex-column">
                                             <Nav.Item>
-                                                <Nav.Link eventKey="first">Tab 1</Nav.Link>
-                                            </Nav.Item>
-                                            <Nav.Item>
-                                                <Nav.Link eventKey="second">Tab 2</Nav.Link>
-                                            </Nav.Item>
-                                        </Nav>
-                                    </Accordion.Body>
-                                </Accordion.Item>
-                                <Accordion.Item eventKey="1">
-                                    <Accordion.Header>Accordion Item #2</Accordion.Header>
-                                    <Accordion.Body>
-                                        <Nav variant="pills" className="flex-column">
-                                            <Nav.Item>
-                                                <Nav.Link eventKey="third">Tab 3</Nav.Link>
-                                            </Nav.Item>
-                                            <Nav.Item>
-                                                <Nav.Link eventKey="fourth">Tab 4</Nav.Link>
+                                                <Nav.Link>
+                                                    <Placeholder animation="glow">
+                                                        <Placeholder xs={10} />
+                                                    </Placeholder>
+                                                </Nav.Link>
                                             </Nav.Item>
                                         </Nav>
                                     </Accordion.Body>
                                 </Accordion.Item>
                             </Accordion>
-                        </Col>
-                        <Col sm={9}>
-                            <Tab.Content>
-                                <Tab.Pane eventKey="first">
-                                    content of Tab1
-                                </Tab.Pane>
-                                <Tab.Pane eventKey="second">
-                                    content of Tab2
-                                </Tab.Pane>
-                                <Tab.Pane eventKey="third">
-                                    content of Tab3
-                                </Tab.Pane>
-                                <Tab.Pane eventKey="fourth">
-                                    content of Tab4
-                                </Tab.Pane>
-                            </Tab.Content>
-                        </Col>
-                    </Row>
-                </Tab.Container>
-            </>
-        )
-    }
+                        }
+
+                    </Col>
+                    <Col sm={9}>
+                        <Tab.Content>
+                            <Tab.Pane eventKey="first">
+                                content of Tab1
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="second">
+                                content of Tab2
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="third">
+                                content of Tab3
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="fourth">
+                                content of Tab4
+                            </Tab.Pane>
+                        </Tab.Content>
+                    </Col>
+                </Row>
+            </Tab.Container>
+        </>
+    )
 }
 
 export default Courses;

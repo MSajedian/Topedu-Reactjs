@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import Editor from "@monaco-editor/react";
-
+import CoursesNavbar from './CoursesNavbar';
 
 class CodePlayground extends Component {
     constructor(props) {
@@ -25,8 +25,10 @@ class CodePlayground extends Component {
 
     render() {
         return (
-            <Container>
-                <h3>Code Playground</h3>
+            <>
+                <CoursesNavbar />
+                <Container>
+                    <h3>Code Playground</h3>
                     <Row>
                         <Col xs={12} md={4}>
                             <label>HTML</label>
@@ -80,7 +82,8 @@ class CodePlayground extends Component {
                             ></iframe>
                         </Col>
                     </Row>
-            </Container>
+                </Container>
+            </>
         )
     }
 }
