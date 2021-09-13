@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Nav, Navbar, Placeholder } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 // import { Form, FormControl, Button } from 'react-bootstrap';
 // import { FcAbout } from 'react-icons/fc';
-// import { Container, Row, Col } from 'react-bootstrap';
+// import { Container, Row, Col, Placeholder } from 'react-bootstrap';
 import { Dropdown } from 'react-bootstrap';
 import { Link, useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux'

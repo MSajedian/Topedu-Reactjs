@@ -109,13 +109,13 @@ function Home(props) {
                     </span>
                 </div>
 
-                <Tabs defaultActiveKey="MyCourses" id="courses-tabs" className="mb-3">
+                <Tabs defaultActiveKey="MyCourses" id="courses-tabs" className="mb-1">
                     <Tab eventKey="MyCourses" title={MyCoursesTabTitle()}>
-                        <Row xs={1} md={2} className="mt-4 g-4" id="link-1">
+                        <Row xs={1} md={2} className="mt-1 g-4" id="link-1">
                             {courses.length > 0 ? courses.map(course => (
                                 <Col>
                                     <Card onClick={() => (props.history.push(`/courses/${course._id}`))} className="btn">
-                                        <Card.Img variant="top" src="https://picsum.photos/640/360" />
+                                        <Card.Img variant="top" src={course.cover ? course.cover : "https://picsum.photos/640/360"} />
                                         <Card.Body>
                                             <Card.Title>{course.title}</Card.Title>
                                         </Card.Body>
@@ -168,7 +168,7 @@ function Home(props) {
                         </Row>
                     </Tab>
                     <Tab eventKey="codePlayground" title={codePlaygroundTabTitle()}>
-                        <Row xs={1} md={2} className="mt-4 g-4" id="link-1" >
+                        <Row xs={1} md={2} className="mt-1 g-4" id="link-1" >
                             <Col>
                                 <Card onClick={() => (props.history.push(`/code-playground`))} className="btn">
                                     <Card.Img variant="top" src={window.location.origin + '/code-playground.jpg'} />

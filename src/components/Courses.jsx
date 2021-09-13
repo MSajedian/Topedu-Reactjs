@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useDebugValue } from "react";
-import { Tab, Row, Col, Accordion, Nav, Card, Placeholder } from 'react-bootstrap';
+import { Tab, Row, Col, Accordion, Nav, Card, Placeholder, Container } from 'react-bootstrap';
 // import { FcAbout } from 'react-icons/fc';
 // import { Row, Col } from 'react-bootstrap';
 // import { Card } from 'react-bootstrap';
@@ -50,7 +50,7 @@ function Courses() {
                 <Row>
                     <Col sm={3}>
                         <Card>
-                            <Card.Img variant="top" src="https://via.placeholder.com/300x150/0000FF" />
+                            <Card.Img variant="top" src={course.cover ? course.cover : "https://picsum.photos/640/360"} />
                         </Card>
 
                         {course.flowsAndActivities ?
@@ -92,22 +92,32 @@ function Courses() {
                                 </Accordion.Item>
                             </Accordion>
                         }
-
                     </Col>
                     <Col sm={9}>
                         <Tab.Content>
-                            <Tab.Pane eventKey="first">
-                                content of Tab1
+                            {course.flowsAndActivities ? course.flowsAndActivities.map((flow) => (
+                                flow.activities.map((activity) => (
+                                    <Tab.Pane eventKey={activity.eventKey}>
+                                        <Container className="mt-5">{activity.activityContent}</Container>
+                                    </Tab.Pane>
+                                ))
+                            ))
+                                :
+                                <Placeholder animation="glow"> <Placeholder xs={10} /> </Placeholder>
+                            }
+                            {/* {course.flowsAndActivities ? { course.flowsAndActivities.map((flow) => (<></>)) } : <Placeholder animation="glow"> <Placeholder xs={10} /> </Placeholder> } */}
+                            {/* <Tab.Pane eventKey="first">
+                                <Container className="mt-5">content of Tab1</Container>
                             </Tab.Pane>
                             <Tab.Pane eventKey="second">
-                                content of Tab2
+                                <Container className="mt-5">content of Tab2</Container>
                             </Tab.Pane>
                             <Tab.Pane eventKey="third">
-                                content of Tab3
+                                <Container className="mt-5">content of Tab3</Container>
                             </Tab.Pane>
                             <Tab.Pane eventKey="fourth">
-                                content of Tab4
-                            </Tab.Pane>
+                                <Container className="mt-5">content of Tab4</Container>
+                            </Tab.Pane> */}
                         </Tab.Content>
                     </Col>
                 </Row>
