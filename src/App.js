@@ -1,6 +1,6 @@
 import React, { useContext, createContext } from "react";
 
-import { BrowserRouter as Router, Switch, Route, Redirect, useHistory, } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import Main from './components/Main'
 import LogIn from './components/LogIn'
@@ -18,9 +18,6 @@ export default function App() {
   return (
     <ProvideAuth>
       <Router>
-        <div>
-          <AuthButton />
-          <hr />
           <Switch>
             <Route exact path="/"> <Main /> </Route>
             <Route path="/login"> <LogIn /> </Route>
@@ -30,7 +27,6 @@ export default function App() {
             <PrivateRoute path="/code-playground"> <CodePlayground /> </PrivateRoute>
             <PrivateRoute path="/dashboard"> <Dashboard /> </PrivateRoute>
           </Switch>
-        </div>
       </Router>
     </ProvideAuth >
   );
@@ -113,25 +109,25 @@ function useProvideAuth() {
 }
 
 
-function AuthButton() {
-  let history = useHistory();
-  let auth = useAuth();
+// function AuthButton() {
+//   let history = useHistory();
+//   let auth = useAuth();
 
-  return auth.userName ? (
-    <>
-      <span>{`Welcome ${auth.userName} `}</span>
-      <button
-        onClick={() => {
-          auth.signout(() => history.push("/login"));
-        }}
-      >
-        Sign out
-      </button>
-    </>
-  ) : (
-    <p>You are not logged in.</p>
-  );
-}
+//   return auth.userName ? (
+//     <>
+//       <span>{`Welcome ${auth.userName} `}</span>
+//       <button
+//         onClick={() => {
+//           auth.signout(() => history.push("/login"));
+//         }}
+//       >
+//         Sign out
+//       </button>
+//     </>
+//   ) : (
+//     <p>You are not logged in.</p>
+//   );
+// }
 
 function PrivateRoute({ children, ...rest }) {
   let auth = useAuth();

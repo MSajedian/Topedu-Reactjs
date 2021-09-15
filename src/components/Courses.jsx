@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useDebugValue } from "react";
-import { Tab, Row, Col, Accordion, Nav, Card, Placeholder, Container } from 'react-bootstrap';
+import { Tab, Row, Col, Accordion, Nav, Card, Placeholder, Spinner } from 'react-bootstrap';
 // import { FcAbout } from 'react-icons/fc';
 // import { Row, Col } from 'react-bootstrap';
 // import { Card } from 'react-bootstrap';
 import CoursesNavbar from './Courses/CoursesNavbar';
 import { useParams } from "react-router-dom";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 let urlCourses = "http://localhost:3001/courses";
-
+const finalSpaceCharacters = [{ id: 'gary', name: 'Gary Goodspeed', thumb: '/images/gary.png' }, { id: 'cato', name: 'Little Cato', thumb: '/images/cato.png' }, { id: 'kvn', name: 'KVN', thumb: '/images/kvn.png' }, { id: 'mooncake', name: 'Mooncake', thumb: '/images/mooncake.png' }, { id: 'quinn', name: 'Quinn Ergon', thumb: '/images/quinn.png' }]
 function Courses() {
-    const [course, setCourse] = useStateWithLabel({}, "course");
 
     let { courseId } = useParams();
 
@@ -25,7 +27,6 @@ function Courses() {
                 credentials: 'include',
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
-                // body: JSON.stringify({ "institutionsId": institutions[0]._id }) // body data type must match "Content-Type" header
             })
                 .then(res => res.json())
                 .then(
@@ -39,14 +40,41 @@ function Courses() {
         }
     };
 
+    const updateCourse = () => {
+        try {
+            fetch(urlCourses + "/" + courseId, {
+                credentials: 'include',
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(course) // body data type must match "Content-Type" header
+            })
+        } catch (error) {
+            console.log('error:', error)
+        }
+    };
+
     useEffect(() => {
         getCourse()
         // eslint-disable-next-line
     }, [])
+
+
+    const [course, setCourse] = useStateWithLabel({}, "course");
+
+    function handleOnDragEnd(result, flowIndex) {
+        if (!result.destination) return;
+        const activities = Array.from(course.flowsAndActivities[flowIndex].activities);
+        const [reorderedItem] = activities.splice(result.source.index, 1);
+        activities.splice(result.destination.index, 0, reorderedItem);
+        course.flowsAndActivities[flowIndex].activities = activities
+        setCourse(course);
+        updateCourse()
+    }
+
     return (
         <>
-            <CoursesNavbar />
-            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+            <CoursesNavbar CourseTitle={course.title ? course.title : <span>&nbsp;&nbsp;<Spinner animation="border" variant="primary" /></span>} />
+            <Tab.Container id="left-tabs-example">
                 <Row>
                     <Col sm={3}>
                         <Card>
@@ -55,17 +83,31 @@ function Courses() {
 
                         {course.flowsAndActivities ?
                             <Accordion>
-                                {course.flowsAndActivities.map((flow) => (
-                                    <Accordion.Item eventKey={flow.eventKey}>
+                                {course.flowsAndActivities.map((flow, flowIndex) => (
+                                    <Accordion.Item eventKey={flow._id}>
                                         <Accordion.Header>{flow.name}</Accordion.Header>
                                         <Accordion.Body>
-                                            <Nav variant="pills" className="flex-column">
-                                                {flow.activities.map((activity) => (
-                                                    <Nav.Item>
-                                                        <Nav.Link eventKey={activity.eventKey}>{activity.name}</Nav.Link>
-                                                    </Nav.Item>
-                                                ))}
-                                            </Nav>
+                                            <DragDropContext onDragEnd={(result) => (handleOnDragEnd(result, flowIndex))}>
+                                                <Droppable droppableId="activities">
+                                                    {(provided) => (
+                                                        <Nav variant="pills" className="flex-column" {...provided.droppableProps} ref={provided.innerRef}>
+
+                                                            {flow.activities.map((activity, index) => {
+                                                                return (
+                                                                    <Draggable key={activity._id} draggableId={activity._id} index={index}>
+                                                                        {(provided) => (
+                                                                            <Nav.Item ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                                                <Nav.Link eventKey={activity._id}>{activity.name}</Nav.Link>
+                                                                            </Nav.Item>
+                                                                        )}
+                                                                    </Draggable>
+                                                                )
+                                                            })}
+                                                            {provided.placeholder}
+                                                        </Nav>
+                                                    )}
+                                                </Droppable>
+                                            </DragDropContext>
                                         </Accordion.Body>
                                     </Accordion.Item>
                                 ))}
@@ -92,13 +134,35 @@ function Courses() {
                                 </Accordion.Item>
                             </Accordion>
                         }
+
                     </Col>
                     <Col sm={9}>
                         <Tab.Content>
                             {course.flowsAndActivities ? course.flowsAndActivities.map((flow) => (
                                 flow.activities.map((activity) => (
-                                    <Tab.Pane eventKey={activity.eventKey}>
-                                        <Container className="mt-5">{activity.activityContent}</Container>
+                                    <Tab.Pane eventKey={activity._id} className="mt-2">
+                                        <CKEditor
+                                            editor={ClassicEditor}
+                                            data={activity.activityContent}
+                                            onReady={editor => {
+                                                // You can store the "editor" and use when it is needed.
+                                                console.log('Editor is ready to use!', editor);
+                                            }}
+                                            onChange={(event, editor) => {
+                                                const data = editor.getData();
+                                                activity.activityContent = data
+                                                setCourse(course)
+                                                updateCourse()
+                                                // console.log("---------------------");
+                                                // console.log({ event, editor, data });
+                                            }}
+                                        // onBlur={(event, editor) => {
+                                        //     console.log('Blur.', editor);
+                                        // }}
+                                        // onFocus={(event, editor) => {
+                                        //     console.log('Focus.', editor);
+                                        // }}
+                                        />
                                     </Tab.Pane>
                                 ))
                             ))
@@ -119,6 +183,9 @@ function Courses() {
                                 <Container className="mt-5">content of Tab4</Container>
                             </Tab.Pane> */}
                         </Tab.Content>
+
+
+
                     </Col>
                 </Row>
             </Tab.Container>

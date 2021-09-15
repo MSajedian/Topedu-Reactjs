@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Nav, Navbar } from 'react-bootstrap';
+import { Nav, Navbar, Spinner } from 'react-bootstrap';
 // import { Form, FormControl, Button } from 'react-bootstrap';
 // import { FcAbout } from 'react-icons/fc';
 // import { Container, Row, Col, Placeholder } from 'react-bootstrap';
@@ -52,7 +52,7 @@ function HomeNavbar(props) {
                 {selectedInstitution ?
                     <span className="ms-2 text-dark alert-dismissible fade show"> {selectedInstitution.name} </span>
                     :
-                    ""
+                    <span>&nbsp;&nbsp;<Spinner animation="border" variant="primary" /></span>
                 }
 
                 <Dropdown.Menu>
