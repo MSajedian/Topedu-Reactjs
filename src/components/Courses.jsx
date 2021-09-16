@@ -10,9 +10,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 let urlCourses = "http://localhost:3001/courses";
-const finalSpaceCharacters = [{ id: 'gary', name: 'Gary Goodspeed', thumb: '/images/gary.png' }, { id: 'cato', name: 'Little Cato', thumb: '/images/cato.png' }, { id: 'kvn', name: 'KVN', thumb: '/images/kvn.png' }, { id: 'mooncake', name: 'Mooncake', thumb: '/images/mooncake.png' }, { id: 'quinn', name: 'Quinn Ergon', thumb: '/images/quinn.png' }]
 function Courses() {
-
+    const [course, setCourse] = useStateWithLabel({}, "course");
     let { courseId } = useParams();
 
     function useStateWithLabel(initialValue, name) {
@@ -59,7 +58,6 @@ function Courses() {
     }, [])
 
 
-    const [course, setCourse] = useStateWithLabel({}, "course");
 
     function handleOnDragEnd(result, flowIndex) {
         if (!result.destination) return;

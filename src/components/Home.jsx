@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useDebugValue } from "react";
 import { Container } from 'react-bootstrap';
 import { Button, Tabs, Tab } from 'react-bootstrap';
-import { Row, Col, Card, Placeholder } from 'react-bootstrap';
+import { Row, Col, Card, Placeholder, Modal, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux'
 import { withRouter } from "react-router";
 import HomeNavbar from './HomeNavbar'
@@ -42,22 +42,23 @@ function Home(props) {
     };
 
     const getCoursesDetails = () => {
-        try {
-            fetch(urlInstitutions + "/" + institutions[0]._id, {
-                credentials: 'include',
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                // body: JSON.stringify({ "institutionsId": institutions[0]._id }) // body data type must match "Content-Type" header
-            })
-                .then(res => res.json())
-                .then(
-                    (results2) => {
-                        console.log('results2 of getCoursesDetails:', results2)
-                        setCourses(results2.courses)
-                    }
-                )
-        } catch (error) {
-            console.log('error:', error)
+        if (institutions[0]) {
+            try {
+                fetch(urlInstitutions + "/" + institutions[0]._id, {
+                    credentials: 'include',
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    // body: JSON.stringify({ "institutionsId": institutions[0]._id }) // body data type must match "Content-Type" header
+                })
+                    .then(res => res.json())
+                    .then(
+                        (results) => {
+                            setCourses(results.courses)
+                        }
+                    )
+            } catch (error) {
+                console.log('error:', error)
+            }
         }
     };
 
@@ -85,6 +86,19 @@ function Home(props) {
         </strong>)
     };
 
+
+    const [showCreateCourseModal, setShowCreateCourseModal] = useState(false);
+    const [newCourseName, setNewCourseName] = useState('');
+    const handleCloseCreateCourseModal = () => setShowCreateCourseModal(false);
+    const handleShowCreateCourseModal = () => setShowCreateCourseModal(true);
+
+    const handleSubmitCreateCourse = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        console.log('newCourseName:', newCourseName)
+        handleCloseCreateCourseModal()
+    };
+
     return (
         <>
             <HomeNavbar institutions={institutions} />
@@ -92,8 +106,21 @@ function Home(props) {
                 <Container>
                     <div className="d-flex">
                         <div className="me-auto p-2 h1">Hello {userName}, good to see you again! 👋</div>
-                        <div className="p-2 h1"><Button>+&nbsp;Create&nbsp;Course</Button></div>
+                        <div className="p-2 h1"><Button variant="primary" onClick={handleShowCreateCourseModal}>+&nbsp;Create&nbsp;Course</Button></div>
                     </div>
+
+                    <Modal centered show={showCreateCourseModal} onHide={handleCloseCreateCourseModal}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Create a new course</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form onSubmit={handleSubmitCreateCourse}>
+                                <Form.Label>New Course Name:</Form.Label>
+                                <Form.Control type="text" required onChange={(e) => (setNewCourseName(e.target.value))} />
+                                <Button type="submit" className="mt-2">Create</Button>
+                            </Form>
+                        </Modal.Body>
+                    </Modal>
 
                     <div className="d-flex">
                         <span className="ms-auto pt-1 px-1">&#128269;</span>
@@ -113,8 +140,8 @@ function Home(props) {
                     <Tabs defaultActiveKey="MyCourses" id="courses-tabs" className="mb-1">
                         <Tab eventKey="MyCourses" title={MyCoursesTabTitle()}>
                             <Row xs={1} md={2} className="mt-1 g-4" id="link-1">
-                                {courses.length > 0 ? courses.map(course => (
-                                    <Col>
+                                {courses.length > 0 ? courses.map((course, index) => (
+                                    <Col key={`course${index}`}>
                                         <Card onClick={() => (props.history.push(`/courses/${course._id}`))} className="btn">
                                             <Card.Img variant="top" src={course.cover ? course.cover : "https://picsum.photos/640/360"} />
                                             <Card.Body>
@@ -169,7 +196,7 @@ function Home(props) {
                             </Row>
                         </Tab>
                         <Tab eventKey="codePlayground" title={codePlaygroundTabTitle()}>
-                            <Row xs={1} md={2} className="mt-1 g-4" id="link-1" >
+                            <Row xs={1} md={2} className="mt-1 g-4" id="link-2" >
                                 <Col>
                                     <Card onClick={() => (props.history.push(`/code-playground`))} className="btn">
                                         <Card.Img variant="top" src={window.location.origin + '/code-playground.jpg'} />
