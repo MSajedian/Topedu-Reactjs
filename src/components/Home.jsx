@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useDebugValue } from "react";
 import { Container } from 'react-bootstrap';
 import { Button, Tabs, Tab } from 'react-bootstrap';
-import { Row, Col, Card, Placeholder, Modal, Form } from 'react-bootstrap';
+import { Row, Col, Card, Placeholder, Modal, Form, DropdownButton, Dropdown } from 'react-bootstrap';
 import { useSelector } from 'react-redux'
 import { withRouter } from "react-router";
 import HomeNavbar from './HomeNavbar'
 
 let urlUsers = "http://localhost:3001/users/me";
 let urlInstitutions = "http://localhost:3001/institutions";
-// let urlCourses = "http://localhost:3001/courses";
+let urlCourses = "http://localhost:3001/courses";
 
 function Home(props) {
     const [query, setQuery] = useStateWithLabel("", "query");
@@ -62,16 +62,6 @@ function Home(props) {
         }
     };
 
-    useEffect(() => {
-        getInstitutionsDetails()
-        // eslint-disable-next-line
-    }, [])
-
-    useEffect(() => {
-        getCoursesDetails()
-        // eslint-disable-next-line
-    }, [institutions])
-
     const MyCoursesTabTitle = () => {
         return (<strong>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="blue"><path className="fill" d="M10,9 L14,9 C14.5522847,9 15,9.44771525 15,10 L15,14 C15,14.5522847 14.5522847,15 14,15 L10,15 C9.44771525,15 9,14.5522847 9,14 L9,10 C9,9.44771525 9.44771525,9 10,9 Z M10,10 L10,14 L14,14 L14,10 L10,10 Z M2,9 L6,9 C6.55228475,9 7,9.44771525 7,10 L7,14 C7,14.5522847 6.55228475,15 6,15 L2,15 C1.44771525,15 1,14.5522847 1,14 L1,10 C1,9.44771525 1.44771525,9 2,9 Z M2,10 L2,14 L6,14 L6,10 L2,10 Z M10,1 L14,1 C14.5522847,1 15,1.44771525 15,2 L15,6 C15,6.55228475 14.5522847,7 14,7 L10,7 C9.44771525,7 9,6.55228475 9,6 L9,2 C9,1.44771525 9.44771525,1 10,1 Z M10,2 L10,6 L14,6 L14,2 L10,2 Z M2,1 L6,1 C6.55228475,1 7,1.44771525 7,2 L7,6 C7,6.55228475 6.55228475,7 6,7 L2,7 C1.44771525,7 1,6.55228475 1,6 L1,2 C1,1.44771525 1.44771525,1 2,1 Z M2,2 L2,6 L6,6 L6,2 L2,2 Z"></path></svg>
@@ -86,18 +76,69 @@ function Home(props) {
         </strong>)
     };
 
-
     const [showCreateCourseModal, setShowCreateCourseModal] = useState(false);
     const [newCourseName, setNewCourseName] = useState('');
     const handleCloseCreateCourseModal = () => setShowCreateCourseModal(false);
     const handleShowCreateCourseModal = () => setShowCreateCourseModal(true);
 
+    const postNewCourse = () => {
+        if (institutions[0]) {
+            try {
+                fetch(urlCourses + "/" + institutions[0]._id, {
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ "title": newCourseName }) // body data type must match "Content-Type" header
+                })
+            } catch (error) {
+                console.log('error:', error)
+            }
+        }
+    };
+
+    const deleteCourse = (courseId) => {
+        if (institutions[0]) {
+            try {
+                fetch(urlCourses + "/" + courseId, {
+                    credentials: 'include',
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                })
+            } catch (error) {
+                console.log('error:', error)
+            }
+        }
+    };
+
     const handleSubmitCreateCourse = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        console.log('newCourseName:', newCourseName)
+        postNewCourse()
         handleCloseCreateCourseModal()
     };
+
+    // const threeDotsDropdownToggle = React.forwardRef(({ children, onClick }, ref) => (
+    //     <button
+    //         ref={ref}
+    //         onClick={(e) => {
+    //             e.preventDefault();
+    //             onClick(e);
+    //         }}
+    //     >
+    //         {children}
+    //         ⋮
+    //     </button>
+    // ));
+
+    useEffect(() => {
+        getInstitutionsDetails()
+        // eslint-disable-next-line
+    }, [handleSubmitCreateCourse, deleteCourse])
+
+    useEffect(() => {
+        getCoursesDetails()
+        // eslint-disable-next-line
+    }, [institutions])
 
     return (
         <>
@@ -142,11 +183,14 @@ function Home(props) {
                             <Row xs={1} md={2} className="mt-1 g-4" id="link-1">
                                 {courses.length > 0 ? courses.map((course, index) => (
                                     <Col key={`course${index}`}>
-                                        <Card onClick={() => (props.history.push(`/courses/${course._id}`))} className="btn">
-                                            <Card.Img variant="top" src={course.cover ? course.cover : "https://picsum.photos/640/360"} />
+                                        <Card className="position-relative">
+                                            <Card.Img variant="top" src={course.cover ? course.cover : "https://picsum.photos/640/360"} onClick={() => (props.history.push(`/courses/${course._id}`))} />
                                             <Card.Body>
                                                 <Card.Title>{course.title}</Card.Title>
                                             </Card.Body>
+                                            <DropdownButton id={`dropdown-item-button${index}`} title={`⋮`} className="position-absolute bottom-0 end-0" >
+                                                <Dropdown.Item as="button" onClick={() => (deleteCourse(course._id))}>Delete</Dropdown.Item>
+                                            </DropdownButton>
                                         </Card>
                                     </Col>
                                 )) :
