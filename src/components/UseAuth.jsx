@@ -4,7 +4,7 @@ import { Route, Redirect } from "react-router-dom";
 import { setUsernameAction, setUserSurnameAction } from '../actions';
 import { useSelector, useDispatch } from 'react-redux'
 
-const baseUrl = process.env.REACT_APP_FE_URL || "http://localhost:3001"
+const BEURL = process.env.REACT_APP_FE_URL || "http://localhost:3001"
 
 const authContext = createContext();
 
@@ -27,7 +27,7 @@ function useProvideAuth() {
 
     const signin = (email, password, cb) => {
         try {
-            fetch(baseUrl + "/users/login", {
+            fetch(BEURL + "/users/login", {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json', 'Accepts': 'application/json' },
