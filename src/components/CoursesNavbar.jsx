@@ -7,9 +7,9 @@ import { Dropdown } from 'react-bootstrap';
 // import { Container, Row, Col } from 'react-bootstrap';
 import { Link, useHistory } from "react-router-dom";
 
-import OffCanvasCodePlayground from './OffCanvasCodePlayground';
+import OffCanvasCodePlayground from './Courses/OffCanvasCodePlayground';
 import { useSelector } from 'react-redux'
-import { useAuth } from '../../App'
+import useAuth from './UseAuth'
 
 function CoursesNavbar(props) {
     let auth = useAuth();

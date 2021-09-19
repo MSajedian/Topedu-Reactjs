@@ -3,7 +3,7 @@ import { Tab, Row, Col, Accordion, Nav, Card, Placeholder, Spinner } from 'react
 // import { FcAbout } from 'react-icons/fc';
 // import { Row, Col } from 'react-bootstrap';
 // import { Card } from 'react-bootstrap';
-import CoursesNavbar from './Courses/CoursesNavbar';
+import CoursesNavbar from './CoursesNavbar';
 import { useParams } from "react-router-dom";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';

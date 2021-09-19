@@ -90,6 +90,11 @@ function Home(props) {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ "title": newCourseName }) // body data type must match "Content-Type" header
                 })
+                    .then(response => {
+                        if (response.ok) {
+                            getCoursesDetails()
+                        }
+                    })
             } catch (error) {
                 console.log('error:', error)
             }
@@ -104,6 +109,11 @@ function Home(props) {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                 })
+                    .then(response => {
+                        if (response.ok) {
+                            getCoursesDetails()
+                        }
+                    })
             } catch (error) {
                 console.log('error:', error)
             }
@@ -133,7 +143,8 @@ function Home(props) {
     useEffect(() => {
         getInstitutionsDetails()
         // eslint-disable-next-line
-    }, [handleSubmitCreateCourse, deleteCourse])
+    }, [])
+    // }, [handleSubmitCreateCourse, deleteCourse])
 
     useEffect(() => {
         getCoursesDetails()

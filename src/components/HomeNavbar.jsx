@@ -6,7 +6,7 @@ import { Navbar, Spinner, Button } from 'react-bootstrap';
 import { Dropdown } from 'react-bootstrap';
 import { Link, useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux'
-import { useAuth } from '../App'
+import useAuth from './UseAuth'
 
 // ***************************************************
 // The forwardRef is important!!
