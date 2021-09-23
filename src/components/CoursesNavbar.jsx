@@ -9,7 +9,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import OffCanvasCodePlayground from './Courses/OffCanvasCodePlayground';
 import { useSelector } from 'react-redux'
-import useAuth from './UseAuth'
+import useAuth from './auth/UseAuth'
 
 function CoursesNavbar(props) {
     let auth = useAuth();

@@ -13,7 +13,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => {
   let { path } = useRouteMatch();
   return (
     <Container
-      fluid
+      
       className={classNames("content", { "is-open": sidebarIsOpen })}
     >
       {/* <Topbar toggleSidebar={toggleSidebar} /> */}

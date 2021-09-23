@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useDebugValue } from "react";
 import { Tab, Row, Col, Accordion, Nav, Card, Placeholder, Spinner } from 'react-bootstrap';
-// import { FcAbout } from 'react-icons/fc';
-// import { Row, Col } from 'react-bootstrap';
-// import { Card } from 'react-bootstrap';
 import CoursesNavbar from './CoursesNavbar';
 import { useParams } from "react-router-dom";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { getNewAccessToken } from './auth/UseAuth';
 
 let urlCourses = "http://localhost:3001/courses";
+
 function Courses() {
     const [course, setCourse] = useStateWithLabel({}, "course");
     let { courseId } = useParams();
@@ -20,6 +19,8 @@ function Courses() {
         return [value, setValue];
     }
 
+
+
     const getCourse = () => {
         try {
             fetch(urlCourses + "/" + courseId, {
@@ -27,10 +28,10 @@ function Courses() {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             })
-                .then(res => res.json())
+                .then(res => { if (res.status === 401) { getNewAccessToken(); getCourse() } return res.json() })
                 .then(
                     (result) => {
-                        console.log('result of getCourse:', result)
+                        console.log('result:', result)
                         setCourse(result)
                     }
                 )
@@ -56,8 +57,6 @@ function Courses() {
         getCourse()
         // eslint-disable-next-line
     }, [])
-
-
 
     function handleOnDragEnd(result, flowIndex) {
         if (!result.destination) return;
@@ -167,19 +166,6 @@ function Courses() {
                                 :
                                 <Placeholder animation="glow"> <Placeholder xs={10} /> </Placeholder>
                             }
-                            {/* {course.flowsAndActivities ? { course.flowsAndActivities.map((flow) => (<></>)) } : <Placeholder animation="glow"> <Placeholder xs={10} /> </Placeholder> } */}
-                            {/* <Tab.Pane eventKey="first">
-                                <Container className="mt-5">content of Tab1</Container>
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="second">
-                                <Container className="mt-5">content of Tab2</Container>
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="third">
-                                <Container className="mt-5">content of Tab3</Container>
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="fourth">
-                                <Container className="mt-5">content of Tab4</Container>
-                            </Tab.Pane> */}
                         </Tab.Content>
 
 

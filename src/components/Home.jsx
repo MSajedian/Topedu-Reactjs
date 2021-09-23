@@ -5,6 +5,7 @@ import { Row, Col, Card, Placeholder, Modal, Form, DropdownButton, Dropdown } fr
 import { useSelector } from 'react-redux'
 import { withRouter } from "react-router";
 import HomeNavbar from './HomeNavbar'
+import { getNewAccessToken } from './auth/UseAuth';
 
 let urlUsers = "http://localhost:3001/users/me";
 let urlInstitutions = "http://localhost:3001/institutions";
@@ -50,7 +51,7 @@ function Home(props) {
                     headers: { 'Content-Type': 'application/json' },
                     // body: JSON.stringify({ "institutionsId": institutions[0]._id }) // body data type must match "Content-Type" header
                 })
-                    .then(res => res.json())
+                    .then(res => { if (res.status === 401) { getNewAccessToken(); getCoursesDetails() } return res.json() })
                     .then(
                         (results) => {
                             setCourses(results.courses)
@@ -88,7 +89,7 @@ function Home(props) {
                     credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ "title": newCourseName }) // body data type must match "Content-Type" header
+                    body: JSON.stringify({ "title": newCourseName, "cover": `https://eu.ui-avatars.com/api/?size=150&name=${newCourseName}` }) // body data type must match "Content-Type" header
                 })
                     .then(response => {
                         if (response.ok) {
@@ -194,10 +195,10 @@ function Home(props) {
                             <Row xs={1} md={2} className="mt-1 g-4" id="link-1">
                                 {courses.length > 0 ? courses.map((course, index) => (
                                     <Col key={`course${index}`}>
-                                        <Card className="position-relative">
-                                            <Card.Img variant="top" src={course.cover ? course.cover : "https://picsum.photos/640/360"} onClick={() => (props.history.push(`/courses/${course._id}`))} />
-                                            <Card.Body>
-                                                <Card.Title>{course.title}</Card.Title>
+                                        <Card className="position-relative border border-secondary" onClick={() => (props.history.push(`/courses/${course._id}`))}>
+                                            <Card.Img style={{height: '50vh'}} variant="top" src={course.cover ? course.cover : "https://picsum.photos/640/360"}  />
+                                            <Card.Body className="border border-primary border-end-0 border-bottom-0 border-start-0">
+                                                <Card.Title >{course.title}</Card.Title>
                                             </Card.Body>
                                             <DropdownButton id={`dropdown-item-button${index}`} title={`⋮`} className="position-absolute bottom-0 end-0" >
                                                 <Dropdown.Item as="button" onClick={() => (deleteCourse(course._id))}>Delete</Dropdown.Item>

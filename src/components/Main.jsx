@@ -26,7 +26,7 @@ class Main extends Component {
                         </div>
                         <Col className="mt-4">
                             <Link to="/signup" className="rounded" style={{ backgroundColor: "rgb(0,22,50)", color: "rgb(255,255,255)", padding: "1.7vw 3vw 2vw 3vw", textDecoration: "none", fontSize: "1.4rem", fontWeight: "bold" }}>Sign up for free &nbsp;
-                                <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 16l4-4-4-4M8 12h8" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#fff"></path><path d="M12 16l4-4-4-4M8 12h8" stroke="#fff" ></path></svg>
                             </Link>
                         </Col>
                     </Row>
@@ -94,22 +94,22 @@ class Main extends Component {
                                 <h5>Features</h5>
                                 <ul className="list-unstyled text-small">
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/" >Cool stuff</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/" >Cool stuff</Link>
                                     </li>
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/" >Random feature</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/" >Random feature</Link>
                                     </li>
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/" >Team feature</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/" >Team feature</Link>
                                     </li>
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/" >Stuff for developers</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/" >Stuff for developers</Link>
                                     </li>
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/" >Another one</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/" >Another one</Link>
                                     </li>
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/" >Last time</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/" >Last time</Link>
                                     </li>
                                 </ul>
                             </Col>
@@ -117,16 +117,16 @@ class Main extends Component {
                                 <h5>Resources</h5>
                                 <ul className="list-unstyled text-small">
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/" >Resource</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/" >Resource</Link>
                                     </li>
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/" >Resource name</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/" >Resource name</Link>
                                     </li>
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/" >Another resource</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/" >Another resource</Link>
                                     </li>
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/" >Final resource</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/" >Final resource</Link>
                                     </li>
                                 </ul>
                             </Col>
@@ -134,16 +134,16 @@ class Main extends Component {
                                 <h5>About</h5>
                                 <ul className="list-unstyled text-small">
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/">Team</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/">Team</Link>
                                     </li>
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/" >Locations</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/" >Locations</Link>
                                     </li>
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/" >Privacy</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/" >Privacy</Link>
                                     </li>
                                     <li className="mb-1">
-                                        <Link className="link-secondary text-decoration-none" href="/">Terms</Link>
+                                        <Link className="link-secondary text-decoration-none" to="/">Terms</Link>
                                     </li>
                                 </ul>
                             </Col>

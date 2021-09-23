@@ -2,10 +2,10 @@
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import institutionsReducer from '../reducers/institution'
-// import bookReducer from '../reducers/book'
 import userReducer from '../reducers/user'
-
 import thunk from 'redux-thunk'
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import { persistStore, persistReducer } from 'redux-persist'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -16,23 +16,22 @@ export const initialState = {
   },
   institutions: {
     institutionNames: [],
-  },
-  // books: {
-  //   stock: [],
-  //   error: false,
-  //   loading: false,
-  // },
+  }
 }
 
 const bigReducer = combineReducers({
   user: userReducer,
   institutions: institutionsReducer,
-  // books: bookReducer,
 })
 
-// splitting up the reducers will make them independent and not-aware any more of the big picture
-// the state argument every reducer is now receiving is just their slice of the cake
+const persistConfig = {
+  key: 'root',
+  storage,
+}
 
-const configureStore = () => createStore(bigReducer, initialState, composeEnhancers(applyMiddleware(thunk)))
+const persistedReducer = persistReducer(persistConfig, bigReducer)
+export const store = createStore(persistedReducer, initialState, composeEnhancers(applyMiddleware(thunk)))
+export const persistor = persistStore(store)
 
-export default configureStore
+// const configureStore = () => createStore(bigReducer, initialState, composeEnhancers(applyMiddleware(thunk)))
+// export default configureStore

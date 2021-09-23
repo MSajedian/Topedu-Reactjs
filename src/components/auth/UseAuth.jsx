@@ -1,7 +1,7 @@
 import React, { useContext, createContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 
-import { setUsernameAction, setUserSurnameAction } from '../actions';
+import { setUsernameAction, setUserSurnameAction } from '../../actions';
 import { useSelector, useDispatch } from 'react-redux'
 
 const BEURL = process.env.REACT_APP_FE_URL || "http://localhost:3001"
@@ -81,4 +81,17 @@ export function PrivateRoute({ children, ...rest }) {
             }
         />
     );
+}
+
+export const getNewAccessToken = () => {
+    try {
+        fetch(BEURL + "/users/refreshToken", {
+            credentials: 'include',
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then(res => res.json())
+    } catch (error) {
+        console.log('error:', error)
+    }
 }
