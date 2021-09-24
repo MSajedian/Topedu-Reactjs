@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useDebugValue } from "react";
-import { Tab, Row, Col, Accordion, Nav, Card, Placeholder, Spinner } from 'react-bootstrap';
+import { Tab, Row, Col, Accordion, Nav, Card, Placeholder, Spinner, Form } from 'react-bootstrap';
 import CoursesNavbar from './CoursesNavbar';
 import { useParams } from "react-router-dom";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { getNewAccessToken } from './auth/UseAuth';
 
@@ -11,6 +12,7 @@ let urlCourses = "http://localhost:3001/courses";
 
 function Courses() {
     const [course, setCourse] = useStateWithLabel({}, "course");
+    const [editableCourseTitle, setEditableCourseTitle] = useStateWithLabel("", "editableCourseTitle");
     let { courseId } = useParams();
 
     function useStateWithLabel(initialValue, name) {
@@ -18,8 +20,6 @@ function Courses() {
         useDebugValue(`${name}: ${value}`);
         return [value, setValue];
     }
-
-
 
     const getCourse = () => {
         try {
@@ -31,8 +31,8 @@ function Courses() {
                 .then(res => { if (res.status === 401) { getNewAccessToken(); getCourse() } return res.json() })
                 .then(
                     (result) => {
-                        console.log('result:', result)
                         setCourse(result)
+                        setEditableCourseTitle(result.title)
                     }
                 )
         } catch (error) {
@@ -68,6 +68,13 @@ function Courses() {
         updateCourse()
     }
 
+    // function changeCourseTitle(e) {
+    //     setEditableCourseTitle(e.target.value)
+    //     course.title = e.target.value
+    //     setCourse(course)
+    //     updateCourse()
+    // }
+
     return (
         <>
             <CoursesNavbar CourseTitle={course.title ? course.title : <span>&nbsp;&nbsp;<Spinner animation="border" variant="primary" /></span>} />
@@ -76,8 +83,15 @@ function Courses() {
                     <Col sm={3}>
                         <Card>
                             <Card.Img variant="top" src={course.cover ? course.cover : "https://picsum.photos/640/360"} />
+                            <Card.Title >
+                                <Form.Control className="text-center" plaintext value={editableCourseTitle} onChange={(e) => {
+                                    setEditableCourseTitle(e.target.value)
+                                    course.title = e.target.value
+                                    setCourse(course)
+                                    updateCourse()
+                                }} />
+                            </Card.Title>
                         </Card>
-
                         {course.flowsAndActivities ?
                             <Accordion>
                                 {course.flowsAndActivities.map((flow, flowIndex) => (
@@ -131,7 +145,6 @@ function Courses() {
                                 </Accordion.Item>
                             </Accordion>
                         }
-
                     </Col>
                     <Col sm={9}>
                         <Tab.Content>
@@ -139,7 +152,7 @@ function Courses() {
                                 flow.activities.map((activity) => (
                                     <Tab.Pane eventKey={activity._id} className="mt-2">
                                         <CKEditor
-                                            editor={ClassicEditor}
+                                            editor={InlineEditor}
                                             data={activity.activityContent}
                                             onReady={editor => {
                                                 // You can store the "editor" and use when it is needed.

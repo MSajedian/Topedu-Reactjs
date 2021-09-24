@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useDebugValue } from "react";
-import { Container } from 'react-bootstrap';
-import { Button, Tabs, Tab } from 'react-bootstrap';
-import { Row, Col, Card, Placeholder, Modal, Form, DropdownButton, Dropdown } from 'react-bootstrap';
-import { useSelector } from 'react-redux'
+import React, { useDebugValue, useEffect, useState } from "react";
+import { Button, Card, Col, Container, Dropdown, DropdownButton, Form, Modal, Placeholder, Row, Tab, Tabs } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { withRouter } from "react-router";
-import HomeNavbar from './HomeNavbar'
 import { getNewAccessToken } from './auth/UseAuth';
+import HomeNavbar from './HomeNavbar';
 
 let urlUsers = "http://localhost:3001/users/me";
 let urlInstitutions = "http://localhost:3001/institutions";
@@ -89,13 +87,9 @@ function Home(props) {
                     credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ "title": newCourseName, "cover": `https://eu.ui-avatars.com/api/?size=150&name=${newCourseName}` }) // body data type must match "Content-Type" header
+                    body: JSON.stringify({ "title": newCourseName, "cover": `https://fakeimg.pl/350x200/333/eae0d0?text=${newCourseName}` }) // body data type must match "Content-Type" header
                 })
-                    .then(response => {
-                        if (response.ok) {
-                            getCoursesDetails()
-                        }
-                    })
+                    .then(response => { if (response.ok) { getCoursesDetails() } })
             } catch (error) {
                 console.log('error:', error)
             }
@@ -195,8 +189,8 @@ function Home(props) {
                             <Row xs={1} md={2} className="mt-1 g-4" id="link-1">
                                 {courses.length > 0 ? courses.map((course, index) => (
                                     <Col key={`course${index}`}>
-                                        <Card className="position-relative border border-secondary" onClick={() => (props.history.push(`/courses/${course._id}`))}>
-                                            <Card.Img style={{height: '50vh'}} variant="top" src={course.cover ? course.cover : "https://picsum.photos/640/360"}  />
+                                        <Card className="position-relative border border-secondary" >
+                                            <Card.Img style={{ height: '40vh' }} variant="top" src={course.cover ? course.cover : "https://picsum.photos/640/360"} onClick={() => (props.history.push(`/courses/${course._id}`))} />
                                             <Card.Body className="border border-primary border-end-0 border-bottom-0 border-start-0">
                                                 <Card.Title >{course.title}</Card.Title>
                                             </Card.Body>
@@ -249,6 +243,7 @@ function Home(props) {
                                         </Col>
                                     </>
                                 }
+                                {/* <strong className='text-center'>You don't have any courses yet</strong> */}
                             </Row>
                         </Tab>
                         <Tab eventKey="codePlayground" title={codePlaygroundTabTitle()}>

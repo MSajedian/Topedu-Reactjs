@@ -7,7 +7,7 @@ import LogIn from './components/LogIn'
 import Signup from './components/Signup'
 import Home from './components/Home'
 import Courses from './components/Courses'
-import CodePlayground from './components/Courses/CodePlayground'
+import CodePlayground from './components/courses/CodePlayground'
 import Dashboard from './components/Dashboard'
 
 export default function App() {
