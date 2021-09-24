@@ -3,8 +3,8 @@ import { Tab, Row, Col, Accordion, Nav, Card, Placeholder, Spinner, Form } from 
 import CoursesNavbar from './CoursesNavbar';
 import { useParams } from "react-router-dom";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import InlineEditor from '@ckeditor/ckeditor5-build-inline';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { getNewAccessToken } from './auth/UseAuth';
 
@@ -68,13 +68,6 @@ function Courses() {
         updateCourse()
     }
 
-    // function changeCourseTitle(e) {
-    //     setEditableCourseTitle(e.target.value)
-    //     course.title = e.target.value
-    //     setCourse(course)
-    //     updateCourse()
-    // }
-
     return (
         <>
             <CoursesNavbar CourseTitle={course.title ? course.title : <span>&nbsp;&nbsp;<Spinner animation="border" variant="primary" /></span>} />
@@ -86,6 +79,9 @@ function Courses() {
                             <Card.Title >
                                 <Form.Control className="text-center" plaintext value={editableCourseTitle} onChange={(e) => {
                                     setEditableCourseTitle(e.target.value)
+                                    if (course.cover === `https://fakeimg.pl/350x200/333/eae0d0?text=${course.title}`) {
+                                        course.cover = `https://fakeimg.pl/350x200/333/eae0d0?text=${e.target.value}`
+                                    }
                                     course.title = e.target.value
                                     setCourse(course)
                                     updateCourse()
@@ -95,20 +91,29 @@ function Courses() {
                         {course.flowsAndActivities ?
                             <Accordion>
                                 {course.flowsAndActivities.map((flow, flowIndex) => (
-                                    <Accordion.Item eventKey={flow._id}>
-                                        <Accordion.Header>{flow.name}</Accordion.Header>
+                                    <Accordion.Item eventKey={flow._id} key={flow._id}>
+                                        <Accordion.Header>
+                                            <Form.Control className="text-center" plaintext defaultValue={flow.name} onChange={(e) => {
+                                                flow.name = e.target.value
+                                                updateCourse(course)
+                                            }} />
+                                        </Accordion.Header>
                                         <Accordion.Body>
                                             <DragDropContext onDragEnd={(result) => (handleOnDragEnd(result, flowIndex))}>
                                                 <Droppable droppableId="activities">
                                                     {(provided) => (
                                                         <Nav variant="pills" className="flex-column" {...provided.droppableProps} ref={provided.innerRef}>
-
                                                             {flow.activities.map((activity, index) => {
                                                                 return (
                                                                     <Draggable key={activity._id} draggableId={activity._id} index={index}>
                                                                         {(provided) => (
                                                                             <Nav.Item ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                                                <Nav.Link eventKey={activity._id}>{activity.name}</Nav.Link>
+                                                                                <Nav.Link eventKey={activity._id}>
+                                                                                    <Form.Control plaintext defaultValue={activity.name} onChange={(e) => {
+                                                                                        activity.name = e.target.value
+                                                                                        updateCourse(course)
+                                                                                    }} />
+                                                                                </Nav.Link>
                                                                             </Nav.Item>
                                                                         )}
                                                                     </Draggable>
@@ -150,13 +155,13 @@ function Courses() {
                         <Tab.Content>
                             {course.flowsAndActivities ? course.flowsAndActivities.map((flow) => (
                                 flow.activities.map((activity) => (
-                                    <Tab.Pane eventKey={activity._id} className="mt-2">
+                                    <Tab.Pane eventKey={activity._id} key={activity._id} className="mt-2">
                                         <CKEditor
-                                            editor={InlineEditor}
+                                            editor={ClassicEditor}
                                             data={activity.activityContent}
                                             onReady={editor => {
                                                 // You can store the "editor" and use when it is needed.
-                                                console.log('Editor is ready to use!', editor);
+                                                // console.log('Editor is ready to use!', editor);
                                             }}
                                             onChange={(event, editor) => {
                                                 const data = editor.getData();

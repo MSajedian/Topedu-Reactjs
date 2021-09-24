@@ -76,9 +76,16 @@ function Home(props) {
     };
 
     const [showCreateCourseModal, setShowCreateCourseModal] = useState(false);
-    const [newCourseName, setNewCourseName] = useState('');
+    const [newCourseTitle, setNewCourseTitle] = useState('');
     const handleCloseCreateCourseModal = () => setShowCreateCourseModal(false);
     const handleShowCreateCourseModal = () => setShowCreateCourseModal(true);
+
+    const handleSubmitCreateCourse = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        postNewCourse()
+        handleCloseCreateCourseModal()
+    };
 
     const postNewCourse = () => {
         if (institutions[0]) {
@@ -87,7 +94,7 @@ function Home(props) {
                     credentials: 'include',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ "title": newCourseName, "cover": `https://fakeimg.pl/350x200/333/eae0d0?text=${newCourseName}` }) // body data type must match "Content-Type" header
+                    body: JSON.stringify({ "title": newCourseTitle, "cover": `https://fakeimg.pl/350x200/333/eae0d0?text=${newCourseTitle}` }) // body data type must match "Content-Type" header
                 })
                     .then(response => { if (response.ok) { getCoursesDetails() } })
             } catch (error) {
@@ -115,12 +122,7 @@ function Home(props) {
         }
     };
 
-    const handleSubmitCreateCourse = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        postNewCourse()
-        handleCloseCreateCourseModal()
-    };
+
 
     // const threeDotsDropdownToggle = React.forwardRef(({ children, onClick }, ref) => (
     //     <button
@@ -146,6 +148,19 @@ function Home(props) {
         // eslint-disable-next-line
     }, [institutions])
 
+    const updateCourse = (course) => {
+        try {
+            fetch(urlCourses + "/" + course._id, {
+                credentials: 'include',
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(course) // body data type must match "Content-Type" header
+            })
+        } catch (error) {
+            console.log('error:', error)
+        }
+    };
+
     return (
         <>
             <HomeNavbar institutions={institutions} />
@@ -163,7 +178,7 @@ function Home(props) {
                         <Modal.Body>
                             <Form onSubmit={handleSubmitCreateCourse}>
                                 <Form.Label>New Course Name:</Form.Label>
-                                <Form.Control type="text" required onChange={(e) => (setNewCourseName(e.target.value))} />
+                                <Form.Control type="text" required onChange={(e) => (setNewCourseTitle(e.target.value))} />
                                 <Button type="submit" className="mt-2">Create</Button>
                             </Form>
                         </Modal.Body>
@@ -190,9 +205,17 @@ function Home(props) {
                                 {courses.length > 0 ? courses.map((course, index) => (
                                     <Col key={`course${index}`}>
                                         <Card className="position-relative border border-secondary" >
-                                            <Card.Img style={{ height: '40vh' }} variant="top" src={course.cover ? course.cover : "https://picsum.photos/640/360"} onClick={() => (props.history.push(`/courses/${course._id}`))} />
+                                            <Card.Img style={{ height: '40vh' }} variant="top" src={course.cover} onClick={() => (props.history.push(`/courses/${course._id}`))} />
                                             <Card.Body className="border border-primary border-end-0 border-bottom-0 border-start-0">
-                                                <Card.Title >{course.title}</Card.Title>
+                                                <Card.Title>
+                                                    <Form.Control className="text-center" plaintext defaultValue={course.title} onChange={(e) => {
+                                                        if (course.cover === `https://fakeimg.pl/350x200/333/eae0d0?text=${course.title}`) {
+                                                            course.cover = `https://fakeimg.pl/350x200/333/eae0d0?text=${e.target.value}`
+                                                        }
+                                                        course.title = e.target.value
+                                                        updateCourse(course)
+                                                    }} />
+                                                </Card.Title>
                                             </Card.Body>
                                             <DropdownButton id={`dropdown-item-button${index}`} title={`⋮`} className="position-absolute bottom-0 end-0" >
                                                 <Dropdown.Item as="button" onClick={() => (deleteCourse(course._id))}>Delete</Dropdown.Item>
