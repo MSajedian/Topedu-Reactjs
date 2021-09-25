@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { Container } from 'react-bootstrap';
-import { Row, Col, CardGroup, Card } from 'react-bootstrap';
+import { Row, Col, CardGroup, Card, Carousel } from 'react-bootstrap';
 // import { FcReadingEbook } from 'react-icons/fc';
 // import { FcAbout } from 'react-icons/fc';
 import MainNavbar from './MainNavbar'
@@ -17,6 +17,41 @@ class Main extends Component {
                 <MainNavbar />
                 {/* <Container className="my-5" style={{ backgroundColor: "white", width: "50vw", padding: "10vw", border: "2px solid #b6b6b6", borderRadius: "5px" }}> */}
                 <Container>
+                    <Carousel>
+                        <Carousel.Item interval={1000}>
+                            <img
+                                className="d-block w-100"
+                                src="https://picsum.photos/1200/600"
+                                alt="First slide"
+                            />
+                            <Carousel.Caption>
+                                <h3>First slide label</h3>
+                                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item interval={5000}>
+                            <img
+                                className="d-block w-100"
+                                src="http://unsplash.it/1200/600?gravity=center"
+                                alt="Second slide"
+                            />
+                            <Carousel.Caption>
+                                <h3>Second slide label</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://picsum.photos/1200/600"
+                                alt="Third slide"
+                            />
+                            <Carousel.Caption>
+                                <h3>Third slide label</h3>
+                                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                    </Carousel>
                     <Row className="p-4 p-md-5 mb-4 text-center">
                         <div>
                             <h1 className="display-3">COLLABORATIVE LEARNING PLATFORM</h1>
