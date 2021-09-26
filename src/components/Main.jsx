@@ -17,11 +17,11 @@ class Main extends Component {
                 <MainNavbar />
                 {/* <Container className="my-5" style={{ backgroundColor: "white", width: "50vw", padding: "10vw", border: "2px solid #b6b6b6", borderRadius: "5px" }}> */}
                 <Container>
-                    <Carousel>
+                    <Carousel fade>
                         <Carousel.Item interval={1000}>
                             <img
                                 className="d-block w-100"
-                                src="https://picsum.photos/1200/600"
+                                src="http://unsplash.it/1400/400?random&gravity=west"
                                 alt="First slide"
                             />
                             <Carousel.Caption>
@@ -32,7 +32,7 @@ class Main extends Component {
                         <Carousel.Item interval={5000}>
                             <img
                                 className="d-block w-100"
-                                src="http://unsplash.it/1200/600?gravity=center"
+                                src="http://unsplash.it/1400/400?gravity=center"
                                 alt="Second slide"
                             />
                             <Carousel.Caption>
@@ -43,7 +43,7 @@ class Main extends Component {
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="https://picsum.photos/1200/600"
+                                src="https://picsum.photos/1400/400"
                                 alt="Third slide"
                             />
                             <Carousel.Caption>
