@@ -70,6 +70,42 @@ function Courses() {
         updateCourse()
     }
 
+    function uploadAdapter(loader) {
+        return {
+            upload: () => {
+                return new Promise((resolve, reject) => {
+                    const body = new FormData();
+
+                    loader.file.then((file) => {
+                        body.append("image", file);
+                        let headers = new Headers();
+                        headers.append("Origin", "http://localhost:3000");
+                        fetch(`${urlCourses}/${courseId}/upload/image`, {
+                            credentials: 'include',
+                            method: 'POST',
+                            headers: headers,
+                            body: body
+                        })
+                            .then((res) => res.json())
+                            .then((res) => {
+                                resolve({
+                                    default: `${res.path}`
+                                });
+                            })
+                            .catch((err) => {
+                                reject(err);
+                            });
+                    });
+                });
+            }
+        };
+    }
+    function uploadPlugin(editor) {
+        editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+            return uploadAdapter(loader);
+        };
+    }
+
     return (
         <>
             <CoursesNavbar CourseTitle={course.title ? course.title : <span>&nbsp;&nbsp;<Spinner animation="border" variant="primary" /></span>} />
@@ -186,18 +222,19 @@ function Courses() {
                                     <Tab.Pane eventKey={activity._id} key={activity._id} className="mt-2">
                                         <CKEditor
                                             editor={ClassicEditor}
+                                            config={{ extraPlugins: [uploadPlugin] }}
                                             data={activity.activityContent}
                                             onReady={editor => {
                                                 // You can store the "editor" and use when it is needed.
-                                                // console.log('Editor is ready to use!', editor);
+                                                console.log('Editor is ready to use!', editor);
                                             }}
                                             onChange={(event, editor) => {
                                                 const data = editor.getData();
                                                 activity.activityContent = data
                                                 setCourse(course)
                                                 updateCourse()
-                                                // console.log("---------------------");
-                                                // console.log({ event, editor, data });
+                                                console.log("---------------------");
+                                                console.log({ event, editor, data });
                                             }}
                                         // onBlur={(event, editor) => {
                                         //     console.log('Blur.', editor);
@@ -206,6 +243,7 @@ function Courses() {
                                         //     console.log('Focus.', editor);
                                         // }}
                                         />
+
                                     </Tab.Pane>
                                 ))
                             ))
