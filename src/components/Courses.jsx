@@ -33,6 +33,7 @@ function Courses() {
                     (result) => {
                         setCourse(result)
                         setEditableCourseTitle(result.title)
+                        setChangeCourseCover(result.cover)
                     }
                 )
         } catch (error) {
@@ -50,6 +51,30 @@ function Courses() {
             })
                 .then(res => { if (res.ok) { getCourse() } })
 
+        } catch (error) {
+            console.log('error:', error)
+        }
+    };
+
+    const [changeCourseCover, setChangeCourseCover] = useState('');
+
+    const postImage = (file) => {
+        const body = new FormData();
+        body.append("image", file);
+        let headers = new Headers();
+        headers.append("Origin", "http://localhost:3000");
+
+        try {
+            fetch(`${urlCourses}/upload/image`, {
+                credentials: 'include',
+                method: 'POST',
+                headers: headers,
+                body: body
+            })
+                .then((res) => res.json())
+                .then((res) => {
+                    setChangeCourseCover(`${res.path}`)
+                })
         } catch (error) {
             console.log('error:', error)
         }
@@ -80,7 +105,7 @@ function Courses() {
                         body.append("image", file);
                         let headers = new Headers();
                         headers.append("Origin", "http://localhost:3000");
-                        fetch(`${urlCourses}/${courseId}/upload/image`, {
+                        fetch(`${urlCourses}/upload/image`, {
                             credentials: 'include',
                             method: 'POST',
                             headers: headers,
@@ -111,9 +136,10 @@ function Courses() {
     const handleCloseChangeCourseImageModal = () => setShowChangeCourseImageModal(false);
     const handleShowChangeCourseImageModal = () => setShowChangeCourseImageModal(true);
 
-    const handleSubmitChangeCourseImage = (event) => {
+    const handleChangeCourseImage = (event) => {
         event.preventDefault();
         event.stopPropagation();
+        course.cover = changeCourseCover
         updateCourse()
         handleCloseChangeCourseImageModal()
     };
@@ -129,35 +155,35 @@ function Courses() {
                             onMouseLeave={() => setIsHoveringCourseImage(false)}
                         >
                             <Card.Img variant="top" src={course.cover} className="p-1" thumbnail />
-                            {isHoveringCourseImage && (<Card.ImgOverlay>
-                                <Button
-                                    onClick={handleShowChangeCourseImageModal}
-                                    variant="secondary" style={{ borderRadius: "50px" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 20 20" width="18" height="18" fill="currentColor" focusable="false" >
-                                        <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z" ></path>
-                                    </svg>
-                                </Button>
-
-                                <Modal centered show={showChangeCourseImageModal} onHide={handleCloseChangeCourseImageModal}>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Choose a new Picture</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>
-                                        <Form onSubmit={handleSubmitChangeCourseImage}>
-                                            <Card.Img variant="top" src={course.cover} className="p-1" thumbnail />
-
-                                            <Form.Group controlId="formFile" className="mb-3">
-                                                <Form.Control type="file" />
-                                            </Form.Group>
-                                            <Button type="submit" className="mt-2">Create</Button>
-                                        </Form>
-
-                                    </Modal.Body>
-                                </Modal>
-
-
-                            </Card.ImgOverlay>
+                            {isHoveringCourseImage && (
+                                <Card.ImgOverlay>
+                                    <Button
+                                        onClick={handleShowChangeCourseImageModal}
+                                        variant="secondary" style={{ borderRadius: "50px" }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 20 20" width="18" height="18" fill="currentColor" focusable="false" >
+                                            <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z" ></path>
+                                        </svg>
+                                    </Button>
+                                </Card.ImgOverlay>
                             )}
+                            <Modal centered show={showChangeCourseImageModal} onHide={handleCloseChangeCourseImageModal}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Choose a New Picture</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <Form >
+                                        <Card.Img variant="top" src={changeCourseCover} className="p-1" thumbnail />
+                                        <Form.Group controlId="formFile" className="mb-3">
+                                            <Form.Control type="file"
+                                                onChange={e => {
+                                                    postImage(e.target.files[0])
+                                                }}
+                                            />
+                                            <Button type="submit" className="mt-2" onClick={handleChangeCourseImage}>Save</Button>
+                                        </Form.Group>
+                                    </Form>
+                                </Modal.Body>
+                            </Modal>
                             <Card.Title >
                                 <Form.Control className="text-center" plaintext value={editableCourseTitle} onChange={(e) => {
                                     setEditableCourseTitle(e.target.value)
@@ -281,7 +307,6 @@ function Courses() {
                                                 console.log({ event, editor, data });
                                             }}
                                         />
-
                                     </Tab.Pane>
                                 ))
                             ))
@@ -289,9 +314,6 @@ function Courses() {
                                 <Placeholder animation="glow"> <Placeholder xs={10} /> </Placeholder>
                             }
                         </Tab.Content>
-
-
-
                     </Col>
                 </Row>
             </Tab.Container>
