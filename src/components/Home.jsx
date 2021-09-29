@@ -75,8 +75,8 @@ function Home(props) {
         </strong>)
     };
 
-    const [showCreateCourseModal, setShowCreateCourseModal] = useState(false);
     const [newCourseTitle, setNewCourseTitle] = useState('');
+    const [showCreateCourseModal, setShowCreateCourseModal] = useState(false);
     const handleCloseCreateCourseModal = () => setShowCreateCourseModal(false);
     const handleShowCreateCourseModal = () => setShowCreateCourseModal(true);
 

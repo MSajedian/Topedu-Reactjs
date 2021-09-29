@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useDebugValue } from "react";
-import { Tab, Row, Col, Accordion, Nav, Card, Placeholder, Spinner, Form } from 'react-bootstrap';
+import { Tab, Row, Col, Accordion, Nav, Card, Placeholder, Spinner, Form, Button, Modal } from 'react-bootstrap';
 import CoursesNavbar from './CoursesNavbar';
 import { useParams } from "react-router-dom";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -106,14 +106,58 @@ function Courses() {
         };
     }
 
+    const [isHoveringCourseImage, setIsHoveringCourseImage] = useState(false);
+    const [showChangeCourseImageModal, setShowChangeCourseImageModal] = useState(false);
+    const handleCloseChangeCourseImageModal = () => setShowChangeCourseImageModal(false);
+    const handleShowChangeCourseImageModal = () => setShowChangeCourseImageModal(true);
+
+    const handleSubmitChangeCourseImage = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        updateCourse()
+        handleCloseChangeCourseImageModal()
+    };
+
     return (
         <>
             <CoursesNavbar CourseTitle={course.title ? course.title : <span>&nbsp;&nbsp;<Spinner animation="border" variant="primary" /></span>} />
             <Tab.Container id="left-tabs-example">
                 <Row>
                     <Col sm={3}>
-                        <Card>
-                            <Card.Img variant="top" src={course.cover} />
+                        <Card border="info"
+                            onMouseEnter={() => setIsHoveringCourseImage(true)}
+                            onMouseLeave={() => setIsHoveringCourseImage(false)}
+                        >
+                            <Card.Img variant="top" src={course.cover} className="p-1" thumbnail />
+                            {isHoveringCourseImage && (<Card.ImgOverlay>
+                                <Button
+                                    onClick={handleShowChangeCourseImageModal}
+                                    variant="secondary" style={{ borderRadius: "50px" }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 20 20" width="18" height="18" fill="currentColor" focusable="false" >
+                                        <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z" ></path>
+                                    </svg>
+                                </Button>
+
+                                <Modal centered show={showChangeCourseImageModal} onHide={handleCloseChangeCourseImageModal}>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>Choose a new Picture</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        <Form onSubmit={handleSubmitChangeCourseImage}>
+                                            <Card.Img variant="top" src={course.cover} className="p-1" thumbnail />
+
+                                            <Form.Group controlId="formFile" className="mb-3">
+                                                <Form.Control type="file" />
+                                            </Form.Group>
+                                            <Button type="submit" className="mt-2">Create</Button>
+                                        </Form>
+
+                                    </Modal.Body>
+                                </Modal>
+
+
+                            </Card.ImgOverlay>
+                            )}
                             <Card.Title >
                                 <Form.Control className="text-center" plaintext value={editableCourseTitle} onChange={(e) => {
                                     setEditableCourseTitle(e.target.value)
@@ -236,12 +280,6 @@ function Courses() {
                                                 console.log("---------------------");
                                                 console.log({ event, editor, data });
                                             }}
-                                        // onBlur={(event, editor) => {
-                                        //     console.log('Blur.', editor);
-                                        // }}
-                                        // onFocus={(event, editor) => {
-                                        //     console.log('Focus.', editor);
-                                        // }}
                                         />
 
                                     </Tab.Pane>
