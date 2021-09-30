@@ -85,9 +85,15 @@ function OffCanvasParticipants({ ...props }) {
                 </Form> 
               </Col> */}
               <Col>
-                <span className="ms-auto mx-2">Learners can join your course via this link</span>
-                <Form.Control defaultValue={courseInvitationLink} onChange={(e) => { setCourseInvitationLink(e.target.value) }} />
-                <Button className="mt-1" onClick={() => { navigator.clipboard.writeText(courseInvitationLink) }}>Copy Link</Button>
+                <Row>
+                    <span className="ms-auto mx-2">Learners can join your course via this link</span>
+                  <Col>
+                    <Form.Control defaultValue={courseInvitationLink} onChange={(e) => { setCourseInvitationLink(e.target.value) }} />
+                  </Col>
+                  <Col>
+                    <Button className="mt-1" onClick={() => { navigator.clipboard.writeText(courseInvitationLink) }}>Copy Link</Button>
+                  </Col>
+                </Row>
               </Col>
               <Col>
                 <button className="btn btn-info d-flex ms-auto" onClick={handleShowCreateInvitationModal}>
