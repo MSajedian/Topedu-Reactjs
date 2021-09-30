@@ -1,10 +1,9 @@
-import React, { useContext, createContext } from "react";
-import { Route, Redirect } from "react-router-dom";
-
+import React, { createContext, useContext } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, Route } from "react-router-dom";
 import { setUsernameAction, setUserSurnameAction } from '../../actions';
-import { useSelector, useDispatch } from 'react-redux'
 
-const BEURL = process.env.REACT_APP_FE_URL || "http://localhost:3001"
+const BEURL = process.env.REACT_APP_BACKEND_LOCAL_URL || "http://localhost:3001"
 
 const authContext = createContext();
 
@@ -17,7 +16,7 @@ export function ProvideAuth({ children }) {
     );
 }
 
-export default function useAuth() {
+export default function UseAuth() {
     return useContext(authContext);
 }
 
@@ -63,7 +62,7 @@ function useProvideAuth() {
 }
 
 export function PrivateRoute({ children, ...rest }) {
-    let auth = useAuth();
+    let auth = UseAuth();
     return (
         <Route
             {...rest}
@@ -83,15 +82,21 @@ export function PrivateRoute({ children, ...rest }) {
     );
 }
 
-export const getNewAccessToken = () => {
-    try {
-        fetch(BEURL + "/users/refreshToken", {
-            credentials: 'include',
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-        })
-            .then(res => res.json())
-    } catch (error) {
-        console.log('error:', error)
-    }
-}
+// export function GetNewAccessToken() {
+//     let history = useHistory();
+//     let auth = UseAuth();
+
+//     try {
+//         fetch(BEURL + "/users/refreshToken", {
+//             credentials: 'include',
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//         })
+//             .then(res => {
+//                 console.log('res:', res)
+//                 if (res.status(401)) { auth.signout(() => history.push("/login")) }
+//             })
+//     } catch (error) {
+//         console.log('error:', error)
+//     }
+// }

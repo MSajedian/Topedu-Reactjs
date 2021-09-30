@@ -1,25 +1,45 @@
-import React, { useState, useEffect, useDebugValue } from "react";
-import { Tab, Row, Col, Accordion, Nav, Card, Placeholder, Spinner, Form, Button, Modal } from 'react-bootstrap';
-import CoursesNavbar from './CoursesNavbar';
-import { useParams } from "react-router-dom";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// import InlineEditor from '@ckeditor/ckeditor5-build-inline';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { getNewAccessToken } from './auth/UseAuth';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import React, { useDebugValue, useEffect, useState } from "react";
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Spinner, Tab } from 'react-bootstrap';
+import { useHistory, useParams } from "react-router-dom";
+import CoursesNavbar from './CoursesNavbar';
+import UseAuth from '../auth/UseAuth'
 
 let urlCourses = "http://localhost:3001/courses";
+const BEURL = process.env.REACT_APP_BACKEND_LOCAL_URL || "http://localhost:3001"
 
 function Courses() {
-    const [course, setCourse] = useStateWithLabel({}, "course");
-    const [editableCourseTitle, setEditableCourseTitle] = useStateWithLabel("", "editableCourseTitle");
-    let { courseId } = useParams();
-
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
         useDebugValue(`${name}: ${value}`);
         return [value, setValue];
     }
+
+    let history = useHistory();
+    let auth = UseAuth();
+
+    function getNewAccessToken() {
+        try {
+            fetch(BEURL + "/users/refreshToken", {
+                credentials: 'include',
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+            })
+                .then(res => {
+                    console.log('res:', res)
+                    if (res.status === 401) { auth.signout(() => history.push("/login")) } else { getCourse() }
+                })
+        } catch (error) {
+            console.log('error:', error)
+        }
+    }
+
+    const [course, setCourse] = useStateWithLabel({}, "course");
+    const [editableCourseTitle, setEditableCourseTitle] = useStateWithLabel("", "editableCourseTitle");
+    let { courseId } = useParams();
+
 
     const getCourse = () => {
         try {
@@ -28,7 +48,7 @@ function Courses() {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             })
-                .then(res => { if (res.status === 401) { getNewAccessToken(); getCourse() } return res.json() })
+                .then(res => { if (res.status === 401) { getNewAccessToken(); } return res.json() })
                 .then(
                     (result) => {
                         setCourse(result)
@@ -148,7 +168,7 @@ function Courses() {
         <>
             <CoursesNavbar CourseTitle={course.title ? course.title : <span>&nbsp;&nbsp;<Spinner animation="border" variant="primary" /></span>} />
             <Tab.Container id="left-accordions-tabs">
-                <Row>
+                <Row className="p-0 m-0">
                     <Col sm={3}>
                         <Card
                             onMouseEnter={() => setIsHoveringCourseImage(true)}

@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import Editor from "@monaco-editor/react";
-import CoursesNavbar from '../CoursesNavbar';
+import CoursesNavbar from './CoursesNavbar';
 
 class CodePlayground extends Component {
     constructor(props) {

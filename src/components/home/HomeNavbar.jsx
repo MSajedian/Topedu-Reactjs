@@ -6,7 +6,7 @@ import { Navbar, Spinner, Button } from 'react-bootstrap';
 import { Dropdown } from 'react-bootstrap';
 import { Link, useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux'
-import useAuth from './auth/UseAuth'
+import UseAuth from '../auth/UseAuth'
 
 // ***************************************************
 // The forwardRef is important!!
@@ -34,7 +34,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 function HomeNavbar(props) {
     const userName = useSelector((state) => state.user.userName)
     let history = useHistory();
-    let auth = useAuth();
+    let auth = UseAuth();
     const [selectedInstitution, setSelectedInstitution] = useState({});
 
     useEffect(() => {
@@ -56,12 +56,12 @@ function HomeNavbar(props) {
                 }
 
                 <Dropdown.Menu>
-                    <div><Link to="/dashboard" className="dropdown-item">
+                    {/* <div><Link to="/dashboard" className="dropdown-item">
                         <svg width="16" height="16" viewBox="0 0 16 16" className=" Icons__icon-size___3XuUV"><path className="fill" d="M2.55556,15.5 C2.01040698,15.5 1.4875625,15.2834329 1.10206873,14.8979655 C0.759404483,14.5553248 0.550212493,14.1041116 0.507955807,13.6251524 L0.5,13.4444 L0.5,2.55556 C0.5,2.01039205 0.716568208,1.48754501 1.10205661,1.10205661 C1.44471297,0.759400253 1.89589961,0.550211703 2.37482185,0.507955684 L2.55556,0.5 L13.4444,0.5 C13.9896118,0.5 14.5124947,0.716571452 14.8979655,1.10206873 C15.2406031,1.44472986 15.4497888,1.89591501 15.4920444,2.37482638 L15.5,2.55556 L15.5,13.4444 C15.5,13.9895969 15.2834296,14.5124772 14.8979534,14.8979534 C14.5553079,15.2405989 14.1040962,15.449788 13.6251479,15.4920443 L13.4444,15.5 L2.55556,15.5 Z M5.166,14.5 L5.166,1.5 L2.55556,1.5 C2.27560729,1.5 2.00711453,1.61121225 1.80916339,1.80916339 C1.63949099,1.9788358 1.53354511,2.2003347 1.50673756,2.43645415 L1.5,2.55556 L1.5,13.4444 C1.5,13.7243977 1.61121525,13.992912 1.80915127,14.1908345 C1.97883371,14.3605053 2.20034112,14.4664539 2.43645699,14.4932622 L2.55556,14.5 L5.166,14.5 Z M13.4444,1.5 L6.166,1.5 L6.166,14.5 L13.4444,14.5 C13.7243885,14.5 13.9929125,14.3887808 14.1908466,14.1908466 C14.3605044,14.0211888 14.4664534,13.799669 14.4932621,13.5635208 L14.5,13.4444 L14.5,2.55556 C14.5,2.27561651 14.3887838,2.00711411 14.1908345,1.80915127 C14.0211867,1.63949183 13.7996754,1.5335456 13.5635236,1.50673768 L13.4444,1.5 Z"></path></svg>
                         &nbsp;
                         Dashboard
-                    </Link></div>
-                    <Dropdown.Divider />
+                    </Link></div> 
+                    <Dropdown.Divider /> */}
                     {props.institutions.map((institution, index) => (
                         <div key={`course${index}`}><p className="px-2 my-0 text-secondary">Switch Institution</p>
                             <div><Link to="/" className="dropdown-item">
@@ -80,10 +80,7 @@ function HomeNavbar(props) {
             </Dropdown>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
-                <div className="d-flex ms-auto notifly-target"><Link to="/" className="dropdown-item">
-                    <svg width="16px" height="16px" viewBox="0 0 16 16"><path d="M14.2939 10.3418C13.7629 9.81731 13.2143 9.27488 13.2143 6.71425C13.2143 4.11969 11.3094 1.96194 8.82469 1.56544C8.93914 1.39911 9.00028 1.2019 9.00001 1C9.00001 0.447719 8.55229 0 8.00001 0C7.44773 0 7.00001 0.447719 7.00001 1C6.99972 1.20191 7.06086 1.39912 7.17529 1.56547C4.69066 1.96197 2.78573 4.11972 2.78573 6.71428C2.78573 9.27469 2.23726 9.81716 1.70626 10.3417C0.203257 11.8263 1.30394 14 3.09123 14H6.00001C6.00001 15.1046 6.89544 16 8.00001 16C9.10457 16 10 15.1046 10 14H12.9088C14.6959 14 15.7967 11.8255 14.2939 10.3418V10.3418ZM8.00001 14.75C7.58644 14.75 7.25001 14.4136 7.25001 14H8.75001C8.75001 14.4136 8.41357 14.75 8.00001 14.75ZM12.9091 12.5H3.09063C2.56682 12.5 2.30516 11.8628 2.67394 11.494C3.56723 10.6007 4.28573 9.75266 4.28573 6.71428C4.28573 4.66622 5.95194 3 8.00001 3C10.0481 3 11.7143 4.66622 11.7143 6.71428C11.7143 9.76584 12.4399 10.6072 13.3258 11.494C13.6962 11.8644 13.4307 12.5 12.9091 12.5Z"></path></svg>
-                </Link></div>
-                <Dropdown>
+                <Dropdown className="d-flex ms-auto">
                     <Dropdown.Toggle type="button" id="dropdown-custom-components" className="btn btn-primary text-white">
                         {userName}
                     </Dropdown.Toggle>

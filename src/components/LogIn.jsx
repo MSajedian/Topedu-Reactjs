@@ -13,7 +13,7 @@ import {
     useHistory,
     useLocation
 } from "react-router-dom";
-import useAuth from './auth/UseAuth'
+import UseAuth from './auth/UseAuth'
 
 export default function LogIn() {
     const [email, setEmail] = useState('');
@@ -21,7 +21,7 @@ export default function LogIn() {
 
     let history = useHistory();
     let location = useLocation();
-    let auth = useAuth();
+    let auth = UseAuth();
 
     let { from } = location.state || { from: { pathname: "/home" } };
     const login = () => {

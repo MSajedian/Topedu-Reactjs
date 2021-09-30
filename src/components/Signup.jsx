@@ -5,7 +5,7 @@ import { FcAbout } from 'react-icons/fc';
 // import React, { useContext, createContext, useState } from "react";
 
 import { useHistory, useLocation } from "react-router-dom";
-import useAuth from './auth/UseAuth'
+import UseAuth from './auth/UseAuth'
 
 export default function Signup() {
     const [name, setName] = useState('');
@@ -16,7 +16,7 @@ export default function Signup() {
 
     let history = useHistory();
     let location = useLocation();
-    let auth = useAuth();
+    let auth = UseAuth();
 
     let { from } = location.state || { from: { pathname: "/home" } };
     let signup = () => {
