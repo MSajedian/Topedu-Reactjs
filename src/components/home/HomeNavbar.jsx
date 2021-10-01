@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Navbar, Spinner, Button } from 'react-bootstrap';
-// import { Form, FormControl, Button } from 'react-bootstrap';
-// import { FcAbout } from 'react-icons/fc';
-// import { Container, Row, Col, Placeholder } from 'react-bootstrap';
-import { Dropdown } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { Button, Dropdown, Navbar, Spinner } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { Link, useHistory } from "react-router-dom";
-import { useSelector } from 'react-redux'
-import UseAuth from '../auth/UseAuth'
+import UseAuth from '../auth/UseAuth';
 
 // ***************************************************
 // The forwardRef is important!!
@@ -80,16 +76,16 @@ function HomeNavbar(props) {
             </Dropdown>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
-                <Dropdown className="d-flex ms-auto">
-                    <Dropdown.Toggle type="button" id="dropdown-custom-components" className="btn btn-primary text-white">
+                <Dropdown className="d-flex ms-lg-auto mx-1 mx-lg-1 ">
+                    <Dropdown.Toggle type="button" id="dropdown-custom-components" className="btn btn-primary text-white ">
                         {userName}
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <div><Button onClick={() => { auth.signout(() => history.push("/login")) }} className="dropdown-item">
+                    <Dropdown.Menu align={{ lg: 'end' }}>
+                        <Button className="dropdown-item" onClick={() => { auth.signout(() => history.push("/login")) }} >
                             <svg width="16px" height="16px" viewBox="0 0 16 16" className=""><path className="fill" d="M12.7928858,8.5 L6,8.5 C5.72385763,8.5 5.5,8.27614237 5.5,8 C5.5,7.72385763 5.72385763,7.5 6,7.5 L12.7929109,7.5 L10.313145,5.0202118 C10.1178838,4.82494878 10.1178852,4.50836629 10.3131482,4.31310502 C10.5084112,4.11784375 10.8249937,4.11784518 11.020255,4.3131082 L14.353555,7.6464382 C14.5488154,7.8417004 14.5488149,8.15828125 14.3535539,8.35354286 L11.0202539,11.6868529 C10.8249921,11.8821153 10.5084096,11.8821158 10.3131471,11.6868539 C10.1178847,11.4915921 10.1178842,11.1750096 10.3131461,10.9797471 L12.7928858,8.5 L12.7928858,8.5 Z M6,13.5 C6.27614237,13.5 6.5,13.7238576 6.5,14 C6.5,14.2761424 6.27614237,14.5 6,14.5 L3.33333,14.5 C2.84713906,14.5 2.38083141,14.3068494 2.0369242,13.963011 C1.69313845,13.6191427 1.5,13.1528825 1.5,12.6667 L1.5,3.33333 C1.5,2.84710825 1.69315353,2.38079344 2.03697368,2.03695954 C2.38079344,1.69315353 2.84710825,1.5 3.33333,1.5 L6,1.5 C6.27614237,1.5 6.5,1.72385763 6.5,2 C6.5,2.27614237 6.27614237,2.5 6,2.5 L3.33333,2.5 C3.11232115,2.5 2.90035321,2.58779982 2.74408046,2.74406632 C2.58779982,2.90035321 2.5,3.11232115 2.5,3.33333 L2.5,12.6667 C2.5,12.8876813 2.58779596,13.0996317 2.74403804,13.2559113 C2.9003494,13.4121914 3.11233863,13.5 3.33333,13.5 L6,13.5 Z"></path></svg>
                             &nbsp;
                             Sign Out
-                        </Button></div>
+                        </Button>
                     </Dropdown.Menu>
                 </Dropdown>
             </Navbar.Collapse>

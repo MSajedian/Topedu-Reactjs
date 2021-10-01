@@ -160,16 +160,16 @@ function OffCanvasParticipants({ ...props }) {
                       <tr key={assistant._id}>
                         <td>{assistant.name} {assistant.surname}</td>
                         <td>{assistant.email}</td>
-                        <td>{assistant.role}</td>
                         <td>Assistant</td>
+                        <td>Enrolled</td>
                       </tr>
                     ))}
                     {course.learners.map((learner) => (
                       <tr key={learner._id}>
                         <td>{learner.name} {learner.surname}</td>
                         <td>{learner.email}</td>
-                        <td>{learner.role}</td>
                         <td>Learner</td>
+                        <td>Enrolled</td>
                       </tr>
                     ))}
                   </tbody>
