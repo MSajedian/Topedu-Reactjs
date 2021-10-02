@@ -2,27 +2,36 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import React, { useDebugValue, useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Spinner, Tab } from 'react-bootstrap';
+import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Tab } from 'react-bootstrap';
 import { useHistory, useParams } from "react-router-dom";
+import UseAuth from '../auth/UseAuth';
 import CoursesNavbar from './CoursesNavbar';
-import UseAuth from '../auth/UseAuth'
 
-let urlCourses = "http://localhost:3001/courses";
-const BEURL = process.env.REACT_APP_BACKEND_LOCAL_URL || "http://localhost:3001"
+const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
 function Courses() {
+    const history = useHistory();
+    const auth = UseAuth();
+
+    const [course, setCourse] = useStateWithLabel({}, "course");
+    const [userType, setUserType] = useStateWithLabel('', "userType");
+    const [editableCourseTitle, setEditableCourseTitle] = useStateWithLabel("", "editableCourseTitle");
+    const { courseId } = useParams();
+    const [changeCourseCover, setChangeCourseCover] = useState('');
+    const [isHoveringCourseImage, setIsHoveringCourseImage] = useState(false);
+    const [showChangeCourseImageModal, setShowChangeCourseImageModal] = useState(false);
+    const handleCloseChangeCourseImageModal = () => setShowChangeCourseImageModal(false);
+    const handleShowChangeCourseImageModal = () => setShowChangeCourseImageModal(true);
+
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
         useDebugValue(`${name}: ${value}`);
         return [value, setValue];
     }
 
-    let history = useHistory();
-    let auth = UseAuth();
-
     function getNewAccessToken() {
         try {
-            fetch(BEURL + "/users/refreshToken", {
+            fetch(BackendURL + "/users/refreshToken", {
                 credentials: 'include',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -36,24 +45,20 @@ function Courses() {
         }
     }
 
-    const [course, setCourse] = useStateWithLabel({}, "course");
-    const [editableCourseTitle, setEditableCourseTitle] = useStateWithLabel("", "editableCourseTitle");
-    let { courseId } = useParams();
-
-
     const getCourse = () => {
         try {
-            fetch(urlCourses + "/" + courseId, {
+            fetch(`${BackendURL}/courses/${courseId}`, {
                 credentials: 'include',
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             })
                 .then(res => { if (res.status === 401) { getNewAccessToken(); } return res.json() })
                 .then(
-                    (result) => {
-                        setCourse(result)
-                        setEditableCourseTitle(result.title)
-                        setChangeCourseCover(result.cover)
+                    (response) => {
+                        setCourse(response.course)
+                        setEditableCourseTitle(response.course.title)
+                        setChangeCourseCover(response.course.cover)
+                        setUserType(response.userType)
                     }
                 )
         } catch (error) {
@@ -63,7 +68,7 @@ function Courses() {
 
     const updateCourse = (isRefreshContentneeded) => {
         try {
-            fetch(urlCourses + "/" + courseId, {
+            fetch(`${BackendURL}/courses/${courseId}`, {
                 credentials: 'include',
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -76,8 +81,6 @@ function Courses() {
         }
     };
 
-    const [changeCourseCover, setChangeCourseCover] = useState('');
-
     const postImage = (file) => {
         const body = new FormData();
         body.append("image", file);
@@ -85,7 +88,7 @@ function Courses() {
         headers.append("Origin", "http://localhost:3000");
 
         try {
-            fetch(`${urlCourses}/upload/image`, {
+            fetch(`${BackendURL}/courses/upload/image`, {
                 credentials: 'include',
                 method: 'POST',
                 headers: headers,
@@ -99,11 +102,6 @@ function Courses() {
             console.log('error:', error)
         }
     };
-
-    useEffect(() => {
-        getCourse()
-        // eslint-disable-next-line
-    }, [])
 
     function handleOnDragEnd(result, flowIndex) {
         if (!result.destination) return;
@@ -125,7 +123,7 @@ function Courses() {
                         body.append("image", file);
                         let headers = new Headers();
                         headers.append("Origin", "http://localhost:3000");
-                        fetch(`${urlCourses}/upload/image`, {
+                        fetch(`${BackendURL}/courses/upload/image`, {
                             credentials: 'include',
                             method: 'POST',
                             headers: headers,
@@ -145,16 +143,12 @@ function Courses() {
             }
         };
     }
+
     function uploadPlugin(editor) {
         editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
             return uploadAdapter(loader);
         };
     }
-
-    const [isHoveringCourseImage, setIsHoveringCourseImage] = useState(false);
-    const [showChangeCourseImageModal, setShowChangeCourseImageModal] = useState(false);
-    const handleCloseChangeCourseImageModal = () => setShowChangeCourseImageModal(false);
-    const handleShowChangeCourseImageModal = () => setShowChangeCourseImageModal(true);
 
     const handleChangeCourseImage = (event) => {
         event.preventDefault();
@@ -164,121 +158,165 @@ function Courses() {
         handleCloseChangeCourseImageModal()
     };
 
+    const editorConfiguration = {
+        toolbar: []
+    };
+
+    useEffect(() => {
+        getCourse()
+        // eslint-disable-next-line
+    }, [])
+
     return (
         <>
-            <CoursesNavbar CourseTitle={course.title ? course.title : <span>&nbsp;&nbsp;<Spinner animation="border" variant="primary" /></span>} />
+            <CoursesNavbar userType={userType ? userType : ""} />
             <Tab.Container id="left-accordions-tabs">
                 <Row className="p-0 m-0">
                     <Col sm={3}>
-                        <Card
-                            onMouseEnter={() => setIsHoveringCourseImage(true)}
-                            onMouseLeave={() => setIsHoveringCourseImage(false)}
-                        >
-                            <Card.Img variant="top" src={course.cover} className="p-1" />
-                            {isHoveringCourseImage && (
-                                <Card.ImgOverlay>
-                                    <Button
-                                        onClick={handleShowChangeCourseImageModal}
-                                        variant="secondary" style={{ borderRadius: "50px" }}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 20 20" width="18" height="18" fill="currentColor" focusable="false" >
-                                            <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z" ></path>
-                                        </svg>
-                                    </Button>
-                                </Card.ImgOverlay>
-                            )}
-                            <Modal centered show={showChangeCourseImageModal} onHide={handleCloseChangeCourseImageModal}>
-                                <Modal.Header closeButton>
-                                    <Modal.Title>Choose a New Picture</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <Form >
-                                        <Card.Img variant="top" src={changeCourseCover} className="p-1" thumbnail />
-                                        <Form.Group controlId="formFile" className="mb-3">
-                                            <Form.Control type="file"
-                                                onChange={e => {
-                                                    postImage(e.target.files[0])
-                                                }}
-                                            />
-                                            <Button type="submit" className="mt-2" onClick={handleChangeCourseImage}>Save</Button>
-                                        </Form.Group>
-                                    </Form>
-                                </Modal.Body>
-                            </Modal>
-                        </Card>
-                        <Form.Control className="text-center" plaintext value={editableCourseTitle} onChange={(e) => {
-                            setEditableCourseTitle(e.target.value)
-                            if (course.cover === `https://fakeimg.pl/350x200/333/eae0d0?text=${course.title}`) {
-                                course.cover = `https://fakeimg.pl/350x200/333/eae0d0?text=${e.target.value}`
-                            }
-                            course.title = e.target.value
-                            setCourse(course)
-                            updateCourse(false)
-                        }} />
+
+                        {userType === "owner" || userType === "instructor" ?
+                            // Owner and Instructor can see this:
+                            <Card
+                                onMouseEnter={() => setIsHoveringCourseImage(true)}
+                                onMouseLeave={() => setIsHoveringCourseImage(false)}
+                            >
+                                <Card.Img variant="top" src={course.cover} className="p-1" />
+                                {isHoveringCourseImage && (
+                                    <Card.ImgOverlay>
+                                        <Button
+                                            onClick={handleShowChangeCourseImageModal}
+                                            variant="secondary" style={{ borderRadius: "50px" }}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 20 20" width="18" height="18" fill="currentColor" focusable="false" >
+                                                <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z" ></path>
+                                            </svg>
+                                        </Button>
+                                    </Card.ImgOverlay>
+                                )}
+                                <Modal centered show={showChangeCourseImageModal} onHide={handleCloseChangeCourseImageModal}>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>Choose a New Picture</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        <Form >
+                                            <Card.Img variant="top" src={changeCourseCover} className="p-1" thumbnail />
+                                            <Form.Group controlId="formFile" className="mb-3">
+                                                <Form.Control type="file"
+                                                    onChange={e => {
+                                                        postImage(e.target.files[0])
+                                                    }}
+                                                />
+                                                <Button type="submit" className="mt-2" onClick={handleChangeCourseImage}>Save</Button>
+                                            </Form.Group>
+                                        </Form>
+                                    </Modal.Body>
+                                </Modal>
+                            </Card>
+                            :
+                            // Learner and assistant can see this:
+                            <Card> <Card.Img variant="top" src={course.cover} className="p-1" /> </Card>
+                        }
+                        {userType === "owner" || userType === "instructor" ?
+                            // Owner and Instructor can see this:
+                            <Form.Control className="text-center" plaintext value={editableCourseTitle} onChange={(e) => {
+                                setEditableCourseTitle(e.target.value)
+                                if (course.cover === `https://fakeimg.pl/350x200/333/eae0d0?text=${course.title}`) {
+                                    course.cover = `https://fakeimg.pl/350x200/333/eae0d0?text=${e.target.value}`
+                                }
+                                course.title = e.target.value
+                                setCourse(course)
+                                updateCourse(false)
+                            }} />
+                            :
+                            // Learner and assistant can see this:
+                            <Form.Control className="text-center" plaintext value={course.title} disabled />
+                        }
                         {course.flowsAndActivities ?
                             <Accordion>
                                 {course.flowsAndActivities.map((flow, flowIndex) => (
                                     <Accordion.Item eventKey={flow._id} key={flow._id}>
-                                        <Accordion.Header>
-                                            <div className="btn btn-danger" style={{ paddingRight: "6px", paddingLeft: "6px", paddingTop: "3px", paddingBottom: "3px", }} onClick={() => {
-                                                course.flowsAndActivities.splice(flowIndex, 1)
-                                                updateCourse(true)
-                                            }}>
-                                                <svg width="16px" height="16px" viewBox="0 0 16 16"><path d="M2.03995183,3.5 L1,3.5 C0.723857625,3.5 0.5,3.27614237 0.5,3 C0.5,2.72385763 0.723857625,2.5 1,2.5 L5,2.5 L5,2 C5,1.17185763 5.67185763,0.5 6.5,0.5 L9.5,0.5 C10.3281424,0.5 11,1.17185763 11,2 L11,2.5 L15,2.5 C15.2761424,2.5 15.5,2.72385763 15.5,3 C15.5,3.27614237 15.2761424,3.5 15,3.5 L13.9600771,3.5 L13.0749738,14.1242112 L13.0749583,14.1243977 C13.0098846,14.9019827 12.3600634,15.5 11.58,15.5 L4.42067,15.5 C3.64057767,15.5 2.99070695,14.9019413 2.92572876,14.1242425 L2.03995183,3.5 Z M3.04342135,3.5 L3.92226386,14.0410691 C3.94394479,14.3005598 4.1606632,14.5 4.42067,14.5 L11.58,14.5 C11.8399987,14.5 12.0567206,14.3005553 12.0784417,14.0410023 L12.9566128,3.5 L3.04342135,3.5 Z M6,2.5 L10,2.5 L10,2 C10,1.72414237 9.77585763,1.5 9.5,1.5 L6.5,1.5 C6.22414237,1.5 6,1.72414237 6,2 L6,2.5 Z M7,11.5 C7,11.7761424 6.77614237,12 6.5,12 C6.22385763,12 6,11.7761424 6,11.5 L6,6.5 C6,6.22385763 6.22385763,6 6.5,6 C6.77614237,6 7,6.22385763 7,6.5 L7,11.5 Z M10,11.5 C10,11.7761424 9.77614237,12 9.5,12 C9.22385763,12 9,11.7761424 9,11.5 L9,6.5 C9,6.22385763 9.22385763,6 9.5,6 C9.77614237,6 10,6.22385763 10,6.5 L10,11.5 Z"></path></svg>
-                                            </div>
-                                            <Form.Control
-                                                className="border text-center mx-3" plaintext defaultValue={flow.name} onChange={(e) => {
-                                                    flow.name = e.target.value
-                                                    updateCourse(false)
-                                                }} />
-                                        </Accordion.Header>
-                                        <Accordion.Body>
-                                            <DragDropContext onDragEnd={(result) => (handleOnDragEnd(result, flowIndex))}>
-                                                <Droppable droppableId="activities">
-                                                    {(provided) => (
-                                                        <Nav variant="pills" className="flex-column" {...provided.droppableProps} ref={provided.innerRef}>
-                                                            {flow.activities.map((activity, activityIndex) => {
-                                                                return (
-                                                                    <Draggable key={activity._id} draggableId={activity._id} index={activityIndex}>
-                                                                        {(provided) => (
-                                                                            <Nav.Item ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                                                <Nav.Link eventKey={activity._id} className="d-flex justify-content-between">
-                                                                                    <div className="btn btn-danger mx-2" style={{ paddingRight: "6px", paddingLeft: "6px", paddingTop: "3px", paddingBottom: "3px", }} onClick={() => {
-                                                                                        flow.activities.splice(activityIndex, 1)
-                                                                                        updateCourse(true)
-                                                                                    }}>
-                                                                                        <svg width="16px" height="16px" viewBox="0 0 16 16"><path d="M2.03995183,3.5 L1,3.5 C0.723857625,3.5 0.5,3.27614237 0.5,3 C0.5,2.72385763 0.723857625,2.5 1,2.5 L5,2.5 L5,2 C5,1.17185763 5.67185763,0.5 6.5,0.5 L9.5,0.5 C10.3281424,0.5 11,1.17185763 11,2 L11,2.5 L15,2.5 C15.2761424,2.5 15.5,2.72385763 15.5,3 C15.5,3.27614237 15.2761424,3.5 15,3.5 L13.9600771,3.5 L13.0749738,14.1242112 L13.0749583,14.1243977 C13.0098846,14.9019827 12.3600634,15.5 11.58,15.5 L4.42067,15.5 C3.64057767,15.5 2.99070695,14.9019413 2.92572876,14.1242425 L2.03995183,3.5 Z M3.04342135,3.5 L3.92226386,14.0410691 C3.94394479,14.3005598 4.1606632,14.5 4.42067,14.5 L11.58,14.5 C11.8399987,14.5 12.0567206,14.3005553 12.0784417,14.0410023 L12.9566128,3.5 L3.04342135,3.5 Z M6,2.5 L10,2.5 L10,2 C10,1.72414237 9.77585763,1.5 9.5,1.5 L6.5,1.5 C6.22414237,1.5 6,1.72414237 6,2 L6,2.5 Z M7,11.5 C7,11.7761424 6.77614237,12 6.5,12 C6.22385763,12 6,11.7761424 6,11.5 L6,6.5 C6,6.22385763 6.22385763,6 6.5,6 C6.77614237,6 7,6.22385763 7,6.5 L7,11.5 Z M10,11.5 C10,11.7761424 9.77614237,12 9.5,12 C9.22385763,12 9,11.7761424 9,11.5 L9,6.5 C9,6.22385763 9.22385763,6 9.5,6 C9.77614237,6 10,6.22385763 10,6.5 L10,11.5 Z"></path></svg>
-                                                                                    </div>
-                                                                                    <Form.Control className="border text-center mx-3 overflow-auto" plaintext defaultValue={activity.name} onChange={(e) => {
-                                                                                        activity.name = e.target.value
-                                                                                        updateCourse(false)
-                                                                                    }} />
-                                                                                </Nav.Link>
-                                                                            </Nav.Item>
-                                                                        )}
-                                                                    </Draggable>
-                                                                )
-                                                            })}
-                                                            {provided.placeholder}
+                                        {userType === "owner" || userType === "instructor" ?
+                                            <Accordion.Header>
+                                                <div className="btn btn-danger" style={{ paddingRight: "6px", paddingLeft: "6px", paddingTop: "3px", paddingBottom: "3px", }} onClick={() => {
+                                                    course.flowsAndActivities.splice(flowIndex, 1)
+                                                    updateCourse(true)
+                                                }}>
+                                                    <svg width="16px" height="16px" viewBox="0 0 16 16"><path d="M2.03995183,3.5 L1,3.5 C0.723857625,3.5 0.5,3.27614237 0.5,3 C0.5,2.72385763 0.723857625,2.5 1,2.5 L5,2.5 L5,2 C5,1.17185763 5.67185763,0.5 6.5,0.5 L9.5,0.5 C10.3281424,0.5 11,1.17185763 11,2 L11,2.5 L15,2.5 C15.2761424,2.5 15.5,2.72385763 15.5,3 C15.5,3.27614237 15.2761424,3.5 15,3.5 L13.9600771,3.5 L13.0749738,14.1242112 L13.0749583,14.1243977 C13.0098846,14.9019827 12.3600634,15.5 11.58,15.5 L4.42067,15.5 C3.64057767,15.5 2.99070695,14.9019413 2.92572876,14.1242425 L2.03995183,3.5 Z M3.04342135,3.5 L3.92226386,14.0410691 C3.94394479,14.3005598 4.1606632,14.5 4.42067,14.5 L11.58,14.5 C11.8399987,14.5 12.0567206,14.3005553 12.0784417,14.0410023 L12.9566128,3.5 L3.04342135,3.5 Z M6,2.5 L10,2.5 L10,2 C10,1.72414237 9.77585763,1.5 9.5,1.5 L6.5,1.5 C6.22414237,1.5 6,1.72414237 6,2 L6,2.5 Z M7,11.5 C7,11.7761424 6.77614237,12 6.5,12 C6.22385763,12 6,11.7761424 6,11.5 L6,6.5 C6,6.22385763 6.22385763,6 6.5,6 C6.77614237,6 7,6.22385763 7,6.5 L7,11.5 Z M10,11.5 C10,11.7761424 9.77614237,12 9.5,12 C9.22385763,12 9,11.7761424 9,11.5 L9,6.5 C9,6.22385763 9.22385763,6 9.5,6 C9.77614237,6 10,6.22385763 10,6.5 L10,11.5 Z"></path></svg>
+                                                </div>
 
-                                                        </Nav>
-                                                    )}
-                                                </Droppable>
-                                            </DragDropContext>
-                                            <Nav.Link className="page-link text-center" onClick={() => {
-                                                flow.activities.push({ "name": "New Activity" })
-                                                updateCourse(true)
-                                            }}>
-                                                Add a new activity
-                                            </Nav.Link>
-                                        </Accordion.Body>
+                                                <Form.Control
+                                                    className="border text-center mx-3" plaintext defaultValue={flow.name} onChange={(e) => {
+                                                        flow.name = e.target.value
+                                                        updateCourse(false)
+                                                    }} />
+                                            </Accordion.Header>
+                                            :
+                                            <Accordion.Header className="text-center">
+                                                {flow.name}
+                                            </Accordion.Header>
+                                        }
+                                        {userType === "owner" || userType === "instructor" ?
+                                            <Accordion.Body>
+                                                <DragDropContext onDragEnd={(result) => (handleOnDragEnd(result, flowIndex))}>
+                                                    <Droppable droppableId="activities">
+                                                        {(provided) => (
+                                                            <Nav variant="pills" className="flex-column" {...provided.droppableProps} ref={provided.innerRef}>
+                                                                {flow.activities.map((activity, activityIndex) => {
+                                                                    return (
+                                                                        <Draggable key={activity._id} draggableId={activity._id} index={activityIndex}>
+                                                                            {(provided) => (
+                                                                                <Nav.Item ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                                                    <Nav.Link eventKey={activity._id} className="d-flex justify-content-between">
+                                                                                        <div className="btn btn-danger mx-2" style={{ paddingRight: "6px", paddingLeft: "6px", paddingTop: "3px", paddingBottom: "3px", }} onClick={() => {
+                                                                                            flow.activities.splice(activityIndex, 1)
+                                                                                            updateCourse(true)
+                                                                                        }}>
+                                                                                            <svg width="16px" height="16px" viewBox="0 0 16 16"><path d="M2.03995183,3.5 L1,3.5 C0.723857625,3.5 0.5,3.27614237 0.5,3 C0.5,2.72385763 0.723857625,2.5 1,2.5 L5,2.5 L5,2 C5,1.17185763 5.67185763,0.5 6.5,0.5 L9.5,0.5 C10.3281424,0.5 11,1.17185763 11,2 L11,2.5 L15,2.5 C15.2761424,2.5 15.5,2.72385763 15.5,3 C15.5,3.27614237 15.2761424,3.5 15,3.5 L13.9600771,3.5 L13.0749738,14.1242112 L13.0749583,14.1243977 C13.0098846,14.9019827 12.3600634,15.5 11.58,15.5 L4.42067,15.5 C3.64057767,15.5 2.99070695,14.9019413 2.92572876,14.1242425 L2.03995183,3.5 Z M3.04342135,3.5 L3.92226386,14.0410691 C3.94394479,14.3005598 4.1606632,14.5 4.42067,14.5 L11.58,14.5 C11.8399987,14.5 12.0567206,14.3005553 12.0784417,14.0410023 L12.9566128,3.5 L3.04342135,3.5 Z M6,2.5 L10,2.5 L10,2 C10,1.72414237 9.77585763,1.5 9.5,1.5 L6.5,1.5 C6.22414237,1.5 6,1.72414237 6,2 L6,2.5 Z M7,11.5 C7,11.7761424 6.77614237,12 6.5,12 C6.22385763,12 6,11.7761424 6,11.5 L6,6.5 C6,6.22385763 6.22385763,6 6.5,6 C6.77614237,6 7,6.22385763 7,6.5 L7,11.5 Z M10,11.5 C10,11.7761424 9.77614237,12 9.5,12 C9.22385763,12 9,11.7761424 9,11.5 L9,6.5 C9,6.22385763 9.22385763,6 9.5,6 C9.77614237,6 10,6.22385763 10,6.5 L10,11.5 Z"></path></svg>
+                                                                                        </div>
+                                                                                        <Form.Control className="border text-center mx-3 overflow-auto" plaintext defaultValue={activity.name} onChange={(e) => {
+                                                                                            activity.name = e.target.value
+                                                                                            updateCourse(false)
+                                                                                        }} />
+                                                                                    </Nav.Link>
+                                                                                </Nav.Item>
+                                                                            )}
+                                                                        </Draggable>
+                                                                    )
+                                                                })}
+                                                                {provided.placeholder}
+
+                                                            </Nav>
+                                                        )}
+                                                    </Droppable>
+                                                </DragDropContext>
+                                                <Nav.Link className="page-link text-center" onClick={() => {
+                                                    flow.activities.push({ "name": "New Activity" })
+                                                    updateCourse(true)
+                                                }}>
+                                                    Add a new activity
+                                                </Nav.Link>
+                                            </Accordion.Body>
+                                            :
+                                            <Accordion.Body>
+                                                <Nav variant="pills" className="flex-column">
+                                                    {flow.activities.map((activity, activityIndex) => (
+                                                        <Nav.Item>
+                                                            <Nav.Link eventKey={activity._id} className="d-flex justify-content-between">{activity.name}</Nav.Link>
+                                                        </Nav.Item>
+                                                    ))}
+                                                </Nav>
+                                            </Accordion.Body>
+                                        }
                                     </Accordion.Item>
                                 ))}
-                                <Nav.Link className="page-link text-center btn btn-success" onClick={() => {
-                                    course.flowsAndActivities.push({ "name": "New Flow" })
-                                    updateCourse(true)
-                                }}>
-                                    Add a new flow
-                                </Nav.Link>
+                                {userType === "owner" || userType === "instructor" ?
+                                    <Nav.Link className="page-link text-center btn btn-success" onClick={() => {
+                                        course.flowsAndActivities.push({ "name": "New Flow" })
+                                        updateCourse(true)
+                                    }}>
+                                        Add a new flow
+                                    </Nav.Link>
+                                    : <></>
+                                }
                             </Accordion>
                             :
                             <Accordion>
@@ -306,24 +344,36 @@ function Courses() {
                     <Col sm={9}>
                         <Tab.Content>
                             {course.flowsAndActivities ? course.flowsAndActivities.map((flow) => (
-                                flow.activities.map((activity) => (
+                                (flow.activities.map((activity) => (
                                     <Tab.Pane eventKey={activity._id} key={activity._id} className="mt-2">
-                                        <CKEditor
-                                            editor={ClassicEditor}
-                                            id={activity._id}
-                                            config={{ extraPlugins: [uploadPlugin] }}
-                                            data={activity.activityContent}
-                                            onReady={editor => {
-                                                // You can store the "editor" and use when it is needed.
-                                            }}
-                                            onChange={(event, editor) => {
-                                                activity.activityContent = editor.getData();
-                                                setCourse(course)
-                                                updateCourse(false)
-                                            }}
-                                        />
+                                        <h2>{activity.name}</h2>
+                                        {userType === "owner" || userType === "instructor" ?
+                                            <CKEditor
+                                                editor={ClassicEditor}
+                                                id={activity._id}
+                                                config={{ extraPlugins: [uploadPlugin] }}
+                                                data={activity.activityContent}
+                                                onReady={editor => {
+                                                    // You can store the "editor" and use when it is needed.
+                                                }}
+                                                onChange={(event, editor) => {
+                                                    activity.activityContent = editor.getData();
+                                                    setCourse(course)
+                                                    updateCourse(false)
+                                                }}
+                                            />
+                                            :
+                                            <CKEditor
+                                                editor={ClassicEditor}
+                                                id={activity._id}
+                                                data={activity.activityContent}
+                                                disabled
+                                                config={editorConfiguration}
+                                            />
+                                        }
                                     </Tab.Pane>
                                 ))
+                                )
                             ))
                                 :
                                 <Placeholder animation="glow"> <Placeholder xs={10} /> </Placeholder>

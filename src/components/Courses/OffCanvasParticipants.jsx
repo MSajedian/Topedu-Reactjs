@@ -2,25 +2,25 @@ import React, { useDebugValue, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Modal, Offcanvas, Row, Spinner, Table } from 'react-bootstrap';
 import { useParams } from "react-router-dom";
 
+const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
+
 function OffCanvasParticipants({ ...props }) {
+  const { courseId } = useParams();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
+  const [course, setCourse] = useStateWithLabel({}, "course");
+  const [courseInvitationLink, setCourseInvitationLink] = useStateWithLabel("", "courseInvitationLink");
 
-  let urlCourses = "http://localhost:3001/courses";
-  let { courseId } = useParams();
+  const [showCreateInvitationModal, setShowCreateInvitationModal] = useState(false);
+  const handleCloseCreateInvitationModal = () => setShowCreateInvitationModal(false);
+  const handleShowCreateInvitationModal = () => setShowCreateInvitationModal(true);
 
   function useStateWithLabel(initialValue, name) {
     const [value, setValue] = useState(initialValue);
     useDebugValue(`${name}: ${value}`);
     return [value, setValue];
   }
-
-  const [course, setCourse] = useStateWithLabel({}, "course");
-
-  const [showCreateInvitationModal, setShowCreateInvitationModal] = useState(false);
-  const handleCloseCreateInvitationModal = () => setShowCreateInvitationModal(false);
-  const handleShowCreateInvitationModal = () => setShowCreateInvitationModal(true);
 
   const handleSubmitCreateInvitation = (event) => {
     const form = event.currentTarget;
@@ -33,7 +33,7 @@ function OffCanvasParticipants({ ...props }) {
 
   const getCourse = () => {
     try {
-      fetch(urlCourses + "/" + courseId, {
+      fetch(`${BackendURL}/courses/${courseId}/participants`, {
         credentials: 'include',
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -54,7 +54,6 @@ function OffCanvasParticipants({ ...props }) {
     // eslint-disable-next-line
   }, [])
 
-  const [courseInvitationLink, setCourseInvitationLink] = useStateWithLabel("", "courseInvitationLink");
 
   return (
     <>
@@ -87,7 +86,7 @@ function OffCanvasParticipants({ ...props }) {
               </Col> */}
               <Col>
                 <Row>
-                    <span className="ms-auto mx-2">Learners can join your course via this link</span>
+                  <span className="ms-auto mx-2">Learners can join your course via this link</span>
                   <Col>
                     <Form.Control defaultValue={courseInvitationLink} onChange={(e) => { setCourseInvitationLink(e.target.value) }} />
                   </Col>
