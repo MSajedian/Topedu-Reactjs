@@ -2,7 +2,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import React, { useDebugValue, useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Tab } from 'react-bootstrap';
+import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Tab, Alert } from 'react-bootstrap';
 import { useHistory, useParams } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 import CoursesNavbar from './CoursesNavbar';
@@ -12,14 +12,14 @@ const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_
 function Courses() {
     const history = useHistory();
     const auth = UseAuth();
+    const { courseId } = useParams();
 
     const [course, setCourse] = useStateWithLabel({}, "course");
     const [userType, setUserType] = useStateWithLabel('', "userType");
     const [editableCourseTitle, setEditableCourseTitle] = useStateWithLabel("", "editableCourseTitle");
-    const { courseId } = useParams();
-    const [changeCourseCover, setChangeCourseCover] = useState('');
-    const [isHoveringCourseImage, setIsHoveringCourseImage] = useState(false);
-    const [showChangeCourseImageModal, setShowChangeCourseImageModal] = useState(false);
+    const [changeCourseCover, setChangeCourseCover] = useStateWithLabel('', "changeCourseCover");
+    const [isHoveringCourseImage, setIsHoveringCourseImage] = useStateWithLabel(false, "isHoveringCourseImage");
+    const [showChangeCourseImageModal, setShowChangeCourseImageModal] = useStateWithLabel(false, "showChangeCourseImageModal");
     const handleCloseChangeCourseImageModal = () => setShowChangeCourseImageModal(false);
     const handleShowChangeCourseImageModal = () => setShowChangeCourseImageModal(true);
 
@@ -74,7 +74,12 @@ function Courses() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(course) // body data type must match "Content-Type" header
             })
-                .then(res => { if (!res.ok) { throw new Error('Login Again') } else { if (isRefreshContentneeded === true) getCourse() } })
+                .then(res => {
+                    if (!res.ok) { throw new Error('Login Again') }
+                    else {
+                        if (isRefreshContentneeded === true) { getCourse() }
+                    }
+                })
 
         } catch (error) {
             console.log('error:', error)
@@ -158,10 +163,6 @@ function Courses() {
         handleCloseChangeCourseImageModal()
     };
 
-    const editorConfiguration = {
-        toolbar: []
-    };
-
     useEffect(() => {
         getCourse()
         // eslint-disable-next-line
@@ -228,7 +229,8 @@ function Courses() {
                             }} />
                             :
                             // Learner and assistant can see this:
-                            <Form.Control className="text-center" plaintext value={course.title} disabled />
+                            // <Form.Control className="text-center" plaintext value={course.title} disabled />
+                            <Alert key={course.title} variant="info" className="text-center"> {course.title} </Alert>
                         }
                         {course.flowsAndActivities ?
                             <Accordion>
@@ -246,7 +248,7 @@ function Courses() {
                                                 <Form.Control
                                                     className="border text-center mx-3" plaintext defaultValue={flow.name} onChange={(e) => {
                                                         flow.name = e.target.value
-                                                        updateCourse(false)
+                                                        updateCourse(true)
                                                     }} />
                                             </Accordion.Header>
                                             :
@@ -274,7 +276,7 @@ function Courses() {
                                                                                         </div>
                                                                                         <Form.Control className="border text-center mx-3 overflow-auto" plaintext defaultValue={activity.name} onChange={(e) => {
                                                                                             activity.name = e.target.value
-                                                                                            updateCourse(false)
+                                                                                            updateCourse(true)
                                                                                         }} />
                                                                                     </Nav.Link>
                                                                                 </Nav.Item>
@@ -368,7 +370,7 @@ function Courses() {
                                                 id={activity._id}
                                                 data={activity.activityContent}
                                                 disabled
-                                                config={editorConfiguration}
+                                                config={{ toolbar: [] }}
                                             />
                                         }
                                     </Tab.Pane>

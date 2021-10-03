@@ -18,7 +18,7 @@ export default function App() {
           <Route exact path="/"> <Main /> </Route>
           <Route path="/login"> <LogIn /> </Route>
           <Route path="/signup"> <Signup /> </Route>
-          <Route path="/join"> <Join /> </Route>
+          <Route path="/join/:courseId/:userId"> <Join /> </Route>
           <PrivateRoute path="/home"> <Home /> </PrivateRoute>
           <PrivateRoute path="/courses/:courseId"> <Courses /> </PrivateRoute>
           <PrivateRoute path="/code-playground"> <CodePlayground /> </PrivateRoute>

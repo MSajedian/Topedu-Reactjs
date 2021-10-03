@@ -135,7 +135,7 @@ function Home(props) {
 
     return (
         <>
-            <HomeNavbar institutions={institutions} />
+            <HomeNavbar institutions={institutions} userType={userType ? userType : ""}/>
             <div className="UserOverview pt-2">
                 <Container>
                     <div className="d-flex">

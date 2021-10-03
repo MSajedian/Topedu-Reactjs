@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link, useHistory } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 import OffCanvasCodePlayground from './OffCanvasCodePlayground';
-import OffCanvasParticipants from './OffCanvasParticipants';
+import OffCanvasCourseParticipants from './OffCanvasCourseParticipants';
 
 function CoursesNavbar({ userType }) {
     const auth = UseAuth();
@@ -25,7 +25,7 @@ function CoursesNavbar({ userType }) {
                 </Nav.Item>
                 {userType === "owner" || userType === "instructor" ?
                     <Nav.Item className="mx-lg-1 mx-3 my-1">
-                        <OffCanvasParticipants placement="top" />
+                        <OffCanvasCourseParticipants placement="top" />
                     </Nav.Item>
                     : <></>}
                 {/* <Nav.Item className="notifly-target btn">
