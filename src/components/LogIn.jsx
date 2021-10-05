@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { FcAbout } from 'react-icons/fc';
-// import React, { useContext, createContext, useState } from "react";
 
 import {
     // BrowserRouter as Router,

@@ -1,5 +1,6 @@
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
+
 import React, { useDebugValue, useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Tab, Alert } from 'react-bootstrap';
@@ -175,8 +176,8 @@ function Courses() {
                 <Row className="p-0 m-0">
                     <Col sm={3}>
 
-                        {userType === "owner" || userType === "instructor" ?
-                            // Owner and Instructor can see this:
+                        {userType === "admin" || userType === "instructor" ?
+                            // admin and Instructor can see this:
                             <Card
                                 onMouseEnter={() => setIsHoveringCourseImage(true)}
                                 onMouseLeave={() => setIsHoveringCourseImage(false)}
@@ -216,8 +217,8 @@ function Courses() {
                             // Learner and assistant can see this:
                             <Card> <Card.Img variant="top" src={course.cover} className="p-1" /> </Card>
                         }
-                        {userType === "owner" || userType === "instructor" ?
-                            // Owner and Instructor can see this:
+                        {userType === "admin" || userType === "instructor" ?
+                            // admin and Instructor can see this:
                             <Form.Control className="text-center" plaintext value={editableCourseTitle} onChange={(e) => {
                                 setEditableCourseTitle(e.target.value)
                                 if (course.cover === `https://fakeimg.pl/350x200/333/eae0d0?text=${course.title}`) {
@@ -236,7 +237,7 @@ function Courses() {
                             <Accordion>
                                 {course.flowsAndActivities.map((flow, flowIndex) => (
                                     <Accordion.Item eventKey={flow._id} key={flow._id}>
-                                        {userType === "owner" || userType === "instructor" ?
+                                        {userType === "admin" || userType === "instructor" ?
                                             <Accordion.Header>
                                                 <div className="btn btn-danger" style={{ paddingRight: "6px", paddingLeft: "6px", paddingTop: "3px", paddingBottom: "3px", }} onClick={() => {
                                                     course.flowsAndActivities.splice(flowIndex, 1)
@@ -256,7 +257,7 @@ function Courses() {
                                                 {flow.name}
                                             </Accordion.Header>
                                         }
-                                        {userType === "owner" || userType === "instructor" ?
+                                        {userType === "admin" || userType === "instructor" ?
                                             <Accordion.Body>
                                                 <DragDropContext onDragEnd={(result) => (handleOnDragEnd(result, flowIndex))}>
                                                     <Droppable droppableId="activities">
@@ -310,7 +311,7 @@ function Courses() {
                                         }
                                     </Accordion.Item>
                                 ))}
-                                {userType === "owner" || userType === "instructor" ?
+                                {userType === "admin" || userType === "instructor" ?
                                     <Nav.Link className="page-link text-center btn btn-success" onClick={() => {
                                         course.flowsAndActivities.push({ "name": "New Flow" })
                                         updateCourse(true)
@@ -349,11 +350,49 @@ function Courses() {
                                 (flow.activities.map((activity) => (
                                     <Tab.Pane eventKey={activity._id} key={activity._id} className="mt-2">
                                         <h2>{activity.name}</h2>
-                                        {userType === "owner" || userType === "instructor" ?
+                                        <hr />
+                                        {userType === "admin" || userType === "instructor" ?
                                             <CKEditor
                                                 editor={ClassicEditor}
                                                 id={activity._id}
-                                                config={{ extraPlugins: [uploadPlugin] }}
+                                                config={
+                                                    {
+                                                        extraPlugins: [uploadPlugin],
+                                                        
+                                                        // toolbar: [ 'Essentials', 'CKFinderUploadAdapter', 'Autoformat', 'Bold', 'Italic', 'BlockQuote', 'CKFinder', 'CloudServices', 'EasyImage', 'Heading', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'Indent', 'Link', 'List', 'MediaEmbed', 'Paragraph', 'PasteFromOffice', 'Table', 'TableToolbar', 'TextTransformation', ],
+
+                                                        // toolbar: {
+                                                        //     items: [
+                                                        //         'heading', '|',
+                                                        //         'fontfamily', 'fontsize', '|',
+                                                        //         'alignment', '|',
+                                                        //         'fontColor', 'fontBackgroundColor', '|',
+                                                        //         'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                                                        //         'link', '|',
+                                                        //         'outdent', 'indent', '|',
+                                                        //         'bulletedList', 'numberedList', 'todoList', '|',
+                                                        //         'code', 'codeBlock', '|',
+                                                        //         'insertTable', '|',
+                                                        //         'uploadImage', 'blockQuote', '|',
+                                                        //         'undo', 'redo'
+                                                        //     ],
+                                                        //     shouldNotGroupWhenFull: true
+                                                        // }
+
+                                                        // plugins: [ MediaEmbed ]
+                                                        // toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+                                                        // heading: {
+                                                        //     options: [
+                                                        //         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                                                        //         { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                                                        //         { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                                                        //         { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                                                        //         { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                                                        //         { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                                                        //     ]
+                                                        // }
+                                                    }
+                                                }
                                                 data={activity.activityContent}
                                                 onReady={editor => {
                                                     // You can store the "editor" and use when it is needed.
@@ -365,13 +404,9 @@ function Courses() {
                                                 }}
                                             />
                                             :
-                                            <CKEditor
-                                                editor={ClassicEditor}
-                                                id={activity._id}
-                                                data={activity.activityContent}
-                                                disabled
-                                                config={{ toolbar: [] }}
-                                            />
+                                            <div dangerouslySetInnerHTML={{ __html: activity.activityContent }}></div>
+                                            // <iframe className='border mt-3' id="iFrame" title="iFrame" width='100%' height="1000px" srcDoc={activity.activityContent} ></iframe>
+                                            // <textarea id="story" name="story" rows="5" cols="33" srcDoc={activity.activityContent}> </textarea>
                                         }
                                     </Tab.Pane>
                                 ))

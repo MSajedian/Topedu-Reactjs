@@ -1,5 +1,6 @@
 import React, { useDebugValue, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Modal, Offcanvas, Row, Spinner, Table, Alert } from 'react-bootstrap';
+import { BsTrash, BsClipboard, BsClipboardCheck } from 'react-icons/bs';
 import { useParams } from "react-router-dom";
 
 const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
@@ -16,6 +17,8 @@ function OffCanvasCourseParticipants({ ...props }) {
   const [email, setEmail] = useStateWithLabel("", "email");
   const [courseInvitationLink, setCourseInvitationLink] = useStateWithLabel("", "courseInvitationLink");
   const [messageFromServer, setMessageFromServer] = useStateWithLabel("", "messageFromServer");
+  const [refreshState, setRefreshState] = useStateWithLabel(false, "refreshState");
+  const [isCopied, setIsCopied] = useStateWithLabel(false, "isCopied");
 
   const [showCreateInvitationModal, setShowCreateInvitationModal] = useState(false);
   const handleCloseCreateInvitationModal = () => setShowCreateInvitationModal(false);
@@ -31,28 +34,6 @@ function OffCanvasCourseParticipants({ ...props }) {
     event.preventDefault();
     event.stopPropagation();
     postInvitation()
-    // handleCloseCreateInvitationModal()
-  };
-
-  const postInvitation = () => {
-    try {
-      fetch(`${BackendURL}/courses/${courseId}/invitation`, {
-        credentials: 'include',
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ "name": name, "role": role, "email": email }) // body data type must match "Content-Type" header
-      })
-        .then(res => (res.json()))
-        .then(
-          (result) => {
-            if (result._id) { setCourseInvitationLink(`${FrontendURL}/join/${courseId}/${result._id}`) }
-            else { setMessageFromServer(result.message) }
-            getCourse()
-          }
-        )
-    } catch (error) {
-      console.log('error:', error)
-    }
   };
 
   const getCourse = () => {
@@ -66,6 +47,27 @@ function OffCanvasCourseParticipants({ ...props }) {
         .then(
           (result) => {
             setCourse(result)
+          }
+        )
+    } catch (error) {
+      console.log('error:', error)
+    }
+  };
+
+  const postInvitation = () => {
+    try {
+      fetch(`${BackendURL}/courses/${courseId}/invitation`, {
+        credentials: 'include',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ "name": name, "role": role, "email": email }) // body data type must match "Content-Type" header
+      })
+        .then(res => (res.json()))
+        .then(
+          (result) => {
+            if (result._id) { setCourseInvitationLink(`${FrontendURL}/join/course/${courseId}/${result._id}`) }
+            else { setMessageFromServer(result.message) }
+            getCourse()
           }
         )
     } catch (error) {
@@ -127,17 +129,6 @@ function OffCanvasCourseParticipants({ ...props }) {
                   <Button variant="outline-success">Search</Button>
                 </Form> 
               </Col> */}
-              {/* <Col>
-                <Row>
-                  <span className="ms-auto mx-2">Learners can join your course via this link</span>
-                  <Col>
-                    <Form.Control defaultValue={courseInvitationLink} onChange={(e) => { setCourseInvitationLink(e.target.value) }} />
-                  </Col>
-                  <Col>
-                    <Button className="mt-1" onClick={() => { navigator.clipboard.writeText(courseInvitationLink) }}>Copy Link</Button>
-                  </Col>
-                  </Row>
-                </Col> */}
               <Col>
                 <button className="btn btn-info d-flex ms-auto" onClick={handleShowCreateInvitationModal}>
                   <svg width="16px" height="16px" viewBox="0 0 16 16"><path fillRule="evenodd" d="M13.87 1.07216C13.8593 1.07797 13.8488 1.08412 13.8384 1.09063L1.51649 8.79323C1.3384 8.90468 1.23 9.10001 1.23 9.31C1.23 9.64652 1.5028 9.91933 1.83933 9.91933H7.15121L13.87 1.07216ZM14.7667 1.54479L8.02594 10.421L11.2728 14.7552C11.3646 14.877 11.4988 14.9605 11.6481 14.9887C11.9787 15.0508 12.2971 14.8332 12.3593 14.5028L14.7593 1.72106C14.7703 1.66267 14.7727 1.60325 14.7667 1.54479ZM1.83933 10.9193H5.23334V13.8667C5.23334 14.7546 5.953 15.4753 6.842 15.4753C7.16528 15.4753 7.48133 15.3777 7.74815 15.1959L7.74827 15.1958L9.47285 14.0204L10.4732 15.3558L10.4739 15.3568C10.7154 15.6774 11.068 15.8968 11.4626 15.9713C12.3358 16.1357 13.1776 15.5614 13.342 14.6878L15.7419 1.90656C15.8171 1.50915 15.7398 1.09669 15.5253 0.753616C15.0541 -0.00016313 14.0615 -0.228168 13.3083 0.242696L0.986295 7.94535C0.516451 8.23925 0.229996 8.7547 0.229996 9.31C0.229996 10.1988 0.95052 10.9193 1.83933 10.9193ZM6.23334 10.9193V13.8667C6.23334 14.2027 6.50568 14.4753 6.842 14.4753C6.96401 14.4753 7.08392 14.4384 7.18507 14.3695L7.18519 14.3694L8.87184 13.2199L7.14972 10.9193H6.23334Z"></path></svg>
@@ -169,7 +160,11 @@ function OffCanvasCourseParticipants({ ...props }) {
                   <Button type="submit" >Create an Invitation Link</Button>
                   <hr />
                   {courseInvitationLink ? <><Alert key={courseInvitationLink} variant="info" className="text-center overflow-auto"> {courseInvitationLink} </Alert>
-                    <Button className="mt-1" onClick={() => { navigator.clipboard.writeText(courseInvitationLink) }}>Copy Link</Button></>
+                    {/* <Button className="mt-1" onClick={() => { navigator.clipboard.writeText(courseInvitationLink) }}>Copy Link</Button> */}
+                    Copy Link: <Button variant="success" className="mt-1" onClick={() => { setIsCopied(true); navigator.clipboard.writeText(courseInvitationLink); setTimeout(function () { setIsCopied(false) }, 1500); }}>
+                      {isCopied ? <BsClipboardCheck size="1.5em" color="white" /> : <BsClipboard size="1.5em" color="white" />}
+                    </Button></>
+
                     : <></>}
                   {messageFromServer ? <Alert key={messageFromServer} variant="info" className="text-center"> {messageFromServer} </Alert> : <></>}
                 </Form>
@@ -188,129 +183,110 @@ function OffCanvasCourseParticipants({ ...props }) {
                     <th className="text-center">Link</th>
                   </tr>
                 </thead>
-                {course.owner ?
+                {course.participants ?
                   <tbody>
-                    <tr>
-                      <td>{course.owner.name} {course.owner.surname}</td>
-                      <td>{course.owner.email}</td>
-                      <td>Course owner</td>
-                      <td><Alert variant="success" className="m-0 p-0 text-center">Enrolled</Alert></td>
-                      <td className="text-center"></td>
-                      <td className="text-center"></td>
-                    </tr>
-                    {course.instructors.map((instructor, Index) => (
+                    {course.participants.admins.map((admin, Index) => (
+                      <tr>
+                        <td>{admin.name} {admin.surname}</td>
+                        <td>{admin.email}</td>
+                        <td>Admin</td>
+                        <td><Alert variant="success" className="m-0 p-0 text-center">Enrolled</Alert></td>
+                        <td className="text-center"></td>
+                        <td className="text-center"></td>
+                      </tr>
+                    ))}
+                    {course.participants.instructors.map((instructor, Index) => (
                       <tr key={instructor._id}>
                         <td>{instructor.name} {instructor.surname}</td>
                         <td>{instructor.email}</td>
                         <td>Instructor</td>
                         <td><Alert variant="success" className="m-0 p-0 text-center">Enrolled</Alert></td>
                         <td className="text-center">
-                          <Button variant="outline-danger" onClick={() => { course.instructors.splice(Index, 1); updateCourse(true) }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
-                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                              <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                            </svg></Button>
+                          <Button variant="outline-danger" className="p-2" onClick={() => { course.participants.instructor.splice(Index, 1); updateCourse(true) }}>
+                            <BsTrash size="1.5em" />
+                          </Button>
                         </td>
                         <td className="text-center"></td>
                       </tr>
                     ))}
-                    {course.assistants.map((assistant, Index) => (
+                    {course.participants.assistants.map((assistant, Index) => (
                       <tr key={assistant._id}>
                         <td>{assistant.name} {assistant.surname}</td>
                         <td>{assistant.email}</td>
                         <td>Assistant</td>
                         <td><Alert variant="success" className="m-0 p-0 text-center">Enrolled</Alert></td>
                         <td className="text-center">
-                          <Button variant="outline-danger" onClick={() => { course.assistants.splice(Index, 1); updateCourse(true) }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
-                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                              <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                            </svg></Button>
+                          <Button variant="outline-danger" className="p-2" onClick={() => { course.participants.assistants.splice(Index, 1); updateCourse(true) }}>
+                            <BsTrash size="1.5em" />
+                          </Button>
                         </td>
                         <td className="text-center"></td>
                       </tr>
                     ))}
-                    {course.learners.map((learner, Index) => (
+                    {course.participants.learners.map((learner, Index) => (
                       <tr key={learner._id}>
                         <td>{learner.name} {learner.surname}</td>
                         <td>{learner.email}</td>
                         <td>Learner</td>
                         <td><Alert variant="success" className="m-0 p-0 text-center">Enrolled</Alert></td>
                         <td className="text-center">
-                          <Button variant="outline-danger" onClick={() => { course.learners.splice(Index, 1); updateCourse(true) }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
-                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                              <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                            </svg></Button>
+                          <Button variant="outline-danger" className="p-2" onClick={() => { course.participants.learners.splice(Index, 1); updateCourse(true) }}>
+                            <BsTrash size="1.5em" />
+                          </Button>
                         </td>
                         <td className="text-center"></td>
                       </tr>
                     ))}
-                    {course.notEnrolledLearners.map((notEnrolledLearner, Index) => (
-                      < tr key={notEnrolledLearner._id} >
-                        <td>{notEnrolledLearner.name} {notEnrolledLearner.surname}</td>
-                        <td>{notEnrolledLearner.email}</td>
+                    {course.notEnrolledUsers.learners.map((learner, Index) => (
+                      < tr key={learner._id} >
+                        <td>{learner.name} {learner.surname}</td>
+                        <td>{learner.email}</td>
                         <td>Learner</td>
                         <td><Alert variant="warning" className="m-0 p-0 text-center"> Not Enrolled </Alert></td>
                         <td className="text-center">
-                          <Button variant="outline-danger" onClick={() => { course.notEnrolledLearners.splice(Index, 1); updateCourse(true) }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
-                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                              <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                            </svg></Button>
+                          <Button variant="outline-danger" className="p-2" onClick={() => { course.notEnrolledUsers.learners.splice(Index, 1); updateCourse(true) }}>
+                            <BsTrash size="1.5em" />
+                          </Button>
                         </td>
                         <td className="text-center">
-                          <Button variant="outline-secondary" onClick={() => { navigator.clipboard.writeText(`${FrontendURL}/join/${courseId}/${notEnrolledLearner._id}`); }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-clipboard" viewBox="0 0 16 16">
-                              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
-                              <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
-                            </svg>
+                          <Button variant="outline-success" onClick={() => { learner.isCopied = true; setRefreshState(true); navigator.clipboard.writeText(`${FrontendURL}/join/course/${courseId}/${learner._id}`); setTimeout(function () { learner.isCopied = false; setRefreshState(false) }, 1500); }}>
+                            {refreshState && learner.isCopied ? <BsClipboardCheck size="1.5em" /> : <BsClipboard size="1.5em" />}
                           </Button>
                         </td>
                       </tr>
                     ))}
-                    {course.notEnrolledAssistants.map((notEnrolledAssistant, Index) => (
-                      <tr key={notEnrolledAssistant._id}>
-                        <td>{notEnrolledAssistant.name} {notEnrolledAssistant.surname}</td>
-                        <td>{notEnrolledAssistant.email}</td>
+                    {course.notEnrolledUsers.assistants.map((assistant, Index) => (
+                      <tr key={assistant._id}>
+                        <td>{assistant.name} {assistant.surname}</td>
+                        <td>{assistant.email}</td>
                         <td>Assistant</td>
                         <td><Alert variant="warning" className="m-0 p-0 text-center"> Not Enrolled </Alert></td>
                         <td className="text-center">
-                          <Button variant="outline-danger" onClick={() => { course.notEnrolledAssistants.splice(Index, 1); updateCourse(true) }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
-                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                              <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                            </svg></Button>
+                          <Button variant="outline-danger" className="p-2" onClick={() => { course.notEnrolledUsers.assistants.splice(Index, 1); updateCourse(true) }}>
+                            <BsTrash size="1.5em" />
+                          </Button>
                         </td>
                         <td className="text-center">
-                          <Button variant="outline-secondary" onClick={() => { navigator.clipboard.writeText(`${FrontendURL}/join/${courseId}/${notEnrolledAssistant._id}`); }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-clipboard" viewBox="0 0 16 16">
-                              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
-                              <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
-                            </svg>
+                          <Button variant="success" onClick={() => { assistant.isCopied = true; setRefreshState(true); navigator.clipboard.writeText(`${FrontendURL}/join/course/${courseId}/${assistant._id}`); setTimeout(function () { assistant.isCopied = false; setRefreshState(false) }, 1500); }}>
+                            {refreshState && assistant.isCopied ? <BsClipboardCheck size="1.5em" /> : <BsClipboard size="1.5em" />}
                           </Button>
                         </td>
                       </tr>
                     ))}
-                    {course.notEnrolledInstructors.map((notEnrolledInstructor, Index) => (
-                      <tr key={notEnrolledInstructor._id}>
-                        <td>{notEnrolledInstructor.name} {notEnrolledInstructor.surname}</td>
-                        <td>{notEnrolledInstructor.email}</td>
+                    {course.notEnrolledUsers.instructors.map((instructor, Index) => (
+                      <tr key={instructor._id}>
+                        <td>{instructor.name} {instructor.surname}</td>
+                        <td>{instructor.email}</td>
                         <td>Instructor</td>
                         <td> <Alert variant="warning" className="m-0 p-0 text-center"> Not Enrolled </Alert> </td>
                         <td className="text-center">
-                          <Button variant="outline-danger" onClick={() => { course.notEnrolledInstructors.splice(Index, 1); updateCourse(true) }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
-                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                              <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                            </svg></Button>
+                          <Button variant="outline-danger" className="p-2" onClick={() => { course.notEnrolledUsers.instructors.splice(Index, 1); updateCourse(true) }}>
+                            <BsTrash size="1.5em" />
+                          </Button>
                         </td>
                         <td className="text-center">
-                          <Button variant="outline-secondary" onClick={() => { navigator.clipboard.writeText(`${FrontendURL}/join/${courseId}/${notEnrolledInstructor._id}`); }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-clipboard" viewBox="0 0 16 16">
-                              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
-                              <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
-                            </svg>
+                          <Button variant="success" onClick={() => { instructor.isCopied = true; setRefreshState(true); navigator.clipboard.writeText(`${FrontendURL}/join/course/${courseId}/${instructor._id}`); setTimeout(function () { instructor.isCopied = false; setRefreshState(false) }, 1500); }}>
+                            {refreshState && instructor.isCopied ? <BsClipboardCheck size="1.5em" /> : <BsClipboard size="1.5em" />}
                           </Button>
                         </td>
                       </tr>

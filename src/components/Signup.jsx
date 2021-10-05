@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Alert, Button, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap';
 import { FcAbout } from 'react-icons/fc';
 
-// import React, { useContext, createContext, useState } from "react";
+import { useHistory } from "react-router-dom";
+import UseAuth from './auth/UseAuth'
 
-// import { useHistory, useLocation } from "react-router-dom";
-// import UseAuth from './auth/UseAuth'
+const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
 export default function Signup() {
     const [signUpAs, setSignUpAs] = useState('learner');
@@ -13,25 +13,64 @@ export default function Signup() {
     const [surname, setSurname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [repPassword, setRepPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [institutionName, setInstitutionName] = useState('');
 
-    // let history = useHistory();
-    // let location = useLocation();
-    // let auth = UseAuth();
+    let history = useHistory();
+    let auth = UseAuth();
 
-    // let { from } = location.state || { from: { pathname: "/home" } };
-    // let signup = () => { 
-    //  auth.signin(email, password, () => {
-    //      history.replace(from);
-    //  });
-    // };
+    let { from } = { from: { pathname: "/home" } };
+    const login = () => {
+        auth.signin(email, password, () => {
+            history.replace(from);
+        });
+    };
 
-    const signup = (event) => {
+    const handleSubmitSingupForm = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        console.log('signUpAs:', signUpAs)
-        console.log('name:', name)
+        if (password !== confirmPassword) {
+            alert("passwords are not matched")
+        }
+        registerUser()
+    };
+
+    const registerUser = () => {
+        try {
+            fetch(`${BackendURL}/users/register`, {
+                credentials: 'include',
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, surname, email, password }) // body data type must match "Content-Type" header
+            })
+                .then(res => res.json())
+                .then(
+                    (response) => {
+                        createInstitution()
+                    }
+                )
+        } catch (error) {
+            console.log('error:', error)
+        }
+    };
+
+    const createInstitution = () => {
+        try {
+            fetch(`${BackendURL}/institutions/me`, {
+                credentials: 'include',
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: institutionName }) // body data type must match "Content-Type" header
+            })
+                .then(res => res.json())
+                .then(
+                    (response) => {
+                        login()
+                    }
+                )
+        } catch (error) {
+            console.log('error:', error)
+        }
     };
 
     return (
@@ -47,15 +86,15 @@ export default function Signup() {
                             <option value="learner">Learner</option>
                             <option value="instructor">Instructor</option>
                             <option value="assistant">Assistant</option>
-                            <option value="institutionOwner">Institution owner</option>
+                            <option value="admin">Admin</option>
                         </Form.Select>
                     </FloatingLabel>
 
                     {signUpAs === "learner" ? <Alert variant="primary" className="text-center my-2"> You should ask the owner of the institution to send you the invitation link as <mark>Learner</mark> </Alert> : <></>}
                     {signUpAs === "instructor" ? <Alert variant="primary" className="text-center my-2"> You should ask the owner of the institution to send you the invitation link as <mark>Instructor</mark> </Alert> : <></>}
                     {signUpAs === "assistant" ? <Alert variant="primary" className="text-center my-2"> You should ask the owner of the institution to send you the invitation link as <mark>Assistant</mark> </Alert> : <></>}
-                    {signUpAs === "institutionOwner" ?
-                        <Form onSubmit={signup}>
+                    {signUpAs === "admin" ?
+                        <Form onSubmit={handleSubmitSingupForm}>
                             <Form.Group className="mb-3" controlId="formBasicName">
                                 <Form.Label>Name</Form.Label>
                                 <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} required />
@@ -73,9 +112,9 @@ export default function Signup() {
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="formBasicrepPassword">
-                                <Form.Label>Repeat Password</Form.Label>
-                                <Form.Control type="repPassword" value={repPassword} onChange={(e) => setRepPassword(e.target.value)} required />
+                            <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
+                                <Form.Label>Confirm Password</Form.Label>
+                                <Form.Control type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicInstitutionName">
                                 <Form.Label>Institution Name</Form.Label>

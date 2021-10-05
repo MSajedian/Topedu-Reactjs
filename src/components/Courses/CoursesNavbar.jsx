@@ -9,9 +9,7 @@ import OffCanvasCourseParticipants from './OffCanvasCourseParticipants';
 function CoursesNavbar({ userType }) {
     const auth = UseAuth();
     const history = useHistory();
-
     const userName = useSelector((state) => state.user.userName)
-
     return (
         <Navbar bg="light" expand="lg" className="block-example border-bottom border-dark">
             <div><Link to="/home" style={{ border: "gray solid 1px", padding: "3px 8px 7px 8px" }} className="rounded mx-3">
@@ -23,7 +21,7 @@ function CoursesNavbar({ userType }) {
                 <Nav.Item className="d-flex ms-lg-auto mx-lg-1 mx-3 my-1">
                     <OffCanvasCodePlayground placement="top" />
                 </Nav.Item>
-                {userType === "owner" || userType === "instructor" ?
+                {userType === "admin" || userType === "instructor" ?
                     <Nav.Item className="mx-lg-1 mx-3 my-1">
                         <OffCanvasCourseParticipants placement="top" />
                     </Nav.Item>

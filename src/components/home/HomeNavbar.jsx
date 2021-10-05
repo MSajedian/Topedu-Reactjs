@@ -79,7 +79,7 @@ function HomeNavbar({ institutions, userType }) {
             <Navbar.Collapse id="navbarScroll">
                 <Nav.Item className="d-flex ms-lg-auto mx-1 mx-lg-1 ">
                 </Nav.Item>
-                {userType === "owner" || userType === "instructor" ?
+                {userType === "admin" || userType === "instructor" ?
                     <Nav.Item className="mx-lg-1 mx-3 my-1">
                         <OffCanvasInstitutionParticipants placement="top" institutionId={selectedInstitution._id}/>
                     </Nav.Item>
