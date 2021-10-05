@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, Route } from "react-router-dom";
 import { setUsernameAction, setUserSurnameAction } from '../../actions';
 
-const BackendURL = process.env.REACT_APP_BACKEND_LOCAL_URL || "http://localhost:3001"
+const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
 const authContext = createContext();
 
