@@ -81,7 +81,7 @@ function HomeNavbar({ institutions, userType }) {
                 </Nav.Item>
                 {userType === "admin" || userType === "instructor" ?
                     <Nav.Item className="mx-lg-1 mx-3 my-1">
-                        <OffCanvasInstitutionParticipants placement="top" institutionId={selectedInstitution._id}/>
+                        <OffCanvasInstitutionParticipants placement="top" institutionid={selectedInstitution._id}/>
                     </Nav.Item>
                     : <></>}
                 <Dropdown className="mx-lg-1 mx-3 my-1">

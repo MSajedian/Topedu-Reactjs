@@ -186,7 +186,7 @@ function OffCanvasCourseParticipants({ ...props }) {
                 {course.participants ?
                   <tbody>
                     {course.participants.admins.map((admin, Index) => (
-                      <tr>
+                      <tr key={admin._id}>
                         <td>{admin.name} {admin.surname}</td>
                         <td>{admin.email}</td>
                         <td>Admin</td>

@@ -236,7 +236,7 @@ function Courses() {
                         {course.flowsAndActivities ?
                             <Accordion>
                                 {course.flowsAndActivities.map((flow, flowIndex) => (
-                                    <Accordion.Item eventKey={flow._id} key={flow._id}>
+                                    <Accordion.Item eventKey={flow._id} key={`flow._id${flow._id}`}>
                                         {userType === "admin" || userType === "instructor" ?
                                             <Accordion.Header>
                                                 <div className="btn btn-danger" style={{ paddingRight: "6px", paddingLeft: "6px", paddingTop: "3px", paddingBottom: "3px", }} onClick={() => {
@@ -265,7 +265,7 @@ function Courses() {
                                                             <Nav variant="pills" className="flex-column" {...provided.droppableProps} ref={provided.innerRef}>
                                                                 {flow.activities.map((activity, activityIndex) => {
                                                                     return (
-                                                                        <Draggable key={activity._id} draggableId={activity._id} index={activityIndex}>
+                                                                        <Draggable key={`activity._id${activity._id}`} draggableId={activity._id} index={activityIndex}>
                                                                             {(provided) => (
                                                                                 <Nav.Item ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                                                     <Nav.Link eventKey={activity._id} className="d-flex justify-content-between">
@@ -302,7 +302,7 @@ function Courses() {
                                             <Accordion.Body>
                                                 <Nav variant="pills" className="flex-column">
                                                     {flow.activities.map((activity, activityIndex) => (
-                                                        <Nav.Item>
+                                                        <Nav.Item key={activityIndex}>
                                                             <Nav.Link eventKey={activity._id} className="d-flex justify-content-between">{activity.name}</Nav.Link>
                                                         </Nav.Item>
                                                     ))}
@@ -348,7 +348,7 @@ function Courses() {
                         <Tab.Content>
                             {course.flowsAndActivities ? course.flowsAndActivities.map((flow) => (
                                 (flow.activities.map((activity) => (
-                                    <Tab.Pane eventKey={activity._id} key={activity._id} className="mt-2">
+                                    <Tab.Pane eventKey={activity._id} key={`activityId${activity._id}`} className="mt-2">
                                         <h2>{activity.name}</h2>
                                         <hr />
                                         {userType === "admin" || userType === "instructor" ?
@@ -358,7 +358,7 @@ function Courses() {
                                                 config={
                                                     {
                                                         extraPlugins: [uploadPlugin],
-                                                        
+
                                                         // toolbar: [ 'Essentials', 'CKFinderUploadAdapter', 'Autoformat', 'Bold', 'Italic', 'BlockQuote', 'CKFinder', 'CloudServices', 'EasyImage', 'Heading', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'Indent', 'Link', 'List', 'MediaEmbed', 'Paragraph', 'PasteFromOffice', 'Table', 'TableToolbar', 'TextTransformation', ],
 
                                                         // toolbar: {
