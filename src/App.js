@@ -7,8 +7,8 @@ import LogIn from './components/LogIn'
 import Signup from './components/Signup'
 import Join from './components/Join'
 import Home from './components/home/Home'
-import CodePlayground from './components/c/CodePlayground'
-import Courses from './components/c/Courses'
+import CodePlayground from './components/courses/CodePlayground'
+import Courses from './components/courses/Courses'
 
 export default function App() {
   return (
