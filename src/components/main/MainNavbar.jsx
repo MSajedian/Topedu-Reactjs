@@ -1,10 +1,8 @@
 import { Component } from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
-import { FcAbout } from 'react-icons/fc';
-
-// import { Container, Row, Col } from 'react-bootstrap';
-// import { FcAbout } from 'react-icons/fc';
+import { FcConferenceCall } from 'react-icons/fc';
 import { Link } from "react-router-dom";
+
 class MainNavbar extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +12,7 @@ class MainNavbar extends Component {
         return (
             <Navbar bg="light" expand="lg" className="mx-3">
                 <Link to="/">
-                    <Navbar.Brand> <FcAbout style={{ fontSize: 40 }} className="mb-3" />TopEdu </Navbar.Brand>
+                    <Navbar.Brand> <FcConferenceCall style={{ fontSize: 40 }} className="mb-3" />TopEdu </Navbar.Brand>
                 </Link>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">

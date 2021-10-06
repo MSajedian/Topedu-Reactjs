@@ -29,7 +29,7 @@ function useProvideAuth() {
             fetch(BackendURL + "/users/login", {
                 method: 'POST',
                 credentials: 'include',
-                headers: { 'Content-Type': 'application/json', 'Accepts': 'application/json' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ "email": email, "password": password }) // body data type must match "Content-Type" header
             })
                 .then(res => res.json())

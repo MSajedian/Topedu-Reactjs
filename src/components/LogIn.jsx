@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { FcAbout } from 'react-icons/fc';
+import { FcConferenceCall } from 'react-icons/fc';
 
 import {
     // BrowserRouter as Router,
@@ -32,8 +32,8 @@ export default function LogIn() {
     return (
         <Container className="my-5" style={{ backgroundColor: "white", width: "50vw", padding: "10vw", border: "2px solid #b6b6b6", borderRadius: "5px" }}>
             <Row className="text-center">
-                <FcAbout style={{ fontSize: 50 }} className="mb-3" />
-                <b className="mb-4">Log in to TopEdu</b>
+                <FcConferenceCall style={{ fontSize: 50 }} className="mb-3" />
+                <b className="mb-4">Log in</b>
             </Row>
             <Row className="justify-content-center">
                 <Col>

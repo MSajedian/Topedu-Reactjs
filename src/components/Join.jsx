@@ -1,6 +1,6 @@
 import React, { useDebugValue, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
-import { FcAbout } from 'react-icons/fc';
+import { FcConferenceCall } from 'react-icons/fc';
 import { useParams } from "react-router-dom";
 
 // import React, { useContext, createContext, useState } from "react";
@@ -83,7 +83,7 @@ export default function Join() {
     return (
         <Container className="my-5" style={{ backgroundColor: "white", width: "50vw", padding: "10vw", border: "2px solid #b6b6b6", borderRadius: "5px" }}>
             <Row className="text-center">
-                <FcAbout style={{ fontSize: 50 }} className="mb-3" />
+                <FcConferenceCall style={{ fontSize: 50 }} className="mb-3" />
                 <b className="mb-4">Join TopEdu</b>
             </Row>
             <Row className="justify-content-center">

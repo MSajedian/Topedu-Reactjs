@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { Container } from 'react-bootstrap';
 import { Row, Col, CardGroup, Card, Carousel } from 'react-bootstrap';
 // import { FcReadingEbook } from 'react-icons/fc';
-// import { FcAbout } from 'react-icons/fc';
+// import { FcConferenceCall } from 'react-icons/fc';
 import MainNavbar from './MainNavbar'
 import { Link } from "react-router-dom";
 
