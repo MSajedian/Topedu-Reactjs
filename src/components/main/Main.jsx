@@ -17,6 +17,7 @@ class Main extends Component {
                 <MainNavbar />
                 {/* <Container className="my-5" style={{ backgroundColor: "white", width: "50vw", padding: "10vw", border: "2px solid #b6b6b6", borderRadius: "5px" }}> */}
                 <Container>
+                    <h1 className="display-3 text-center">COLLABORATIVE LEARNING PLATFORM</h1>
                     <Carousel fade>
                         <Carousel.Item interval={1000}>
                             <img
@@ -54,7 +55,6 @@ class Main extends Component {
                     </Carousel>
                     <Row className="p-4 p-md-5 mb-4 text-center">
                         <div>
-                            <h1 className="display-3">COLLABORATIVE LEARNING PLATFORM</h1>
                             <p className="lead my-3">Learning experiences made easy, social and interactive
                                 Increase learner engagement & knowledge retention in higher education and corporate training settings
                             </p>
