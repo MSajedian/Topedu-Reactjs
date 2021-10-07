@@ -6,7 +6,7 @@ import UseAuth from '../auth/UseAuth';
 import OffCanvasCodePlayground from './OffCanvasCodePlayground';
 import OffCanvasCourseParticipants from './OffCanvasCourseParticipants';
 
-function CoursesNavbar({ userType }) {
+export default function CoursesNavbar({ userType }) {
     const auth = UseAuth();
     const history = useHistory();
     const userName = useSelector((state) => state.user.userName)
@@ -74,5 +74,3 @@ function CoursesNavbar({ userType }) {
         </Navbar >
     );
 }
-
-export default CoursesNavbar;

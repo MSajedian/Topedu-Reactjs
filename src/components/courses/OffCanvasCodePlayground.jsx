@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { Container, Row, Col } from 'react-bootstrap';
 import Editor from "@monaco-editor/react";
 
-function OffCanvasCodePlayground({ ...props }) {
+export default function OffCanvasCodePlayground({ ...props }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -87,7 +87,6 @@ function OffCanvasCodePlayground({ ...props }) {
   );
 }
 
-export default OffCanvasCodePlayground;
 
 
 

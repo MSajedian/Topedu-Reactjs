@@ -8,31 +8,34 @@ import OffCanvasInstitutionParticipants from './OffCanvasInstitutionParticipants
 // ***************************************************
 // The forwardRef is important!!
 // Dropdown needs access to the DOM node in order to position the Menu
-const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <>
-        <Link
-            to="/"
-            ref={ref}
-            onClick={(e) => {
-                e.preventDefault();
-                onClick(e);
-            }}
-            style={{ border: "gray solid 1px", padding: "3px 8px 8px 8px" }} className="rounded"
-        >{children}
-        </Link>
-        {/* 
-        <a href="/" ref={ref} onClick={(e) => { e.preventDefault(); onClick(e); }} style={{ border: "gray solid 1px", padding: "3px 8px 8px 8px" }} className="rounded" >
-            {children}
-        </a> */}
-    </>
-));
+
 // ***************************************************
 
-function HomeNavbar({ institutions, userType }) {
+export default function HomeNavbar({ institutions, userType }) {
+
     const userName = useSelector((state) => state.user.userName)
     let history = useHistory();
     let auth = UseAuth();
     const [selectedInstitution, setSelectedInstitution] = useState({});
+
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+        <>
+            <Link
+                to="/"
+                ref={ref}
+                onClick={(e) => {
+                    e.preventDefault();
+                    onClick(e);
+                }}
+                style={{ border: "gray solid 1px", padding: "3px 8px 8px 8px" }} className="rounded"
+            >{children}
+            </Link>
+            {/* 
+                <a href="/" ref={ref} onClick={(e) => { e.preventDefault(); onClick(e); }} style={{ border: "gray solid 1px", padding: "3px 8px 8px 8px" }} className="rounded" >
+                    {children}
+                </a> */}
+        </>
+    ));
 
     useEffect(() => {
         setSelectedInstitution(institutions[0])
@@ -81,7 +84,7 @@ function HomeNavbar({ institutions, userType }) {
                 </Nav.Item>
                 {userType === "admin" || userType === "instructor" ?
                     <Nav.Item className="mx-lg-1 mx-3 my-1">
-                        <OffCanvasInstitutionParticipants placement="top" institutionid={selectedInstitution._id}/>
+                        <OffCanvasInstitutionParticipants placement="top" institutionid={selectedInstitution._id} />
                     </Nav.Item>
                     : <></>}
                 <Dropdown className="mx-lg-1 mx-3 my-1">
@@ -102,5 +105,3 @@ function HomeNavbar({ institutions, userType }) {
     );
 }
 
-
-export default HomeNavbar;

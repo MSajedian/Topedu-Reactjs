@@ -1,14 +1,13 @@
 import React, { useDebugValue, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Modal, Placeholder, Row, Tab, Tabs, Alert } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { withRouter } from "react-router";
 import { useHistory } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 import HomeNavbar from './HomeNavbar';
 
 const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
-function Home(props) {
+export default function Home() {
     const history = useHistory();
     const auth = UseAuth();
     const userName = useSelector((state) => state.user.userName)
@@ -165,7 +164,7 @@ function Home(props) {
                                         courses.map((course, index) => (
                                             <Col key={`course${index}`}>
                                                 <Card className="position-relative border border-secondary" >
-                                                    <Card.Img style={{ height: '40vh' }} variant="top" src={course.cover} onClick={() => (props.history.push(`/courses/${course._id}`))} />
+                                                    <Card.Img style={{ height: '40vh' }} variant="top" src={course.cover} onClick={() => (history.push(`/courses/${course._id}`))} />
                                                     <Card.Body className="border border-primary border-end-0 border-bottom-0 border-start-0">
                                                         <Card.Title className="d-flex justify-content-center">
                                                             {userType === "admin" || userType === "instructor" ?
@@ -236,7 +235,7 @@ function Home(props) {
                         <Tab eventKey="codePlayground" title={codePlaygroundTabTitle()}>
                             <Row xs={1} md={2} className="mt-1 g-4" id="link-2" >
                                 <Col>
-                                    <Card onClick={() => (props.history.push(`/code-playground`))} className="btn">
+                                    <Card onClick={() => (history.push(`/code-playground`))} className="btn">
                                         <Card.Img variant="top" src={window.location.origin + '/code-playground.jpg'} />
                                         < Card.Body >
                                             <Card.Title>Code Playground</Card.Title>
@@ -252,5 +251,3 @@ function Home(props) {
         </>
     );
 }
-
-export default withRouter(Home);

@@ -1,4 +1,4 @@
-import React, { useState, useDebugValue } from 'react';
+import React, { useState, useDebugValue, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Button, Dropdown, Nav, Navbar } from 'react-bootstrap';
 import Editor from "@monaco-editor/react";
@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { Link, useHistory } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 
-function CodePlayground() {
+export default function CodePlayground() {
     const auth = UseAuth();
     const history = useHistory();
     const userName = useSelector((state) => state.user.userName)
@@ -14,7 +14,12 @@ function CodePlayground() {
     const [srcdocOfIframe, setSrcdocOfIframe] = useStateWithLabel(``, "srcdocOfIframe");
     const [htmlTextAreaValue, setHtmlTextAreaValue] = useStateWithLabel(`<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>Document</title>\n</head>\n\n<body>\n<p id='p1'>this is a paraghraph</p>\n</body>\n\n</html>`, "htmlTextAreaValue");
     const [cssTextAreaValue, setCssTextAreaValue] = useStateWithLabel(`p{\ncolor: red\n}`, "cssTextAreaValue");
-    const [jsTextAreaValue, setJsTextAreaValue] = useStateWithLabel(`let body=document.querySelector('body')\nbody.style.backgroundColor='yellow'`, "jsTextAreaValue");
+    const [jsTextAreaValue, setJsTextAreaValue] = useStateWithLabel(`let body=document.querySelector('body')\nbody.style.backgroundColor='gray'`, "jsTextAreaValue");
+
+    useEffect(() => {
+        setHtmlTextAreaValue(`<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">  <!-- Bootstrap CSS -->\n<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">  <title>Hello, world!</title>\n</head>\n<body>\n<h1>Hello, world!</h1>\n<p>This is a paraghraph</p>\n  <!-- Optional JavaScript; choose one of the two! -->  <!-- Option 1: Bootstrap Bundle with Popper -->\n<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>  <!-- Option 2: Separate Popper and Bootstrap JS -->\n<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>\n<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.min.js" integrity="sha384-PsUw7Xwds7x08Ew3exXhqzbhuEYmA2xnwc8BuD6SEr+UmEHlX8/MCltYEodzWA4u" crossorigin="anonymous"></script> -->\n</body>\n</html>`)
+        // eslint-disable-next-line
+    }, [])
 
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
@@ -37,6 +42,7 @@ function CodePlayground() {
                 <div><Link to="/home" style={{ border: "gray solid 1px", padding: "3px 8px 7px 8px" }} className="rounded mx-3">
                     <svg fill="blue" width="16px" height="16px" viewBox="0 0 16 16" className=" Icons__icon-size___3XuUV"><path className="fill accent-color" d="M10,9 L14,9 C14.5522847,9 15,9.44771525 15,10 L15,14 C15,14.5522847 14.5522847,15 14,15 L10,15 C9.44771525,15 9,14.5522847 9,14 L9,10 C9,9.44771525 9.44771525,9 10,9 Z M10,10 L10,14 L14,14 L14,10 L10,10 Z M2,9 L6,9 C6.55228475,9 7,9.44771525 7,10 L7,14 C7,14.5522847 6.55228475,15 6,15 L2,15 C1.44771525,15 1,14.5522847 1,14 L1,10 C1,9.44771525 1.44771525,9 2,9 Z M2,10 L2,14 L6,14 L6,10 L2,10 Z M10,1 L14,1 C14.5522847,1 15,1.44771525 15,2 L15,6 C15,6.55228475 14.5522847,7 14,7 L10,7 C9.44771525,7 9,6.55228475 9,6 L9,2 C9,1.44771525 9.44771525,1 10,1 Z M10,2 L10,6 L14,6 L14,2 L10,2 Z M2,1 L6,1 C6.55228475,1 7,1.44771525 7,2 L7,6 C7,6.55228475 6.55228475,7 6,7 L2,7 C1.44771525,7 1,6.55228475 1,6 L1,2 C1,1.44771525 1.44771525,1 2,1 Z M2,2 L2,6 L6,6 L6,2 L2,2 Z"></path></svg>
                 </Link></div>
+                <div className="fs-3"> 👨‍💻 Code Playground </div>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav navbarScroll > </Nav>
@@ -55,10 +61,9 @@ function CodePlayground() {
                 </Navbar.Collapse>
             </Navbar >
             <Container>
-                <h3>Code Playground</h3>
                 <Row>
                     <Col xs={12} md={4}>
-                        <label>HTML</label>
+                        <div className="fs-3 fw-bold text-center">HTML</div>
                         <Editor
                             height="300px"
                             defaultLanguage="html"
@@ -68,7 +73,7 @@ function CodePlayground() {
                         />
                     </Col>
                     <Col xs={12} md={4}>
-                        <label>CSS</label>
+                        <div className="fs-3 fw-bold text-center">CSS</div>
                         <Editor
                             height="300px"
                             defaultLanguage="css"
@@ -78,7 +83,7 @@ function CodePlayground() {
                         />
                     </Col>
                     <Col xs={12} md={4}>
-                        <label>JavaScript</label>
+                        <div className="fs-3 fw-bold text-center">JavaScript</div>
                         <Editor
                             height="300px"
                             defaultLanguage="javascript"
@@ -114,7 +119,6 @@ function CodePlayground() {
     )
 }
 
-export default CodePlayground;
 
 
 

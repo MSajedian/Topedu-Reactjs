@@ -1,12 +1,13 @@
 import React, { useDebugValue, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Modal, Offcanvas, Row, Spinner, Table, Alert } from 'react-bootstrap';
 import { BsTrash, BsClipboard, BsClipboardCheck } from 'react-icons/bs';
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 const FrontendURL = process.env.REACT_APP_FRONTEND_CLOUD_URL || process.env.REACT_APP_FRONTEND_LOCAL_URL
 
-function OffCanvasCourseParticipants({ ...props }) {
+export default function OffCanvasCourseParticipants({ ...props }) {
+  const history = useHistory();
   const { courseId } = useParams();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -29,6 +30,8 @@ function OffCanvasCourseParticipants({ ...props }) {
     useDebugValue(`${name}: ${value}`);
     return [value, setValue];
   }
+
+
 
   const handleSubmitCreateInvitation = (event) => {
     event.preventDefault();
@@ -84,7 +87,7 @@ function OffCanvasCourseParticipants({ ...props }) {
         body: JSON.stringify(course) // body data type must match "Content-Type" header
       })
         .then(res => {
-          if (!res.ok) { throw new Error('Login Again') }
+          if (!res.ok) { history.push("/login") }
           else {
             if (isRefreshContentneeded === true) { getCourse() }
           }
@@ -157,14 +160,21 @@ function OffCanvasCourseParticipants({ ...props }) {
                   <Form.Label className="mt-2">Email address</Form.Label>
                   <Form.Control type="email" placeholder="Enter email" onChange={(e) => (setEmail(e.target.value))} required />
                   <hr />
-                  <Button type="submit" >Create an Invitation Link</Button>
+                  <Button type="submit" className="align-self-center" >Create an Invitation</Button>
                   <hr />
-                  {courseInvitationLink ? <><Alert key={courseInvitationLink} variant="info" className="text-center overflow-auto"> {courseInvitationLink} </Alert>
-                    {/* <Button className="mt-1" onClick={() => { navigator.clipboard.writeText(courseInvitationLink) }}>Copy Link</Button> */}
-                    Copy Link: <Button variant="success" className="mt-1" onClick={() => { setIsCopied(true); navigator.clipboard.writeText(courseInvitationLink); setTimeout(function () { setIsCopied(false) }, 1500); }}>
-                      {isCopied ? <BsClipboardCheck size="1.5em" color="white" /> : <BsClipboard size="1.5em" color="white" />}
-                    </Button></>
-
+                  {courseInvitationLink ?
+                    <Container>
+                      <Row className="justify-content-center">
+                        <Col xs={2} className="pb-3">
+                          <Button variant="success" className="" onClick={() => { setIsCopied(true); navigator.clipboard.writeText(courseInvitationLink); setTimeout(function () { setIsCopied(false) }, 1500); }}>
+                            {isCopied ? <BsClipboardCheck size="1.5em" color="white" /> : <BsClipboard size="1.5em" color="white" />}
+                          </Button>
+                        </Col>
+                        <Col xs={10} className="p-0">
+                          <Alert key={courseInvitationLink} variant="info" className="overflow-auto"> {courseInvitationLink} </Alert>
+                        </Col>
+                      </Row>
+                    </Container>
                     : <></>}
                   {messageFromServer ? <Alert key={messageFromServer} variant="info" className="text-center"> {messageFromServer} </Alert> : <></>}
                 </Form>
@@ -304,7 +314,6 @@ function OffCanvasCourseParticipants({ ...props }) {
   );
 }
 
-export default OffCanvasCourseParticipants;
 
 
 

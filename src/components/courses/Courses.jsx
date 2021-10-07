@@ -10,7 +10,7 @@ import CoursesNavbar from './CoursesNavbar';
 
 const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
-function Courses() {
+export default function Courses() {
     const history = useHistory();
     const auth = UseAuth();
     const { courseId } = useParams();
@@ -76,7 +76,7 @@ function Courses() {
                 body: JSON.stringify(course) // body data type must match "Content-Type" header
             })
                 .then(res => {
-                    if (!res.ok) { throw new Error('Login Again') }
+                    if (!res.ok) { history.push("/login") }
                     else {
                         if (isRefreshContentneeded === true) { getCourse() }
                     }
@@ -423,7 +423,6 @@ function Courses() {
     )
 }
 
-export default Courses;
 
 
 

@@ -81,22 +81,3 @@ export function PrivateRoute({ children, ...rest }) {
         />
     );
 }
-
-// export function GetNewAccessToken() {
-//     let history = useHistory();
-//     let auth = UseAuth();
-
-//     try {
-//         fetch(BEURL + "/users/refreshToken", {
-//             credentials: 'include',
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//         })
-//             .then(res => {
-//                 console.log('res:', res)
-//                 if (res.status(401)) { auth.signout(() => history.push("/login")) }
-//             })
-//     } catch (error) {
-//         console.log('error:', error)
-//     }
-// }

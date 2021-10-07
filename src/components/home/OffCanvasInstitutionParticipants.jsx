@@ -1,11 +1,12 @@
 import React, { useDebugValue, useEffect, useState } from "react";
 import { Alert, Button, Col, Container, Form, Modal, Offcanvas, Row, Spinner, Table } from 'react-bootstrap';
-// import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 const FrontendURL = process.env.REACT_APP_FRONTEND_CLOUD_URL || process.env.REACT_APP_FRONTEND_LOCAL_URL
 
-function OffCanvasInstitutionParticipants({ ...props }) {
+export default function MaiOffCanvasInstitutionParticipantsn({ ...props }) {
+  const history = useHistory();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
@@ -83,7 +84,7 @@ function OffCanvasInstitutionParticipants({ ...props }) {
         body: JSON.stringify(institution) // body data type must match "Content-Type" header
       })
         .then(res => {
-          if (!res.ok) { throw new Error('Login Again') }
+          if (!res.ok) { history.push("/login") }
           else {
             if (isRefreshContentneeded === true) { getInstitution() }
           }
@@ -168,10 +169,10 @@ function OffCanvasInstitutionParticipants({ ...props }) {
                   <Form.Label className="mt-2">Email address</Form.Label>
                   <Form.Control type="email" placeholder="Enter email" onChange={(e) => (setEmail(e.target.value))} required />
                   <hr />
-                  <Button type="submit" >Create an Invitation Link</Button>
+                  <Button type="submit" >Create an Invitation</Button>
                   <hr />
                   {institutionInvitationLink ? <><Alert key={institutionInvitationLink} variant="info" className="text-center overflow-auto"> {institutionInvitationLink} </Alert>
-                    <Button className="mt-1" onClick={() => { navigator.clipboard.writeText(institutionInvitationLink) }}>Copy Link</Button></>
+                    <Button className="text-center mt-1" onClick={() => { navigator.clipboard.writeText(institutionInvitationLink) }}>Copy Link</Button></>
                     : <></>}
                   {messageFromServer ? <Alert key={messageFromServer} variant="info" className="text-center"> {messageFromServer} </Alert> : <></>}
                 </Form>
@@ -344,7 +345,6 @@ function OffCanvasInstitutionParticipants({ ...props }) {
   );
 }
 
-export default OffCanvasInstitutionParticipants;
 
 
 
