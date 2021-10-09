@@ -4,8 +4,8 @@ import { FcConferenceCall } from 'react-icons/fc';
 import { useParams } from "react-router-dom";
 
 // import React, { useContext, createContext, useState } from "react";
-// import { useHistory, useLocation } from "react-router-dom";
-// import UseAuth from './auth/UseAuth'
+import { useHistory } from "react-router-dom";
+import UseAuth from './auth/UseAuth'
 
 const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
@@ -24,42 +24,63 @@ export default function Join() {
         return [value, setValue];
     }
 
-    // let history = useHistory();
-    // let location = useLocation();
-    // let auth = UseAuth();
+    let history = useHistory();
+    let auth = UseAuth();
 
-    // let { from } = location.state || { from: { pathname: "/home" } };
-    // const login = () => {
-    //     auth.signin(email, password, () => {
-    //         history.replace(from);
-    //     });
-    // };
+    const login = () => {
+        console.log('-----------------login------------------')
+        auth.signin(email, password, () => {
+            history.replace({ pathname: "/home" });
+        });
+    };
 
     const signUp = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        console.log('name:', name)
+        joinCourse()
+    };
+
+    const getUserFromCourse = () => {
+        try {
+            fetch(`${BackendURL}/courses/${courseId}/notEnrolledUser/${userId}`, {
+                credentials: 'include',
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            })
+                .then(res => res.json())
+                .then((response) => { setEmail(response.email) })
+        } catch (error) { console.log('error:', error) }
     };
 
     const joinCourse = () => {
         try {
             fetch(`${BackendURL}/courses/${courseId}/join/${userId}`, {
                 credentials: 'include',
-                method: 'GET',
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, surname, email, password })
             })
                 .then(res => res.json())
                 .then(
                     (response) => {
-                        // setCourse(response.course)
-                        // setEditableCourseTitle(response.course.title)
-                        // setChangeCourseCover(response.course.cover)
-                        // setUserType(response.userType)
+                        if (response) {login();console.log('-----------joinCourse------------------')}
                     }
                 )
         } catch (error) {
             console.log('error:', error)
         }
+    };
+
+    const getUserFromCourseInstitution = () => {
+        try {
+            fetch(`${BackendURL}/institutions/${courseId}/notEnrolledUser/${userId}`, {
+                credentials: 'include',
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            })
+                .then(res => res.json())
+                .then((response) => { setEmail(response.email) })
+        } catch (error) { console.log('error:', error) }
     };
 
     const joinInstitution = () => {
@@ -74,9 +95,10 @@ export default function Join() {
         } catch (error) { console.log('error:', error) }
     };
 
+
     useEffect(() => {
-        if (courseId) joinCourse();console.log("---------------");
-        if (institutionId) joinInstitution()
+        if (courseId) getUserFromCourse();
+        if (institutionId) getUserFromCourseInstitution();
         // eslint-disable-next-line
     }, [])
 
@@ -99,7 +121,7 @@ export default function Join() {
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                            <Form.Control type="email" readOnly defaultValue={email} />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
@@ -107,7 +129,7 @@ export default function Join() {
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicrepPassword">
                             <Form.Label>Repeat Password</Form.Label>
-                            <Form.Control type="repPassword" value={repPassword} onChange={(e) => setRepPassword(e.target.value)} required />
+                            <Form.Control type="password" value={repPassword} onChange={(e) => setRepPassword(e.target.value)} required />
                         </Form.Group>
                         <Button type="submit" >Sign up</Button>
                     </Form>

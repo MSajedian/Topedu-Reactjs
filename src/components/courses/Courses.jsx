@@ -358,7 +358,10 @@ export default function Courses() {
                                                 config={
                                                     {
                                                         extraPlugins: [uploadPlugin],
-
+                                                        toolbar: ['mediaEmbed' ]
+                                                        // mediaEmbed: {
+                                                        //     // configuration...
+                                                        // }
                                                         // toolbar: [ 'Essentials', 'CKFinderUploadAdapter', 'Autoformat', 'Bold', 'Italic', 'BlockQuote', 'CKFinder', 'CloudServices', 'EasyImage', 'Heading', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'Indent', 'Link', 'List', 'MediaEmbed', 'Paragraph', 'PasteFromOffice', 'Table', 'TableToolbar', 'TextTransformation', ],
 
                                                         // toolbar: {
@@ -378,7 +381,11 @@ export default function Courses() {
                                                         //     ],
                                                         //     shouldNotGroupWhenFull: true
                                                         // }
-
+                                                        // plugins: [Table, TableToolbar, Bold],
+                                                        // toolbar: ['insertTable'],
+                                                        // table: {
+                                                        //     contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'TableToolbar', 'tableProperties', 'tableCellProperties']
+                                                        // }
                                                         // plugins: [ MediaEmbed ]
                                                         // toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
                                                         // heading: {

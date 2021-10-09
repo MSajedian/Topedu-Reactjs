@@ -30,11 +30,11 @@ export default function OffCanvasCodePlayground({ ...props }) {
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>👨‍💻 Code Playground</Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body>
+        <Offcanvas.Body className="pt-0">
           <Container>
             <Row>
               <Col xs={12} md={4}>
-                <label>HTML</label>
+                <div className="text-center fw-bold">HTML</div>
                 <Editor
                   height="200px"
                   defaultLanguage="html"
@@ -44,7 +44,7 @@ export default function OffCanvasCodePlayground({ ...props }) {
                 />
               </Col>
               <Col xs={12} md={4}>
-                <label>CSS</label>
+                <div className="text-center fw-bold">CSS</div>
                 <Editor
                   height="200px"
                   defaultLanguage="css"
@@ -54,7 +54,7 @@ export default function OffCanvasCodePlayground({ ...props }) {
                 />
               </Col>
               <Col xs={12} md={4}>
-                <label>JavaScript</label>
+                <div className="text-center fw-bold">JavaScript</div>
                 <Editor
                   height="200px"
                   defaultLanguage="javascript"

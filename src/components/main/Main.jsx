@@ -1,9 +1,9 @@
-import { Container } from 'react-bootstrap';
-import { Row, Col, CardGroup, Card, Carousel } from 'react-bootstrap';
+import { Carousel, Col, Container, Row } from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import MainNavbar from './MainNavbar';
+// import { CardGroup, Card } from 'react-bootstrap';
 // import { FcReadingEbook } from 'react-icons/fc';
 // import { FcConferenceCall } from 'react-icons/fc';
-import MainNavbar from './MainNavbar'
-import { Link } from "react-router-dom";
 
 export default function Main() {
     return (
@@ -47,7 +47,7 @@ export default function Main() {
                         </Carousel.Caption>
                     </Carousel.Item>
                 </Carousel>
-                <Row className="p-4 p-md-5 mb-4 text-center">
+                <Row className="p-4 text-center">
                     <div>
                         <p className="lead my-3">Learning experiences made easy, social and interactive
                             Increase learner engagement & knowledge retention in higher education and corporate training settings
@@ -59,14 +59,14 @@ export default function Main() {
                         </Link>
                     </Col>
                 </Row>
-                <Row className="p-4 p-md-5 mb-4 text-center">
+                <Row className="p-4 text-center">
                     <Col>
                         Fast & easy course creation
                         Engage learners with collaborative activities
                         Track learner progress & measure engagement
                     </Col>
                 </Row>
-                <Row className="p-4 p-md-5 mb-4 text-center">
+                {/* <Row className="p-4 p-md-5 mb-4 text-center">
                     <Col>
                         <div>Built to empower every instructor
                             With our expansive and flexible platform, Eduflow supports a wide range of learning experiences.
@@ -106,7 +106,7 @@ export default function Main() {
                             </Card>
                         </CardGroup>
                     </Col>
-                </Row>
+                </Row> */}
                 <footer className="pt-4 my-md-5 pt-md-5 border-top">
                     <Row>
                         <Col>

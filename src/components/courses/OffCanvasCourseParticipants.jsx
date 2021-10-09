@@ -1,6 +1,8 @@
 import React, { useDebugValue, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Modal, Offcanvas, Row, Spinner, Table, Alert } from 'react-bootstrap';
 import { BsTrash, BsClipboard, BsClipboardCheck } from 'react-icons/bs';
+import { BiMailSend } from 'react-icons/bi';
+import { FiMail } from 'react-icons/fi';
 import { useHistory, useParams } from "react-router-dom";
 
 const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
@@ -16,14 +18,16 @@ export default function OffCanvasCourseParticipants({ ...props }) {
   const [role, setRole] = useStateWithLabel("Learner", "role");
   const [name, setName] = useStateWithLabel("", "name");
   const [email, setEmail] = useStateWithLabel("", "email");
-  const [courseInvitationLink, setCourseInvitationLink] = useStateWithLabel("", "courseInvitationLink");
-  const [messageFromServer, setMessageFromServer] = useStateWithLabel("", "messageFromServer");
   const [refreshState, setRefreshState] = useStateWithLabel(false, "refreshState");
+  const [courseInvitationLink, setCourseInvitationLink] = useStateWithLabel("", "courseInvitationLink");
+  const [CourseInvitatedUser, setCourseInvitatedUser] = useStateWithLabel({}, "CourseInvitatedUser");
+  const [messageFromServer, setMessageFromServer] = useStateWithLabel("", "messageFromServer");
   const [isCopied, setIsCopied] = useStateWithLabel(false, "isCopied");
+  const [isSent, setIsSent] = useStateWithLabel(false, "isSent");
 
   const [showCreateInvitationModal, setShowCreateInvitationModal] = useState(false);
   const handleCloseCreateInvitationModal = () => setShowCreateInvitationModal(false);
-  const handleShowCreateInvitationModal = () => { setShowCreateInvitationModal(true); setCourseInvitationLink(""); setMessageFromServer("") }
+  const handleShowCreateInvitationModal = () => { setShowCreateInvitationModal(true); setCourseInvitationLink(""); setMessageFromServer(""); setCourseInvitatedUser({}) }
 
   function useStateWithLabel(initialValue, name) {
     const [value, setValue] = useState(initialValue);
@@ -36,7 +40,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
   const handleSubmitCreateInvitation = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    postInvitation()
+    postInvitationRequest()
   };
 
   const getCourse = () => {
@@ -57,22 +61,39 @@ export default function OffCanvasCourseParticipants({ ...props }) {
     }
   };
 
-  const postInvitation = () => {
+  const postInvitationRequest = () => {
     try {
       fetch(`${BackendURL}/courses/${courseId}/invitation`, {
         credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ "name": name, "role": role, "email": email }) // body data type must match "Content-Type" header
+        body: JSON.stringify({ name, role, email }) // body data type must match "Content-Type" header
       })
         .then(res => (res.json()))
         .then(
           (result) => {
-            if (result._id) { setCourseInvitationLink(`${FrontendURL}/join/course/${courseId}/${result._id}`) }
+            if (result._id) {
+              setCourseInvitationLink(`${FrontendURL}/join/course/${courseId}/${result._id}`)
+              setCourseInvitatedUser(result)
+            }
             else { setMessageFromServer(result.message) }
             getCourse()
           }
         )
+    } catch (error) {
+      console.log('error:', error)
+    }
+  };
+
+  const sendInvitationEmail = (userId, userEmail) => {
+    try {
+      fetch(`${BackendURL}/courses/${courseId}/sendemail/invitation/${userId}`, {
+        credentials: 'include',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'email': userEmail })
+      })
+        .then(res => (res.json()))
     } catch (error) {
       console.log('error:', error)
     }
@@ -133,11 +154,11 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                 </Form> 
               </Col> */}
               <Col>
-                <button className="btn btn-info d-flex ms-auto" onClick={handleShowCreateInvitationModal}>
+                <Button variant="outline-success" className="d-flex ms-auto align-items-center" onClick={handleShowCreateInvitationModal}>
                   <svg width="16px" height="16px" viewBox="0 0 16 16"><path fillRule="evenodd" d="M13.87 1.07216C13.8593 1.07797 13.8488 1.08412 13.8384 1.09063L1.51649 8.79323C1.3384 8.90468 1.23 9.10001 1.23 9.31C1.23 9.64652 1.5028 9.91933 1.83933 9.91933H7.15121L13.87 1.07216ZM14.7667 1.54479L8.02594 10.421L11.2728 14.7552C11.3646 14.877 11.4988 14.9605 11.6481 14.9887C11.9787 15.0508 12.2971 14.8332 12.3593 14.5028L14.7593 1.72106C14.7703 1.66267 14.7727 1.60325 14.7667 1.54479ZM1.83933 10.9193H5.23334V13.8667C5.23334 14.7546 5.953 15.4753 6.842 15.4753C7.16528 15.4753 7.48133 15.3777 7.74815 15.1959L7.74827 15.1958L9.47285 14.0204L10.4732 15.3558L10.4739 15.3568C10.7154 15.6774 11.068 15.8968 11.4626 15.9713C12.3358 16.1357 13.1776 15.5614 13.342 14.6878L15.7419 1.90656C15.8171 1.50915 15.7398 1.09669 15.5253 0.753616C15.0541 -0.00016313 14.0615 -0.228168 13.3083 0.242696L0.986295 7.94535C0.516451 8.23925 0.229996 8.7547 0.229996 9.31C0.229996 10.1988 0.95052 10.9193 1.83933 10.9193ZM6.23334 10.9193V13.8667C6.23334 14.2027 6.50568 14.4753 6.842 14.4753C6.96401 14.4753 7.08392 14.4384 7.18507 14.3695L7.18519 14.3694L8.87184 13.2199L7.14972 10.9193H6.23334Z"></path></svg>
                   &nbsp;
                   <span>Invite Participants</span>
-                </button>
+                </Button>
                 {/* <div className="d-flex">
                   <div className="p-2 h1"><Button variant="primary" >+&nbsp;Create&nbsp;Invitation</Button></div>
                 </div> */}
@@ -166,8 +187,11 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                     <Container>
                       <Row className="justify-content-center">
                         <Col xs={2} className="pb-3">
-                          <Button variant="success" className="" onClick={() => { setIsCopied(true); navigator.clipboard.writeText(courseInvitationLink); setTimeout(function () { setIsCopied(false) }, 1500); }}>
-                            {isCopied ? <BsClipboardCheck size="1.5em" color="white" /> : <BsClipboard size="1.5em" color="white" />}
+                          <Button variant="outline-success" className="m-1" onClick={() => { setIsCopied(true); navigator.clipboard.writeText(courseInvitationLink); setTimeout(function () { setIsCopied(false) }, 1500); }}>
+                            {isCopied ? <BsClipboardCheck size="1.5em" /> : <BsClipboard size="1.5em" />}
+                          </Button>
+                          <Button variant="outline-info" className="m-1" onClick={() => { setIsSent(true); sendInvitationEmail(CourseInvitatedUser._id, CourseInvitatedUser.email); setTimeout(function () { setIsSent(false) }, 1500); }}>
+                            {isSent ? <BiMailSend size="1.5em" /> : <FiMail size="1.5em" />}
                           </Button>
                         </Col>
                         <Col xs={10} className="p-0">
@@ -191,6 +215,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                     <th className="text-center">Status</th>
                     <th className="text-center">Delete</th>
                     <th className="text-center">Link</th>
+                    <th className="text-center">Send Email</th>
                   </tr>
                 </thead>
                 {course.participants ?
@@ -201,6 +226,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                         <td>{admin.email}</td>
                         <td>Admin</td>
                         <td><Alert variant="success" className="m-0 p-0 text-center">Enrolled</Alert></td>
+                        <td className="text-center"></td>
                         <td className="text-center"></td>
                         <td className="text-center"></td>
                       </tr>
@@ -217,6 +243,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                           </Button>
                         </td>
                         <td className="text-center"></td>
+                        <td className="text-center"></td>
                       </tr>
                     ))}
                     {course.participants.assistants.map((assistant, Index) => (
@@ -230,6 +257,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                             <BsTrash size="1.5em" />
                           </Button>
                         </td>
+                        <td className="text-center"></td>
                         <td className="text-center"></td>
                       </tr>
                     ))}
@@ -245,6 +273,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                           </Button>
                         </td>
                         <td className="text-center"></td>
+                        <td className="text-center"></td>
                       </tr>
                     ))}
                     {course.notEnrolledUsers.learners.map((learner, Index) => (
@@ -252,7 +281,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                         <td>{learner.name} {learner.surname}</td>
                         <td>{learner.email}</td>
                         <td>Learner</td>
-                        <td><Alert variant="warning" className="m-0 p-0 text-center"> Not Enrolled </Alert></td>
+                        <td><Alert variant="outline-info" className="m-0 p-0 text-center"> Not Enrolled </Alert></td>
                         <td className="text-center">
                           <Button variant="outline-danger" className="p-2" onClick={() => { course.notEnrolledUsers.learners.splice(Index, 1); updateCourse(true) }}>
                             <BsTrash size="1.5em" />
@@ -262,6 +291,12 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                           <Button variant="outline-success" onClick={() => { learner.isCopied = true; setRefreshState(true); navigator.clipboard.writeText(`${FrontendURL}/join/course/${courseId}/${learner._id}`); setTimeout(function () { learner.isCopied = false; setRefreshState(false) }, 1500); }}>
                             {refreshState && learner.isCopied ? <BsClipboardCheck size="1.5em" /> : <BsClipboard size="1.5em" />}
                           </Button>
+
+                        </td>
+                        <td className="text-center">
+                          <Button variant="outline-info" onClick={() => { learner.isSent = true; setRefreshState(true); sendInvitationEmail(learner._id, learner.email); setTimeout(function () { learner.isSent = false; setRefreshState(false) }, 1500); }}>
+                            {refreshState && learner.isSent ? <BiMailSend size="1.5em" /> : <FiMail size="1.5em" />}
+                          </Button>
                         </td>
                       </tr>
                     ))}
@@ -270,7 +305,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                         <td>{assistant.name} {assistant.surname}</td>
                         <td>{assistant.email}</td>
                         <td>Assistant</td>
-                        <td><Alert variant="warning" className="m-0 p-0 text-center"> Not Enrolled </Alert></td>
+                        <td><Alert variant="outline-info" className="m-0 p-0 text-center"> Not Enrolled </Alert></td>
                         <td className="text-center">
                           <Button variant="outline-danger" className="p-2" onClick={() => { course.notEnrolledUsers.assistants.splice(Index, 1); updateCourse(true) }}>
                             <BsTrash size="1.5em" />
@@ -281,6 +316,11 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                             {refreshState && assistant.isCopied ? <BsClipboardCheck size="1.5em" /> : <BsClipboard size="1.5em" />}
                           </Button>
                         </td>
+                        <td className="text-center">
+                          <Button variant="outline-info" onClick={() => { assistant.isSent = true; setRefreshState(true); sendInvitationEmail(assistant._id, assistant.email); setTimeout(function () { assistant.isSent = false; setRefreshState(false) }, 1500); }}>
+                            {refreshState && assistant.isSent ? <BiMailSend size="1.5em" /> : <FiMail size="1.5em" />}
+                          </Button>
+                        </td>
                       </tr>
                     ))}
                     {course.notEnrolledUsers.instructors.map((instructor, Index) => (
@@ -288,7 +328,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                         <td>{instructor.name} {instructor.surname}</td>
                         <td>{instructor.email}</td>
                         <td>Instructor</td>
-                        <td> <Alert variant="warning" className="m-0 p-0 text-center"> Not Enrolled </Alert> </td>
+                        <td> <Alert variant="outline-info" className="m-0 p-0 text-center"> Not Enrolled </Alert> </td>
                         <td className="text-center">
                           <Button variant="outline-danger" className="p-2" onClick={() => { course.notEnrolledUsers.instructors.splice(Index, 1); updateCourse(true) }}>
                             <BsTrash size="1.5em" />
@@ -297,6 +337,11 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                         <td className="text-center">
                           <Button variant="success" onClick={() => { instructor.isCopied = true; setRefreshState(true); navigator.clipboard.writeText(`${FrontendURL}/join/course/${courseId}/${instructor._id}`); setTimeout(function () { instructor.isCopied = false; setRefreshState(false) }, 1500); }}>
                             {refreshState && instructor.isCopied ? <BsClipboardCheck size="1.5em" /> : <BsClipboard size="1.5em" />}
+                          </Button>
+                        </td>
+                        <td className="text-center">
+                          <Button variant="outline-info" onClick={() => { instructor.isSent = true; setRefreshState(true); sendInvitationEmail(instructor._id, instructor.email); setTimeout(function () { instructor.isSent = false; setRefreshState(false) }, 1500); }}>
+                            {refreshState && instructor.isSent ? <BiMailSend size="1.5em" /> : <FiMail size="1.5em" />}
                           </Button>
                         </td>
                       </tr>
