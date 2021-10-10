@@ -28,7 +28,6 @@ export default function Join() {
     let auth = UseAuth();
 
     const login = () => {
-        console.log('-----------------login------------------')
         auth.signin(email, password, () => {
             history.replace({ pathname: "/home" });
         });
@@ -63,7 +62,7 @@ export default function Join() {
                 .then(res => res.json())
                 .then(
                     (response) => {
-                        if (response) {login();console.log('-----------joinCourse------------------')}
+                        if (response) { login() }
                     }
                 )
         } catch (error) {
@@ -83,17 +82,17 @@ export default function Join() {
         } catch (error) { console.log('error:', error) }
     };
 
-    const joinInstitution = () => {
-        try {
-            fetch(`${BackendURL}/institutions/${institutionId}/join/${userId}`, {
-                credentials: 'include',
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            })
-                .then(res => res.json())
-            // .then((response) => { setInstitutions(response) })
-        } catch (error) { console.log('error:', error) }
-    };
+    // const joinInstitution = () => {
+    //     try {
+    //         fetch(`${BackendURL}/institutions/${institutionId}/join/${userId}`, {
+    //             credentials: 'include',
+    //             method: 'GET',
+    //             headers: { 'Content-Type': 'application/json' },
+    //         })
+    //             .then(res => res.json())
+    //         // .then((response) => { setInstitutions(response) })
+    //     } catch (error) { console.log('error:', error) }
+    // };
 
 
     useEffect(() => {
