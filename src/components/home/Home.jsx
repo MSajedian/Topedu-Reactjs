@@ -236,7 +236,7 @@ export default function Home() {
                             <Row xs={1} md={2} className="mt-1 g-4" id="link-2" >
                                 <Col>
                                     <Card onClick={() => (history.push(`/code-playground`))} className="btn">
-                                        <Card.Img variant="top" src={window.location.origin + '/code-playground.jpg'} />
+                                        <Card.Img variant="top" src={window.location.origin + '/assets/images/code-playground.jpg'} />
                                         < Card.Body >
                                             <Card.Title>Code Playground</Card.Title>
                                         </Card.Body>
