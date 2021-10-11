@@ -35,17 +35,24 @@ code {
   text-transform: capitalize;
   font-size: 18px;
   font-weight: 500;
-  border: 1px solid rgba(0, 255, 128, 0.507);
   -webkit-transition: all 0.3s ease-in;
   -o-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
   display: inline-block;
   text-decoration: none;
+  border: 1px solid #097a4281;
+}
+
+.button:hover {
+  color: #50be46;
+  /* background-color: transparent; */
+  background-color: #ffffff;
+  border: 1px solid #097a4281;
+
 }
 
 .button-login:hover {
   color: #50be46;
-  /* background-color: transparent; */
   background-color: #e8f3e9;
 }
 
