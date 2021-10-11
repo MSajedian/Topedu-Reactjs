@@ -170,9 +170,9 @@ export default function Courses() {
     }, [])
 
     return (
-        <>
+        <div className="course-background">
             <CoursesNavbar userType={userType ? userType : ""} />
-            <Tab.Container id="left-accordions-tabs">
+            <Tab.Container id="left-accordions-tabs" >
                 <Row className="p-0 m-0">
                     <Col sm={3}>
 
@@ -426,7 +426,7 @@ export default function Courses() {
                     </Col>
                 </Row>
             </Tab.Container>
-        </>
+        </div>
     )
 }
 

@@ -26,8 +26,8 @@ export default function Main() {
                 <div class="hero-shape">
                     <img src="assets/images/round-shape-4.png" alt="shape" class="hero-round-shape-4 item-moveTwo" />
                 </div>
-                <Container>
-                    <Row>
+                <Container className="">
+                    <Row className="align-items-center">
                         <Col lg={6} className="align-self-center">
                             <div class="hero-content">
                                 <h1><span>learning Online</span> becomes easier</h1>
@@ -43,9 +43,6 @@ export default function Main() {
                                     <img src="./assets/images/hero-small-image-4.png" alt="hero-small-4" class="hero-small-image-4" style={{ transform: `translate3d(${(valueX * -1) / 80}px, ${(valueY * -1) / 100}px, 0px)` }} />
                                 </div>
                                 <Image src="./assets/images/online-learning.png" alt="hero"  />
-                                {/* <Image src="assets/images/technical-workshops.png" alt="hero"  /> */}
-                                {/* <Image src="assets/images/Online-Learn-Courses-p1x1yjmoc2f9t2e3kt028qnv3vp2cb51rm1isamguc.png" alt="hero"  /> */}
-                                {/* <Image src="assets/images/Coursera-Clone-Script-to-Build-Online-Course-Software-vector-image.png" alt="hero"  /> */}
                             </div>
                         </Col>
                     </Row>

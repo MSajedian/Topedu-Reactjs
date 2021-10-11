@@ -134,14 +134,15 @@ export default function Home() {
 
     return (
         <>
-            <HomeNavbar institutions={institutions} userType={userType ? userType : ""}/>
-            <div className="UserOverview pt-2">
-                <Container>
-                    <div className="d-flex">
-                        <div className="me-auto p-2 h1">Hello {userName}, good to see you again! 👋</div>
-                        <div className="p-2 h1">{userType === "admin" || userType === "instructor" ? <Button variant="primary" onClick={handleShowCreateCourseModal}>+&nbsp;Create&nbsp;Course</Button> : <></>}</div>
+            <HomeNavbar institutions={institutions} userType={userType ? userType : ""} />
+            <div className="home-background pt-2">
+                <Container >
+                    <div className="d-flex justify-content-center" >
+                        <div className=" h1 rounded " style={{ backgroundColor: "#d0ebe4" }}>Hello {userName}, good to see you again! 👋</div>
                     </div>
-
+                    <div className="d-flex justify-content-center" >
+                        <div className=" h1">{userType === "admin" || userType === "instructor" ? <Button variant="primary" onClick={handleShowCreateCourseModal}>+ Create Course</Button> : <></>}</div>
+                    </div>
                     <Modal centered show={showCreateCourseModal} onHide={handleCloseCreateCourseModal}>
                         <Modal.Header closeButton>
                             <Modal.Title>Create a new course</Modal.Title>
@@ -162,8 +163,8 @@ export default function Home() {
                                     ?
                                     courses.length === 0 ? <Col className="text-center"><Alert variant="warning">You don't have any courses</Alert></Col> :
                                         courses.map((course, index) => (
-                                            <Col key={`course${index}`}>
-                                                <Card className="position-relative border border-secondary" >
+                                            <Col key={`course${index}`} className="">
+                                                <Card className="position-relative border border-secondary box-shadow" >
                                                     <Card.Img style={{ height: '40vh' }} variant="top" src={course.cover} onClick={() => (history.push(`/courses/${course._id}`))} />
                                                     <Card.Body className="border border-primary border-end-0 border-bottom-0 border-start-0">
                                                         <Card.Title className="d-flex justify-content-center">
