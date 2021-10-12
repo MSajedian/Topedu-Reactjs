@@ -362,7 +362,7 @@ export default function Courses() {
                                                 config={
                                                     {
                                                         extraPlugins: [uploadPlugin],
-                                                        toolbar: ['mediaEmbed']
+                                                        // toolbar: ['mediaEmbed']
                                                         // mediaEmbed: {
                                                         //     // configuration...
                                                         // }

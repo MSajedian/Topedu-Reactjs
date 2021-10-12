@@ -32,7 +32,7 @@ export default function CoursesNavbar({ userType }) {
                     </Link>
                 </Nav.Item> */}
                 <Dropdown className="mx-3 mx-lg-1 ">
-                    <Dropdown.Toggle type="button" id="dropdown-custom-components" className="button text-white ">
+                    <Dropdown.Toggle type="button" id="dropdown-custom-components" className="button text-white me-3">
                         {userName}
                     </Dropdown.Toggle>
                     <Dropdown.Menu align={{ lg: 'end' }}>
