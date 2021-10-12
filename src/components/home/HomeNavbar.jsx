@@ -23,7 +23,7 @@ export default function HomeNavbar({ institutions, userType }) {
             }}
             style={{
                 backgroundColor: "#50be46",
-                padding: "8px 8px 10px 8px"
+                padding: "5px 9px 8px 9px"
             }} className="border border-success rounded"
         >{children}
         </Link>
@@ -35,10 +35,10 @@ export default function HomeNavbar({ institutions, userType }) {
     }, [institutions])
 
     return (
-        <Navbar expand="lg" className="px-3 flex-row" style={{ backgroundColor: "#3aafda" }}>
-            <Dropdown>
+        <Navbar expand="lg" className="px-3 flex-row navbar-default" >
+            <Dropdown className="d-flex align-items-center">
                 <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" >
-                    <ImHome size="1.5em" color="white" />
+                    <ImHome size="1.2em" color="white" />
                 </Dropdown.Toggle>
                 {selectedInstitution ?
                     <span className="ms-2 text-dark alert-dismissible fade show"> {selectedInstitution.name} </span>

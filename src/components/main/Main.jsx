@@ -24,10 +24,10 @@ export default function Main() {
 
             <section class="hero-section" onMouseMove={(e) => { setValueX(e.pageX); setValueY(e.pageY) }}>
                 <div class="hero-shape">
-                    <img src="assets/images/round-shape-4.png" alt="shape" class="hero-round-shape-4 item-moveTwo" />
+                    <img src="assets/images/round-shape-4.png" alt="shape" className="hero-round-shape-4 item-moveTwo mt-5" />
                 </div>
-                <Container className="">
-                    <Row className="align-items-center">
+                <Container>
+                    <Row className="p-5">
                         <Col lg={6} className="align-self-center">
                             <div class="hero-content">
                                 <h1><span>learning Online</span> becomes easier</h1>
@@ -42,12 +42,11 @@ export default function Main() {
                                     <img src="./assets/images/hero-small-image-3.png" alt="hero-small-3" class="hero-small-image-3" style={{ transform: `translate3d(${(valueX * -1) / 40}px, ${(valueY * -1) / 60}px, 0px)` }} />
                                     <img src="./assets/images/hero-small-image-4.png" alt="hero-small-4" class="hero-small-image-4" style={{ transform: `translate3d(${(valueX * -1) / 80}px, ${(valueY * -1) / 100}px, 0px)` }} />
                                 </div>
-                                <Image src="./assets/images/online-learning.png" alt="hero"  />
+                                <Image src="./assets/images/online-learning.png" alt="hero" />
                             </div>
                         </Col>
                     </Row>
                 </Container>
-
             </section>
             <Container>
                 {/* <h1 className="display-3 text-center">LEARNING ONLINE BECOMES EASIER</h1>

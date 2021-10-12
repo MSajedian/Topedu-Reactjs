@@ -172,8 +172,8 @@ export default function Courses() {
     return (
         <div className="course-background">
             <CoursesNavbar userType={userType ? userType : ""} />
-            <Tab.Container id="left-accordions-tabs" >
-                <Row className="p-0 m-0">
+            <Tab.Container id="left-accordions-tabs">
+                <Row className="p-0 m-2">
                     <Col sm={3}>
 
                         {userType === "admin" || userType === "instructor" ?
@@ -219,19 +219,23 @@ export default function Courses() {
                         }
                         {userType === "admin" || userType === "instructor" ?
                             // admin and Instructor can see this:
-                            <Form.Control className="text-center" plaintext value={editableCourseTitle} onChange={(e) => {
-                                setEditableCourseTitle(e.target.value)
-                                if (course.cover === `https://fakeimg.pl/350x200/333/eae0d0?text=${course.title}`) {
-                                    course.cover = `https://fakeimg.pl/350x200/333/eae0d0?text=${e.target.value}`
-                                }
-                                course.title = e.target.value
-                                setCourse(course)
-                                updateCourse(false)
-                            }} />
+                            <>
+                            <Alert variant="dark" className="p-2 m-0">
+                                <Form.Control className="text-center" value={editableCourseTitle} onChange={(e) => {
+                                    setEditableCourseTitle(e.target.value)
+                                    if (course.cover === `https://fakeimg.pl/350x200/333/eae0d0?text=${course.title}`) {
+                                        course.cover = `https://fakeimg.pl/350x200/333/eae0d0?text=${e.target.value}`
+                                    }
+                                    course.title = e.target.value
+                                    setCourse(course)
+                                    updateCourse(false)
+                                }} />
+                                </Alert>
+                                </>
                             :
                             // Learner and assistant can see this:
                             // <Form.Control className="text-center" plaintext value={course.title} disabled />
-                            <Alert key={course.title} variant="info" className="text-center"> {course.title} </Alert>
+                            <Alert key={course.title} variant="info" className="text-center p-0 m-0"> {course.title} </Alert>
                         }
                         {course.flowsAndActivities ?
                             <Accordion>
@@ -358,7 +362,7 @@ export default function Courses() {
                                                 config={
                                                     {
                                                         extraPlugins: [uploadPlugin],
-                                                        toolbar: ['mediaEmbed' ]
+                                                        toolbar: ['mediaEmbed']
                                                         // mediaEmbed: {
                                                         //     // configuration...
                                                         // }
