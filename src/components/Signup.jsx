@@ -90,9 +90,9 @@ export default function Signup() {
                         </Form.Select>
                     </FloatingLabel>
 
-                    {signUpAs === "learner" ? <Alert variant="primary" className="text-center my-2"> You should ask the owner of the institution to send you the invitation link as <mark>Learner</mark> </Alert> : <></>}
-                    {signUpAs === "instructor" ? <Alert variant="primary" className="text-center my-2"> You should ask the owner of the institution to send you the invitation link as <mark>Instructor</mark> </Alert> : <></>}
-                    {signUpAs === "assistant" ? <Alert variant="primary" className="text-center my-2"> You should ask the owner of the institution to send you the invitation link as <mark>Assistant</mark> </Alert> : <></>}
+                    {signUpAs === "learner" ? <Alert variant="primary" className="text-center my-2"> You should ask the <strong>Admin</strong> of the institution to send you the invitation link as <mark>Learner</mark> </Alert> : <></>}
+                    {signUpAs === "instructor" ? <Alert variant="primary" className="text-center my-2"> You should ask the <strong>Admin</strong> of the institution to send you the invitation link as <mark>Instructor</mark> </Alert> : <></>}
+                    {signUpAs === "assistant" ? <Alert variant="primary" className="text-center my-2"> You should ask the <strong>Admin</strong> of the institution to send you the invitation link as <mark>Assistant</mark> </Alert> : <></>}
                     {signUpAs === "admin" ?
                         <Form onSubmit={handleSubmitSingupForm}>
                             <Form.Group className="mb-3" controlId="formBasicName">

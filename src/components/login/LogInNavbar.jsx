@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 export default function LogInNavbar() {
     return (
-        <Navbar expand="lg" style={{ backgroundColor: "#3aafda" }}>
+        <Navbar expand="lg" className="navbar-default">
             <Container fluid className="px-3">
                 <Navbar.Brand >
-                    <Link to="/" className="text-decoration-none" style={{ color: "white" }}>
+                    <Link to="/" className="text-decoration-none logo" >
                         <FcConferenceCall style={{ fontSize: 40 }} className="bg-light bg-gradient rounded" /> <span className="ps-2">TopEdu</span>
                     </Link>
                 </Navbar.Brand>

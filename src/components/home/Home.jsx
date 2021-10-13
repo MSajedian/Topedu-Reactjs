@@ -136,12 +136,12 @@ export default function Home() {
         <>
             <HomeNavbar institutions={institutions} userType={userType ? userType : ""} />
             <div className="home-background pt-2">
-                <Container >
-                    <div className="d-flex justify-content-center" >
-                        <div className=" h1 rounded " style={{ backgroundColor: "#d0ebe4" }}>Hello {userName}, good to see you again! 👋</div>
+                <Container>
+                    <div className="d-flex justify-content-center">
+                        <div className="h1 rounded" style={{ backgroundColor: "#d0ebe4" }}>Hello {userName}, good to see you again! 👋</div>
                     </div>
-                    <div className="d-flex justify-content-center" >
-                        <div className=" h1">{userType === "admin" || userType === "instructor" ? <Button variant="primary" onClick={handleShowCreateCourseModal}>+ Create Course</Button> : <></>}</div>
+                    <div className="d-flex justify-content-center">
+                        <div className="h1">{userType === "admin" || userType === "instructor" ? <Button variant="primary" onClick={handleShowCreateCourseModal}>+ Create Course</Button> : <></>}</div>
                     </div>
                     <Modal centered show={showCreateCourseModal} onHide={handleCloseCreateCourseModal}>
                         <Modal.Header closeButton>

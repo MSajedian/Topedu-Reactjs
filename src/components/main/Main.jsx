@@ -22,27 +22,27 @@ export default function Main() {
             <MainNavbar />
             {/* <Container className="my-5" style={{ backgroundColor: "white", width: "50vw", padding: "10vw", border: "2px solid #b6b6b6", borderRadius: "5px" }}> */}
 
-            <section class="hero-section" onMouseMove={(e) => { setValueX(e.pageX); setValueY(e.pageY) }}>
-                <div class="hero-shape">
+            <section className="hero-section" onMouseMove={(e) => { setValueX(e.pageX); setValueY(e.pageY) }}>
+                <div className="hero-shape">
                     <img src="assets/images/round-shape-4.png" alt="shape" className="hero-round-shape-4 item-moveTwo mt-5" />
                 </div>
                 <Container>
                     <Row className="p-5">
-                        <Col lg={6} className="align-self-center">
-                            <div class="hero-content">
+                        <Col lg={4} className="align-self-start mt-5">
+                            <div className="hero-content mt-5">
                                 <h1><span>learning Online</span> becomes easier</h1>
-                                <span class="hero-tagline">Learn Wherever, Whenever, However Online Classes.</span>
+                                <span className="hero-tagline">Learn Wherever, Whenever, However Online Classes.</span>
                             </div>
                         </Col>
-                        <Col lg={6} >
-                            <div class="hero-image">
-                                <div class="hero-small-images">
-                                    <img src="./assets/images/hero-small-image-1.png" alt="hero-small-1" class="hero-small-image-1" style={{ transform: `translate3d(${(valueX * -1) / 100}px, ${(valueY * -1) / 120}px, 0px)` }} />
-                                    <img src="./assets/images/hero-small-image-2.png" alt="hero-small-2" class="hero-small-image-2" style={{ transform: `translate3d(${(valueX * -1) / 60}px, ${(valueY * -1) / 80}px, 0px)` }} />
-                                    <img src="./assets/images/hero-small-image-3.png" alt="hero-small-3" class="hero-small-image-3" style={{ transform: `translate3d(${(valueX * -1) / 40}px, ${(valueY * -1) / 60}px, 0px)` }} />
-                                    <img src="./assets/images/hero-small-image-4.png" alt="hero-small-4" class="hero-small-image-4" style={{ transform: `translate3d(${(valueX * -1) / 80}px, ${(valueY * -1) / 100}px, 0px)` }} />
+                        <Col lg={8} >
+                            <div className="hero-image">
+                                <div className="hero-small-images">
+                                    <img src="./assets/images/hero-small-image-1.png" alt="hero-small-1" className="hero-small-image-1" style={{ transform: `translate3d(${(valueX * -1) / 100}px, ${(valueY * -1) / 120}px, 0px)` }} />
+                                    <img src="./assets/images/hero-small-image-2.png" alt="hero-small-2" className="hero-small-image-2" style={{ transform: `translate3d(${(valueX * -1) / 60}px, ${(valueY * -1) / 80}px, 0px)` }} />
+                                    <img src="./assets/images/hero-small-image-3.png" alt="hero-small-3" className="hero-small-image-3" style={{ transform: `translate3d(${(valueX * -1) / 40}px, ${(valueY * -1) / 60}px, 0px)` }} />
+                                    <img src="./assets/images/hero-small-image-4.png" alt="hero-small-4" className="hero-small-image-4" style={{ transform: `translate3d(${(valueX * -1) / 80}px, ${(valueY * -1) / 100}px, 0px)` }} />
                                 </div>
-                                <Image src="./assets/images/online-learning.png" alt="hero" />
+                                <Image src="./assets/images/online-learning.png" alt="hero" className="img-fluid" />
                             </div>
                         </Col>
                     </Row>
