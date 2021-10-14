@@ -6,7 +6,7 @@ import { IoIosPeople } from 'react-icons/io';
 const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 const FrontendURL = process.env.REACT_APP_FRONTEND_CLOUD_URL || process.env.REACT_APP_FRONTEND_LOCAL_URL
 
-export default function MaiOffCanvasInstitutionParticipantsn({ ...props }) {
+export default function MaiOffCanvasInstitutionParticipants({ ...props }) {
   const history = useHistory();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -30,7 +30,7 @@ export default function MaiOffCanvasInstitutionParticipantsn({ ...props }) {
     return [value, setValue];
   }
 
-  const getInstitution = () => {
+  const getInstitutionParticipants = () => {
     try {
       fetch(`${BackendURL}/institutions/${props.institutionid}/participants`, {
         credentials: 'include',
@@ -57,18 +57,18 @@ export default function MaiOffCanvasInstitutionParticipantsn({ ...props }) {
 
   const postInvitation = () => {
     try {
-      fetch(`${BackendURL}/courses/${props.institutionid}/invitation`, {
+      fetch(`${BackendURL}/institutions/${props.institutionid}/invitation`, {
         credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ "name": name, "role": role, "email": email }) // body data type must match "Content-Type" header
+        body: JSON.stringify({ name, role, email }) // body data type must match "Content-Type" header
       })
         .then(res => (res.json()))
         .then(
           (result) => {
             if (result._id) { setInstitutionInvitationLink(`${FrontendURL}/join/institution/${props.institutionid}/${result._id}`) }
             else { setMessageFromServer(result.message) }
-            getInstitution()
+            getInstitutionParticipants()
           }
         )
     } catch (error) {
@@ -78,7 +78,7 @@ export default function MaiOffCanvasInstitutionParticipantsn({ ...props }) {
 
   const updateInstitution = (isRefreshContentneeded) => {
     try {
-      fetch(`${BackendURL}/courses/${props.institutionid}`, {
+      fetch(`${BackendURL}/institutions/${props.institutionid}`, {
         credentials: 'include',
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -87,7 +87,7 @@ export default function MaiOffCanvasInstitutionParticipantsn({ ...props }) {
         .then(res => {
           if (!res.ok) { history.push("/login") }
           else {
-            if (isRefreshContentneeded === true) { getInstitution() }
+            if (isRefreshContentneeded === true) { getInstitutionParticipants() }
           }
         })
 
@@ -98,7 +98,7 @@ export default function MaiOffCanvasInstitutionParticipantsn({ ...props }) {
 
   useEffect(() => {
     console.log('props.institutionid:', props.institutionid)
-    getInstitution()
+    getInstitutionParticipants()
     // eslint-disable-next-line
   }, [])
 

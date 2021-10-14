@@ -44,7 +44,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
     postInvitationRequest()
   };
 
-  const getCourse = () => {
+  const getCourseParticipants = () => {
     try {
       fetch(`${BackendURL}/courses/${courseId}/participants`, {
         credentials: 'include',
@@ -78,7 +78,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
               setCourseInvitatedUser(result)
             }
             else { setMessageFromServer(result.message) }
-            getCourse()
+            getCourseParticipants()
           }
         )
     } catch (error) {
@@ -88,7 +88,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
 
   const sendInvitationEmail = (userId, userEmail) => {
     try {
-      fetch(`${BackendURL}/courses/${courseId}/sendemail/invitation/${userId}`, {
+      fetch(`${BackendURL}/courses/${courseId}/email/invitation/${userId}`, {
         credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -111,7 +111,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
         .then(res => {
           if (!res.ok) { history.push("/login") }
           else {
-            if (isRefreshContentneeded === true) { getCourse() }
+            if (isRefreshContentneeded === true) { getCourseParticipants() }
           }
         })
 
@@ -121,7 +121,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
   };
 
   useEffect(() => {
-    getCourse()
+    getCourseParticipants()
     // eslint-disable-next-line
   }, [])
 
