@@ -1,5 +1,16 @@
 {
   "name": "topedu-reactjs",
+  "author": "Mohammadamin Sajedian",
+  "keywords": [
+    "LMS",
+    "Learning Management System",
+    "Institution",
+    "Course",
+    "Flow",
+    "Activity",
+    "Activity's content",
+    "Code Playground"
+  ],
   "version": "0.1.0",
   "private": true,
   "dependencies": {
