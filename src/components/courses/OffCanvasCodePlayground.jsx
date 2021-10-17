@@ -10,7 +10,7 @@ export default function OffCanvasCodePlayground({ ...props }) {
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
   const [srcdocOfIframe, setSrcdocOfIframe] = useState(``)
-  const [htmlTextAreaValue, setHtmlTextAreaValue] = useState(`<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>Document</title>\n</head>\n\n<body>\n<p id='p1'>this is a paraghraph</p>\n</body>\n\n</html>`)
+  const [htmlTextAreaValue, setHtmlTextAreaValue] = useState(`<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>Document</title>\n</head>\n\n<body>\n<p id='p1'>this is a paragraph</p>\n</body>\n\n</html>`)
   const [cssTextAreaValue, setCssTextAreaValue] = useState(`p{\ncolor: red\n}`)
   const [jsTextAreaValue, setJsTextAreaValue] = useState(`let body=document.querySelector('body')\nbody.style.backgroundColor='yellow'`)
 
