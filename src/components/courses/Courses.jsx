@@ -3,7 +3,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 import React, { useDebugValue, useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Tab, Alert } from 'react-bootstrap';
+import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Tab } from 'react-bootstrap';
 import { useHistory, useParams } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 import CoursesNavbar from './CoursesNavbar';
@@ -175,7 +175,26 @@ export default function Courses() {
             <Tab.Container id="left-accordions-tabs">
                 <Row className="p-0 m-2">
                     <Col sm={3}>
-
+                    {userType === "admin" || userType === "instructor" ?
+                            // admin and Instructor can see this:
+                            <>
+                            <div className="text-center course-activity-title-small" >
+                                <Form.Control className="text-center" value={editableCourseTitle} onChange={(e) => {
+                                    setEditableCourseTitle(e.target.value)
+                                    if (course.cover === `https://fakeimg.pl/350x200/333/eae0d0?text=${course.title}`) {
+                                        course.cover = `https://fakeimg.pl/350x200/333/eae0d0?text=${e.target.value}`
+                                    }
+                                    course.title = e.target.value
+                                    setCourse(course)
+                                    updateCourse(false)
+                                }} />
+                                </div>
+                                </>
+                            :
+                            // Learner and assistant can see this:
+                            // <Form.Control className="text-center" plaintext value={course.title} disabled />
+                            <div className="text-center course-activity-title-small" > {course.title} </div>
+                        }
                         {userType === "admin" || userType === "instructor" ?
                             // admin and Instructor can see this:
                             <Card
@@ -217,33 +236,14 @@ export default function Courses() {
                             // Learner and assistant can see this:
                             <Card> <Card.Img variant="top" src={course.cover} className="p-1" /> </Card>
                         }
-                        {userType === "admin" || userType === "instructor" ?
-                            // admin and Instructor can see this:
-                            <>
-                            <Alert variant="dark" className="p-2 m-0">
-                                <Form.Control className="text-center" value={editableCourseTitle} onChange={(e) => {
-                                    setEditableCourseTitle(e.target.value)
-                                    if (course.cover === `https://fakeimg.pl/350x200/333/eae0d0?text=${course.title}`) {
-                                        course.cover = `https://fakeimg.pl/350x200/333/eae0d0?text=${e.target.value}`
-                                    }
-                                    course.title = e.target.value
-                                    setCourse(course)
-                                    updateCourse(false)
-                                }} />
-                                </Alert>
-                                </>
-                            :
-                            // Learner and assistant can see this:
-                            // <Form.Control className="text-center" plaintext value={course.title} disabled />
-                            <Alert key={course.title} variant="info" className="text-center p-0 m-0"> {course.title} </Alert>
-                        }
+                        
                         {course.flowsAndActivities ?
                             <Accordion>
                                 {course.flowsAndActivities.map((flow, flowIndex) => (
                                     <Accordion.Item eventKey={flow._id} key={`flow._id${flow._id}`}>
                                         {userType === "admin" || userType === "instructor" ?
                                             <Accordion.Header>
-                                                <div className="btn btn-danger" style={{ paddingRight: "6px", paddingLeft: "6px", paddingTop: "3px", paddingBottom: "3px", }} onClick={() => {
+                                                <div className="btn btn-danger button-delete" onClick={() => {
                                                     course.flowsAndActivities.splice(flowIndex, 1)
                                                     updateCourse(true)
                                                 }}>
@@ -273,7 +273,7 @@ export default function Courses() {
                                                                             {(provided) => (
                                                                                 <Nav.Item ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                                                     <Nav.Link eventKey={activity._id} className="d-flex justify-content-between">
-                                                                                        <div className="btn btn-danger mx-2" style={{ paddingRight: "6px", paddingLeft: "6px", paddingTop: "3px", paddingBottom: "3px", }} onClick={() => {
+                                                                                        <div className="btn btn-danger button-delete" onClick={() => {
                                                                                             flow.activities.splice(activityIndex, 1)
                                                                                             updateCourse(true)
                                                                                         }}>
@@ -353,8 +353,7 @@ export default function Courses() {
                             {course.flowsAndActivities ? course.flowsAndActivities.map((flow) => (
                                 (flow.activities.map((activity) => (
                                     <Tab.Pane eventKey={activity._id} key={`activityId${activity._id}`} className="mt-2">
-                                        <h2>{activity.name}</h2>
-                                        <hr />
+                                        <div className="text-center course-activity-title mb-3">{activity.name}</div>
                                         {userType === "admin" || userType === "instructor" ?
                                             <CKEditor
                                                 editor={ClassicEditor}
@@ -415,7 +414,7 @@ export default function Courses() {
                                                 }}
                                             />
                                             :
-                                            <div dangerouslySetInnerHTML={{ __html: activity.activityContent }}></div>
+                                            <div dangerouslySetInnerHTML={{ __html: activity.activityContent }} className="ck-content course-activity-content"></div>
                                             // <iframe className='border mt-3' id="iFrame" title="iFrame" width='100%' height="1000px" srcDoc={activity.activityContent} ></iframe>
                                             // <textarea id="story" name="story" rows="5" cols="33" srcDoc={activity.activityContent}> </textarea>
                                         }

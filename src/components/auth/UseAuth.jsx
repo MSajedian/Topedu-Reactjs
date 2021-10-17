@@ -34,7 +34,6 @@ function useProvideAuth() {
             })
                 .then(res => res.json())
                 .then((response) => {
-                    console.log('response:', response)
                     dispatch(setUsernameAction(response.name))
                     dispatch(setUserSurnameAction(response.surname))
                     // dispatch(addItemToInstitutionsAction(response.institutions))
