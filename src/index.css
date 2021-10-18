@@ -108,12 +108,14 @@ code {
 }
 
 .logo {
+  fill: #248a8d;
   color: #248a8d;
   font-weight: 800;
   letter-spacing: 1px;
 }
 
 .logo:hover {
+  fill: #0b3c5e;
   color: #0b3c5e;
 }
 

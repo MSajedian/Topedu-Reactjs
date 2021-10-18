@@ -74,12 +74,8 @@ export default function Join() {
                 body: JSON.stringify({ name, surname, email, password })
             })
                 .then(res => res.json())
-                .then(
-                    (response) => { if (response) { login() } }
-                )
-        } catch (error) {
-            console.log('error:', error)
-        }
+                .then( (response) => { if (response) { login() } } )
+        } catch (error) { console.log('error:', error) }
     };
 
     const joinInstitution = () => {
@@ -91,9 +87,7 @@ export default function Join() {
                 body: JSON.stringify({ name, surname, email, password })
             })
             .then(res => res.json())
-            .then(
-                (response) => { if (response) { login() } }
-            )
+            .then( (response) => { if (response) { login() } } )
         } catch (error) { console.log('error:', error) }
     };
 
