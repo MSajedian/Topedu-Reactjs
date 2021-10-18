@@ -100,7 +100,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
     }
   };
 
-  const updateCourse = (isRefreshContentneeded) => {
+  const updateCourse = (isRefreshContentNeeded) => {
     try {
       fetch(`${BackendURL}/courses/${courseId}`, {
         credentials: 'include',
@@ -111,7 +111,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
         .then(res => {
           if (!res.ok) { history.push("/login") }
           else {
-            if (isRefreshContentneeded === true) { getCourseParticipants() }
+            if (isRefreshContentNeeded === true) { getCourseParticipants() }
           }
         })
 
@@ -282,7 +282,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                         <td>{learner.name} {learner.surname}</td>
                         <td>{learner.email}</td>
                         <td>Learner</td>
-                        <td><Alert variant="outline-info" className="m-0 p-0 text-center"> Not Enrolled </Alert></td>
+                        <td><Alert variant="warning" className="m-0 p-0 text-center">Not Enrolled</Alert></td>
                         <td className="text-center">
                           <Button variant="outline-danger" className="p-2" onClick={() => { course.notEnrolledUsers.learners.splice(Index, 1); updateCourse(true) }}>
                             <BsTrash size="1.5em" />
@@ -306,7 +306,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                         <td>{assistant.name} {assistant.surname}</td>
                         <td>{assistant.email}</td>
                         <td>Assistant</td>
-                        <td><Alert variant="outline-info" className="m-0 p-0 text-center"> Not Enrolled </Alert></td>
+                        <td><Alert variant="warning" className="m-0 p-0 text-center">Not Enrolled</Alert></td>
                         <td className="text-center">
                           <Button variant="outline-danger" className="p-2" onClick={() => { course.notEnrolledUsers.assistants.splice(Index, 1); updateCourse(true) }}>
                             <BsTrash size="1.5em" />
@@ -329,7 +329,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
                         <td>{instructor.name} {instructor.surname}</td>
                         <td>{instructor.email}</td>
                         <td>Instructor</td>
-                        <td> <Alert variant="outline-info" className="m-0 p-0 text-center"> Not Enrolled </Alert> </td>
+                        <td><Alert variant="warning" className="m-0 p-0 text-center">Not Enrolled</Alert> </td>
                         <td className="text-center">
                           <Button variant="outline-danger" className="p-2" onClick={() => { course.notEnrolledUsers.instructors.splice(Index, 1); updateCourse(true) }}>
                             <BsTrash size="1.5em" />
