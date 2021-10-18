@@ -36,12 +36,26 @@ export default function Join() {
     const signUp = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        joinCourse()
+        if (courseId) joinCourse();
+        if (institutionId) joinInstitution();
     };
 
     const getUserFromCourse = () => {
         try {
             fetch(`${BackendURL}/courses/${courseId}/notEnrolledUser/${userId}`, {
+                credentials: 'include',
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            })
+                .then(res => res.json())
+                .then((response) => { setEmail(response.email) })
+        } catch (error) { console.log('error:', error) }
+    };
+
+
+    const getUserFromInstitution = () => {
+        try {
+            fetch(`${BackendURL}/institutions/${institutionId}/pendingUser/${userId}`, {
                 credentials: 'include',
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
@@ -61,43 +75,32 @@ export default function Join() {
             })
                 .then(res => res.json())
                 .then(
-                    (response) => {
-                        if (response) { login() }
-                    }
+                    (response) => { if (response) { login() } }
                 )
         } catch (error) {
             console.log('error:', error)
         }
     };
 
-    const getUserFromCourseInstitution = () => {
+    const joinInstitution = () => {
         try {
-            fetch(`${BackendURL}/institutions/${courseId}/notEnrolledUser/${userId}`, {
+            fetch(`${BackendURL}/institutions/${institutionId}/join/${userId}`, {
                 credentials: 'include',
-                method: 'GET',
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, surname, email, password })
             })
-                .then(res => res.json())
-                .then((response) => { setEmail(response.email) })
+            .then(res => res.json())
+            .then(
+                (response) => { if (response) { login() } }
+            )
         } catch (error) { console.log('error:', error) }
     };
-
-    // const joinInstitution = () => {
-    //     try {
-    //         fetch(`${BackendURL}/institutions/${institutionId}/join/${userId}`, {
-    //             credentials: 'include',
-    //             method: 'GET',
-    //             headers: { 'Content-Type': 'application/json' },
-    //         })
-    //             .then(res => res.json())
-    //         // .then((response) => { setInstitutions(response) })
-    //     } catch (error) { console.log('error:', error) }
-    // };
 
 
     useEffect(() => {
         if (courseId) getUserFromCourse();
-        if (institutionId) getUserFromCourseInstitution();
+        if (institutionId) getUserFromInstitution();
         // eslint-disable-next-line
     }, [])
 
@@ -130,7 +133,7 @@ export default function Join() {
                             <Form.Label>Repeat Password</Form.Label>
                             <Form.Control type="password" value={repPassword} onChange={(e) => setRepPassword(e.target.value)} required />
                         </Form.Group>
-                        <Button type="submit" >Sign up</Button>
+                        <Button type="submit">Sign up</Button>
                     </Form>
                 </Col>
             </Row>

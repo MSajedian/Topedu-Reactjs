@@ -226,7 +226,7 @@ export default function MaiOffCanvasInstitutionParticipants({ ...props }) {
                         <td>{admin.name} {admin.surname}</td>
                         <td>{admin.email}</td>
                         <td>Admin</td>
-                        <td><Alert variant="success" className="m-0 p-0 text-center">Enrolled</Alert></td>
+                        <td><Alert variant="success" className="m-0 p-0 text-center">Registered</Alert></td>
                         <td className="text-center"></td>
                         <td className="text-center"></td>
                         <td className="text-center"></td>
@@ -237,7 +237,7 @@ export default function MaiOffCanvasInstitutionParticipants({ ...props }) {
                         <td>{instructor.name} {instructor.surname}</td>
                         <td>{instructor.email}</td>
                         <td>Instructor</td>
-                        <td><Alert variant="success" className="m-0 p-0 text-center">Enrolled</Alert></td>
+                        <td><Alert variant="success" className="m-0 p-0 text-center">Registered</Alert></td>
                         <td className="text-center">
                           <Button variant="outline-danger" onClick={() => { institution.participants.instructors.splice(Index, 1); updateInstitution(true) }}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
@@ -254,7 +254,7 @@ export default function MaiOffCanvasInstitutionParticipants({ ...props }) {
                         <td>{assistant.name} {assistant.surname}</td>
                         <td>{assistant.email}</td>
                         <td>Assistant</td>
-                        <td><Alert variant="success" className="m-0 p-0 text-center">Enrolled</Alert></td>
+                        <td><Alert variant="success" className="m-0 p-0 text-center">Registered</Alert></td>
                         <td className="text-center">
                           <Button variant="outline-danger" onClick={() => { institution.participants.assistants.splice(Index, 1); updateInstitution(true) }}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
@@ -271,7 +271,7 @@ export default function MaiOffCanvasInstitutionParticipants({ ...props }) {
                         <td>{learner.name} {learner.surname}</td>
                         <td>{learner.email}</td>
                         <td>Learner</td>
-                        <td><Alert variant="success" className="m-0 p-0 text-center">Enrolled</Alert></td>
+                        <td><Alert variant="success" className="m-0 p-0 text-center">Registered</Alert></td>
                         <td className="text-center">
                           <Button variant="outline-danger" onClick={() => { institution.participants.learners.splice(Index, 1); updateInstitution(true) }}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
