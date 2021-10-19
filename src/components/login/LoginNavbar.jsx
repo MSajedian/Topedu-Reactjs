@@ -2,7 +2,7 @@ import { Container, Nav, Navbar } from 'react-bootstrap';
 // import { FcConferenceCall } from 'react-icons/fc';
 import { Link } from "react-router-dom";
 
-export default function LogInNavbar() {
+export default function LoginNavbar() {
     return (
         <Navbar expand="lg" className="navbar-default py-1">
             <Container fluid className="px-3">

@@ -4,7 +4,6 @@ import { ProvideAuth, PrivateRoute } from "./components/auth/UseAuth";
 
 import Main from './components/main/Main'
 import Login from './components/login/Login'
-// import LogIn2 from './components/login/LogIn2'
 import Signup from './components/Signup'
 import Join from './components/Join'
 import Home from './components/home/Home'
@@ -18,7 +17,6 @@ export default function App() {
         <Switch>
           <Route exact path="/"> <Main /> </Route>
           <Route exact path="/login"> <Login /> </Route>
-          {/* <Route path="/login"> <LogIn2 /> </Route> */}
           <Route path="/signup"> <Signup /> </Route>
           <Route path="/join/course/:courseId/:userId"> <Join /> </Route>
           <Route path="/join/institution/:institutionId/:userId"> <Join /> </Route>
