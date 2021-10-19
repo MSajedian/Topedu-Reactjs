@@ -7,7 +7,6 @@ import UseAuth from '../auth/UseAuth';
 import LogInNavbar from './LogInNavbar';
 
 
-
 export default function LogIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
