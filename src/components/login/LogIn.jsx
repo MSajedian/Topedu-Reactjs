@@ -6,7 +6,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 import LoginNavbar from './LoginNavbar';
 
-export default function LogIn() {
+export default function Login() {
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
         useDebugValue(`${name}: ${value}`);
