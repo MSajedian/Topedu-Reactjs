@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ProvideAuth, PrivateRoute } from "./components/auth/UseAuth";
 
 import Main from './components/main/Main'
-import Login from './components/login/Login2'
+import Login from './components/login/Login'
 import Signup from './components/Signup'
 import Join from './components/Join'
 import Home from './components/home/Home'
