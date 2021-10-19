@@ -23,7 +23,7 @@ export default function OffCanvasCodePlayground({ ...props }) {
 
   return (
     <>
-      <Button className="button" onClick={toggleShow} >
+      <Button variant="success" className="btn-grad-green" style={{padding:"7px 18px"}}onClick={toggleShow} >
         👨‍💻 Code Playground
       </Button>
       <Offcanvas show={show} onHide={handleClose} {...props} scroll={true} backdrop={false} style={{ height: "70vh" }}>

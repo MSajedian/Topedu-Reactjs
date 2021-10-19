@@ -127,11 +127,11 @@ export default function OffCanvasCourseParticipants({ ...props }) {
 
   return (
     <>
-      <Button className="button" onClick={toggleShow} >
-        <IoIosPeople color="#765b29" size="1.5em"/>
+      <button type="button" className="btn-grad-green" onClick={toggleShow} >
+        <IoIosPeople size="1.4em"/>
         &nbsp;
         <span>Course Participants</span>
-      </Button>
+      </button>
       <Offcanvas show={show} onHide={handleClose} {...props} scroll={true} backdrop={false} style={{ height: "80vh" }}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>

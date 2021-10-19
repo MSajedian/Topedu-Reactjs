@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap';
+import { Col, Container, Form, Image, Row } from 'react-bootstrap';
 import { BiEnvelope, BiLock } from 'react-icons/bi';
 import { FcConferenceCall } from 'react-icons/fc';
 import { useHistory, useLocation } from "react-router-dom";
@@ -47,9 +47,9 @@ export default function LogIn() {
                                         <Form.Label><BiLock size="1.5em" /> Password</Form.Label>
                                         <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                                     </Form.Group>
-                                    <Button className="button" onClick={login}>
-                                        Log in
-                                    </Button>
+                                    <button type="button" className="button mx-2" onClick={login}>
+                                        Login
+                                    </button>
                                 </Form>
                             </Container>
                         </Container>

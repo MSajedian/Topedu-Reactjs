@@ -32,10 +32,10 @@ export default function MainNavbar() {
                         navbarScroll
                         className="ms-auto px-2"
                     >
-                        <Link to="/login" className="button button-login">Log in</Link>
+                        <Link to="/login" className="btn-grad-green">Login</Link>
                     </Nav>
                     <Nav>
-                        <Link to="/signup" className="button button-signup" >Sign up</Link>
+                        <Link to="/signup" className="btn-grad-orange" >Sign up</Link>
                     </Nav>
                     {/* <Form
                         className="d-flex my-2 my-lg-0"

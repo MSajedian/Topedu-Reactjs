@@ -119,27 +119,160 @@ code {
   color: #0b3c5e;
 }
 
+.btn-grad-green {
+  background-image: linear-gradient(
+    to right,
+    #4cb8c4 0%,
+    #3cd3ad 51%,
+    #4cb8c4 100%
+  );
+}
+
+.btn-grad-green {
+  padding: 7px 16px;
+  border-color: rgb(133, 133, 133);
+  border-style: solid;
+  border-width: 1px;
+  text-decoration: none;
+  text-align: center;
+  user-select: none;
+  line-height: 1.5;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
+}
+
+.btn-grad-green:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  fill: #fff;
+  text-decoration: none;
+  border-color: rgb(133, 133, 133);
+}
+
+.btn-grad-green:focus {
+  color: #fff;
+  fill: #fff;
+  box-shadow: 0 0 0 0.25rem rgb(15 81 50 / 50%);
+}
+
+.btn-grad-orange {
+  background-image: linear-gradient(
+    to right,
+    #ff512f 0%,
+    #f09819 51%,
+    #ff512f 100%
+  );
+}
+
+.btn-grad-orange {
+  padding: 7px 16px;
+  border-color: rgb(133, 133, 133);
+  border-style: solid;
+  border-width: 1px;
+  text-decoration: none;
+  border-color: rgb(133, 133, 133);
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
+}
+
+.btn-grad-orange:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+  border-color: rgb(133, 133, 133);
+}
+
+.btn-grad-orange:focus {
+  color: #fff;
+  fill: #fff;
+  box-shadow: 0 0 0 0.25rem rgb(15 81 50 / 50%);
+}
+
+.btn-grad-blue {
+  background-image: linear-gradient(
+    to right,
+    #1fa2ff 0%,
+    #12d8fa 51%,
+    #1fa2ff 100%
+  );
+}
+.btn-grad-blue {
+  padding: 7px 16px;
+  border-color: rgb(133, 133, 133);
+  border-style: solid;
+  border-width: 1px;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
+}
+
+.btn-grad-blue:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-grad-blue:focus {
+  color: #fff;
+  fill: #fff;
+  box-shadow: 0 0 0 0.25rem rgb(30 126 164 / 50%);
+}
+
 .button {
+  cursor: pointer;
   color: #ffffff;
+  fill: #ffffff;
   background-color: #50be46;
+  border: 1px solid #097a42;
   padding: 7px 16px;
   border-radius: 8px;
-  text-transform: capitalize;
+  display: inline-block;
   font-size: 1rem;
   font-weight: 500;
-  -webkit-transition: all 0.3s ease-in;
-  -o-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in;
-  display: inline-block;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   text-decoration: none;
-  border: 1px solid #097a42;
+  vertical-align: middle;
+  text-align: center;
+  user-select: none;
+  line-height: 1.5;
+}
+
+.button:active {
+  color: #fff;
+  fill: #fff;
+  background-color: #097a42;
+  border-color: #003119;
+}
+
+.button:focus {
+  color: #fff;
+  fill: #fff;
+  background-color: #0b9852;
+  border-color: #086d3b;
+  box-shadow: 0 0 0 0.25rem rgb(15 81 50 / 50%);
 }
 
 .button:hover {
   color: #50be46;
-  /* background-color: transparent; */
+  fill: #50be46;
   background-color: white;
   border: 1px solid #097a42;
+  /* background-color: transparent; */
 }
 
 .button-delete {
@@ -151,12 +284,12 @@ code {
   background-color: white;
 }
 
-.button-signup {
+.button-user {
   background-color: #f0a440fa;
   border: 1px solid #a76d21;
 }
 
-.button-signup:hover {
+.button-user:hover {
   color: #f0a440fa;
   /* background-color: transparent; */
   background-color: #e8f3e9;
