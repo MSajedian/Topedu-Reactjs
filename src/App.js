@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ProvideAuth, PrivateRoute } from "./components/auth/UseAuth";
 
 import Main from './components/main/Main'
-import Login from './components/login/Login'
+import LogIn from './components/login/LogIn'
 import Signup from './components/Signup'
 import Join from './components/Join'
 import Home from './components/home/Home'
@@ -16,7 +16,7 @@ export default function App() {
       <Router>
         <Switch>
           <Route exact path="/"> <Main /> </Route>
-          <Route path="/login"> <Login /> </Route>
+          <Route path="/login"> <LogIn /> </Route>
           <Route path="/signup"> <Signup /> </Route>
           <Route path="/join/course/:courseId/:userId"> <Join /> </Route>
           <Route path="/join/institution/:institutionId/:userId"> <Join /> </Route>
