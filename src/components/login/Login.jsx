@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useDebugValue } from "react";
 import { Col, Container, Form, Image, Row } from 'react-bootstrap';
 import { BiEnvelope, BiLock } from 'react-icons/bi';
 import { FcConferenceCall } from 'react-icons/fc';
@@ -7,8 +7,14 @@ import UseAuth from '../auth/UseAuth';
 import LoginNavbar from './LoginNavbar';
 
 export default function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useStateWithLabel('', "email");
+    const [password, setPassword] = useStateWithLabel('', "password");
+
+    function useStateWithLabel(initialValue, name) {
+        const [value, setValue] = useState(initialValue);
+        useDebugValue(`${name}: ${value}`);
+        return [value, setValue];
+    }
 
     let history = useHistory();
     let location = useLocation();
@@ -26,10 +32,10 @@ export default function Login() {
             <LoginNavbar />
             <Container className="my-5">
                 <Row className="justify-content-center">
-                    <Col>
+                    <Col lg={6}>
                         <Image src="assets/images/login1.png" alt="hero" width="100%" />
                     </Col>
-                    <Col className="my-5">
+                    <Col lg={6} className="my-5">
                         <Container className="my-4">
                             <div className="text-center" style={{ fontFamily: "Poppins" }}>
                                 <FcConferenceCall style={{ fontSize: 50 }} className="mb-3" />
