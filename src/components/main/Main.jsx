@@ -49,53 +49,12 @@ export default function Main() {
                 </Container>
             </section>
             <Container>
-                {/* <h1 className="display-3 text-center">LEARNING ONLINE BECOMES EASIER</h1>
-                <Carousel fade>
-                    <Carousel.Item interval={3000}>
-                        <img
-                            className="d-block w-100"
-                            src="http://unsplash.it/1400/400?random&gravity=west"
-                            alt="First slide"
-                        />
-                        <Carousel.Caption>
-                            <h3>First slide label</h3>
-                            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item interval={3000}>
-                        <img
-                            className="d-block w-100"
-                            src="http://unsplash.it/1400/400?gravity=center"
-                            alt="Second slide"
-                        />
-                        <Carousel.Caption>
-                            <h3>Second slide label</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item interval={3000}>
-                        <img
-                            className="d-block w-100"
-                            src="https://picsum.photos/1400/400"
-                            alt="Third slide"
-                        />
-                        <Carousel.Caption>
-                            <h3>Third slide label</h3>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                </Carousel> */}
                 <Row className="p-4 text-center">
                     <Col>
                         <p className="lead my-3">Learning experiences made easy, social and interactive
                             Increase learner engagement & knowledge retention in higher education and corporate training settings
                         </p>
                     </Col>
-                    {/* <Col className="mt-4">
-                        <Link to="/signup" className="rounded" style={{ backgroundColor: "#4d70f6", color: "rgb(255,255,255)", padding: "1.6vw 2.9vw 1.8vw 2.9vw", textDecoration: "none", fontSize: "1.5rem", fontWeight: "bold" }}>Sign up for free &nbsp;
-                            <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#fff"></path><path d="M12 16l4-4-4-4M8 12h8" stroke="#fff" ></path></svg>
-                        </Link>
-                    </Col> */}
                 </Row>
                 <Row className="text-center">
                     <Col>
