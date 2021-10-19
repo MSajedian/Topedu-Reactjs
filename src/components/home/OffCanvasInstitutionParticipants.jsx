@@ -120,7 +120,6 @@ export default function MaiOffCanvasInstitutionParticipants({ ...props }) {
   };
 
   useEffect(() => {
-    console.log('props.institutionid:', props.institutionid)
     getInstitutionParticipants()
     // eslint-disable-next-line
   }, [])
