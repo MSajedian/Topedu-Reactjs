@@ -4,10 +4,9 @@ import { BiEnvelope, BiLock } from 'react-icons/bi';
 import { FcConferenceCall } from 'react-icons/fc';
 import { useHistory, useLocation } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
-import LogInNavbar from './LogInNavbar';
+import LoginNavbar from './LoginNavbar';
 
-
-export default function LogIn() {
+export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -24,7 +23,7 @@ export default function LogIn() {
 
     return (
         <>
-            <LogInNavbar />
+            <LoginNavbar />
             <Container className="my-5">
                 <Row className="justify-content-center">
                     <Col>
