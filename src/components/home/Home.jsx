@@ -1,5 +1,5 @@
 import React, { useDebugValue, useEffect, useState } from "react";
-import { Button, Card, Col, Container, Form, Modal, Placeholder, Row, Tab, Tabs, Alert, Badge } from 'react-bootstrap';
+import { Button, Card, Col, Container, Form, Modal, Placeholder, Row, Tab, Tabs, Alert } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
