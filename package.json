@@ -11,7 +11,6 @@
     "Activity's content",
     "Code Playground"
   ],
-  "license": "ISC",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
