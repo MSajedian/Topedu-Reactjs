@@ -1,4 +1,4 @@
-import React, { useState, useDebugValue } from "react";
+import React, { useState, useEffect, useDebugValue } from "react";
 import { Col, Container, Row, Image } from 'react-bootstrap';
 
 import { Link } from "react-router-dom";
@@ -6,6 +6,8 @@ import MainNavbar from './MainNavbar';
 // import { CardGroup, Card } from 'react-bootstrap';
 // import { FcReadingEbook } from 'react-icons/fc';
 // import { FcConferenceCall } from 'react-icons/fc';
+const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
+
 
 export default function Main() {
     function useStateWithLabel(initialValue, name) {
@@ -16,6 +18,22 @@ export default function Main() {
     const [valueX, setValueX] = useStateWithLabel(0, "valueX");
     const [valueY, setValueY] = useStateWithLabel(0, "valueY");
 
+    // ******** Check Connection between Frontend and Backend ************
+
+    function checkConnection() {
+        try {
+            fetch(BackendURL + "/users/checkconnection", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+            })
+                .then(res => { if (res.status !== 200) { console.log('error connection to the backend') } })
+        } catch (error) { console.log('error:', error) }
+    }
+
+    useEffect(() => {
+        checkConnection();
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <>
