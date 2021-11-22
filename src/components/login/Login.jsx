@@ -9,6 +9,8 @@ import LoginNavbar from './LoginNavbar';
 export default function Login() {
     const [email, setEmail] = useStateWithLabel('', "email");
     const [password, setPassword] = useStateWithLabel('', "password");
+    const [loginButtonClassName, setLoginButtonClassName] = useStateWithLabel("button mx-2", "loginButtonClassName");
+    const [loginButtonText, setLoginButtonText] = useStateWithLabel("Log in", "loginButtonText");
 
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
@@ -21,7 +23,12 @@ export default function Login() {
     let auth = UseAuth();
 
     let { from } = location.state || { from: { pathname: "/home" } };
-    const login = () => {
+
+    const handleLogin = (event) => {
+        setLoginButtonText("Logging in ...")
+        setLoginButtonClassName("button mx-2 bg-info")
+        event.preventDefault();
+        event.stopPropagation();
         auth.signin(email, password, () => {
             history.replace(from);
         });
@@ -42,18 +49,18 @@ export default function Login() {
                                 <h3 className="mb-5 text-center" style={{ fontSize: "35px" }}><span style={{ color: "#4e83f5" }}>Login</span> To Your <span style={{ color: "#50be46" }}>Account!</span></h3>
                             </div>
                             <Container className="px-5">
-                                <Form >
+                                <Form onSubmit={handleLogin}>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
                                         <Form.Label><BiEnvelope size="1.5em" /> Email Address</Form.Label>
-                                        <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                        <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formBasicPassword">
                                         <Form.Label><BiLock size="1.5em" /> Password</Form.Label>
-                                        <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                        <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                                     </Form.Group>
-                                    <button type="button" className="button mx-2" onClick={login}>
-                                        Login
-                                    </button>
+                                    {/* <button type="submit" className="button mx-2" > Login </button> */}
+                                    <button className={loginButtonClassName} type="submit">{loginButtonText}</button>
+
                                 </Form>
                             </Container>
                         </Container>

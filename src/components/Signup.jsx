@@ -8,13 +8,15 @@ import UseAuth from './auth/UseAuth'
 const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
 export default function Signup() {
-    const [signUpAs, setSignUpAs] = useState('learner');
+    const [signUpAs, setSignUpAs] = useState('admin');
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [institutionName, setInstitutionName] = useState('');
+    const [signUpButtonStyle, setSignUpButtonStyle] = useState('primary');
+    const [signUpButtonText, setSignUpButtonText] = useState('Sign up');
 
     let history = useHistory();
     let auth = UseAuth();
@@ -29,6 +31,8 @@ export default function Signup() {
     const handleSubmitSingupForm = (event) => {
         event.preventDefault();
         event.stopPropagation();
+        setSignUpButtonStyle('info')
+        setSignUpButtonText('Signing up ...')
         if (password !== confirmPassword) {
             alert("passwords are not matched")
         }
@@ -83,10 +87,10 @@ export default function Signup() {
                 <Col>
                     <FloatingLabel controlId="floatingSelect" label="Sign up as" className="mb-2">
                         <Form.Select aria-label="Floating label select" onChange={(e) => { setSignUpAs(e.target.value) }} defaultValue={signUpAs}>
+                            <option value="admin">Admin</option>
                             <option value="learner">Learner</option>
                             <option value="instructor">Instructor</option>
                             <option value="assistant">Assistant</option>
-                            <option value="admin">Admin</option>
                         </Form.Select>
                     </FloatingLabel>
 
@@ -120,7 +124,7 @@ export default function Signup() {
                                 <Form.Label>Institution Name</Form.Label>
                                 <Form.Control type="text" value={institutionName} onChange={(e) => setInstitutionName(e.target.value)} required />
                             </Form.Group>
-                            <Button type="submit" >Sign up</Button>
+                            <Button type="submit" variant={signUpButtonStyle}>{signUpButtonText}</Button>
                         </Form>
                         : <></>}
                 </Col>
