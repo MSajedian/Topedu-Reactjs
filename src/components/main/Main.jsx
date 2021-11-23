@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useDebugValue } from "react";
 import { Col, Container, Row, Image } from 'react-bootstrap';
 
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import MainNavbar from './MainNavbar';
 // import { CardGroup, Card } from 'react-bootstrap';
 // import { FcReadingEbook } from 'react-icons/fc';
@@ -74,13 +74,13 @@ export default function Main() {
                         </p>
                     </Col>
                 </Row>
-                <Row className="text-center">
+                {/* <Row className="text-center">
                     <Col>
                         Fast & easy course creation
                         Engage learners with collaborative activities
                         Track learner progress & measure engagement
                     </Col>
-                </Row>
+                </Row> */}
                 {/* <Row className="p-4 p-md-5 mb-4 text-center">
                     <Col>
                         <div>Built to empower every instructor
@@ -122,7 +122,7 @@ export default function Main() {
                         </CardGroup>
                     </Col>
                 </Row> */}
-                <footer className="pt-4 my-md-5 pt-md-5 border-top text-center">
+                {/* <footer className="pt-4 my-md-5 pt-md-5 border-top text-center">
                     <Row>
                         <Col>
                             <h5>Features</h5>
@@ -182,7 +182,7 @@ export default function Main() {
                             </ul>
                         </Col>
                     </Row>
-                </footer>
+                </footer> */}
             </Container>
         </>
     );
