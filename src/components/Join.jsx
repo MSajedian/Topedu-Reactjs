@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import UseAuth from './auth/UseAuth'
 
-const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
+const BackendURL = process.env.REACT_APP_BACKEND_REMOTE_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
 export default function Join() {
     const { courseId, userId, institutionId } = useParams();

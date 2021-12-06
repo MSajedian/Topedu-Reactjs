@@ -8,7 +8,7 @@ import { useHistory, useParams } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 import CoursesNavbar from './CoursesNavbar';
 
-const BackendURL = process.env.REACT_APP_BACKEND_CLOUD_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
+const BackendURL = process.env.REACT_APP_BACKEND_REMOTE_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
 export default function Courses() {
     const history = useHistory();
