@@ -146,7 +146,7 @@ export default function Home() {
             <div className="home-background pt-2">
                 <Container>
                     <div className="d-flex justify-content-center  my-2">
-                        <div className="h1"><span className="fst-italic">Hello </span><span className="fst-italic" style={{ color: "#0022ff" }}>{userName}</span><span className="fst-italic">, good to see you again!</span>👋</div>
+                        <div className="h1"><span className="fst-italic">Hello </span><span className="fst-italic" style={{ color: "#0022ff" }}>{userName}</span><span className="fst-italic">, good to see you!</span>👋</div>
                     </div>
                     <div className="d-flex justify-content-center">
                         <div>{userType === "admin" || userType === "instructor" ? <button className="btn-grad-blue mb-2" onClick={handleShowCreateCourseModal}>+ Create Course</button> : <></>}</div>
