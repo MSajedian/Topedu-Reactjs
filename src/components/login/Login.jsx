@@ -44,9 +44,9 @@ export default function Login() {
                     </Col>
                     <Col lg={6} className="my-5">
                         <Container className="my-4">
-                            <div className="text-center" style={{ fontFamily: "Poppins" }}>
-                                <FcConferenceCall style={{ fontSize: 50 }} className="mb-3" />
-                                <h3 className="mb-5 text-center" style={{ fontSize: "35px" }}><span style={{ color: "#4e83f5" }}>Login</span> To Your <span style={{ color: "#50be46" }}>Account!</span></h3>
+                            <div className="text-center font-family-Poppins" >
+                                <FcConferenceCall className="mb-3 fs-1" />
+                                <h3 className="mb-5 text-center fs-2" ><span className="color-4e83f5">Login</span> To Your <span className="color-50be46">Account!</span></h3>
                             </div>
                             <Container className="px-5">
                                 <Form onSubmit={handleLogin}>

@@ -28,7 +28,6 @@ export default function MainNavbar() {
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
-                        style={{ maxHeight: '100px' }}
                         navbarScroll
                         className="ms-auto px-2"
                     >

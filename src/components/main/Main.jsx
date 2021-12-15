@@ -71,7 +71,7 @@ export default function Main() {
                     <Col>
                         <h1 class="lp-v3-hero-heading">Learning experiences made easy, social and interactive</h1>
                         <div class="lp-v3-hero-subheading">Increase learner engagement &amp; knowledge retention in higher education and corporate training settings</div>
-                        <Link to="/signup" className="btn-grad-orange" style={{display:"inline-block"}} >Sign up for free {' '} 
+                        <Link to="/signup" className="btn-grad-orange d-inline-block">Sign up for free {' '} 
                         <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 16l4-4-4-4M8 12h8" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                         </Link>
                     </Col>

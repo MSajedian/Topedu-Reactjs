@@ -78,9 +78,9 @@ export default function Signup() {
     };
 
     return (
-        <Container className="my-5" style={{ backgroundColor: "white", width: "50vw", padding: "10vw", border: "2px solid #b6b6b6", borderRadius: "5px" }}>
+        <Container className="my-5 container-customized" >
             <Row className="text-center">
-                <FcConferenceCall style={{ fontSize: 50 }} className="mb-3" />
+                <FcConferenceCall  className="mb-3 fs-1" />
                 <b className="mb-4">Sign up</b>
             </Row>
             <Row className="justify-content-center">
