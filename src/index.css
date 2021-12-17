@@ -65,6 +65,22 @@ code {
   color: #50be46;
 }
 
+.color-0022ff {
+  color: #0022ff;
+}
+
+.height-40vh {
+  height: 40vh;
+}
+
+.height-70vh {
+  height: 70vh;
+}
+
+.height-80vh {
+  height: 80vh;
+}
+
 .course-background {
   content: " ";
   display: block;

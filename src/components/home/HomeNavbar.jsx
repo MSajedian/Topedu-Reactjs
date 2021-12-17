@@ -21,10 +21,7 @@ export default function HomeNavbar({ institutions, userType }) {
                 e.preventDefault();
                 onClick(e);
             }}
-            style={{
-                padding: "5px 9px 8px 9px"
-            }} 
-            className="border border-success rounded button"
+            className="border border-success rounded button px-2 py-1"
         >{children}
         </Link>
     ));

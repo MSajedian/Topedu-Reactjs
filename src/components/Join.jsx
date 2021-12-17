@@ -91,7 +91,6 @@ export default function Join() {
         } catch (error) { console.log('error:', error) }
     };
 
-
     useEffect(() => {
         if (courseId) getUserFromCourse();
         if (institutionId) getUserFromInstitution();

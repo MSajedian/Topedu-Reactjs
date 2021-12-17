@@ -21,7 +21,7 @@ export default function LoginNavbar() {
                                 <path d="M90 140 l0 -60 1145 0 1145 0 0 60 0 60 -1145 0 -1145 0 0 -60z" />
                             </g>
                         </svg>
-                        {/* <FcConferenceCall style={{ fontSize: 40 }} className="bg-light bg-gradient rounded"/>  */}
+                        {/* <FcConferenceCall className="bg-light bg-gradient rounded"/>  */}
                         <span className="align-self-center">TopEdu</span>
                     </Link>
                 </Navbar.Brand>

@@ -38,7 +38,6 @@ export default function Main() {
     return (
         <>
             <MainNavbar />
-            {/* <Container className="my-5" style={{ backgroundColor: "white", width: "50vw", padding: "10vw", border: "2px solid #b6b6b6", borderRadius: "5px" }}> */}
 
             <section className="hero-section" onMouseMove={(e) => { setValueX(e.pageX); setValueY(e.pageY) }}>
                 <div className="hero-shape">

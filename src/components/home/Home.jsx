@@ -146,7 +146,7 @@ export default function Home() {
             <div className="home-background pt-2">
                 <Container>
                     <div className="d-flex justify-content-center  my-2">
-                        <div className="h1"><span className="fst-italic">Hello </span><span className="fst-italic" style={{ color: "#0022ff" }}>{userName}</span><span className="fst-italic">, good to see you!</span>👋</div>
+                        <div className="h1"><span className="fst-italic">Hello </span><span className="fst-italic color-0022ff">{userName}</span><span className="fst-italic">, good to see you!</span>👋</div>
                     </div>
                     <div className="d-flex justify-content-center">
                         <div>{userType === "admin" || userType === "instructor" ? <button className="btn-grad-blue mb-2" onClick={handleShowCreateCourseModal}>+ Create Course</button> : <></>}</div>
@@ -173,7 +173,7 @@ export default function Home() {
                                         courses.map((course, index) => (
                                             <Col key={`course${index}`} className="">
                                                 <Card className="position-relative border border-secondary box-shadow" >
-                                                    <Card.Img style={{ height: '40vh' }} variant="top" src={course.cover} onClick={() => (history.push(`/courses/${course._id}`))} />
+                                                    <Card.Img className="height-40vh" variant="top" src={course.cover} onClick={() => (history.push(`/courses/${course._id}`))} />
                                                     <Card.Body className="border border-primary border-end-0 border-bottom-0 border-start-0">
                                                         <Card.Title className="d-flex justify-content-center">
                                                             {userType === "admin" || userType === "instructor" ?
