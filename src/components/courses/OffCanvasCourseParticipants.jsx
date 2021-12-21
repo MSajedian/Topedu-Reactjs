@@ -1,10 +1,10 @@
 import React, { useDebugValue, useEffect, useState } from "react";
-import { Button, Col, Container, Form, Modal, Offcanvas, Row, Spinner, Table, Alert } from 'react-bootstrap';
-import { BsTrash, BsClipboard, BsClipboardCheck } from 'react-icons/bs';
+import { Alert, Button, Col, Container, Form, Modal, Offcanvas, Row, Spinner, Table } from 'react-bootstrap';
 import { BiMailSend } from 'react-icons/bi';
+import { BsClipboard, BsClipboardCheck, BsTrash } from 'react-icons/bs';
+import { FcInvite } from 'react-icons/fc';
 import { FiMail } from 'react-icons/fi';
 import { IoIosPeople } from 'react-icons/io';
-import { FcInvite } from 'react-icons/fc';
 import { useHistory, useParams } from "react-router-dom";
 
 const BackendURL = process.env.REACT_APP_BACKEND_REMOTE_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
