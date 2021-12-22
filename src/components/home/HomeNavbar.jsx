@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Nav, Navbar, Spinner } from 'react-bootstrap';
+import { FiLogOut } from "react-icons/fi";
+import { IoHome } from "react-icons/io5";
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
+import OffCanvasCodePlayground from '../OffCanvasCodePlayground';
 import OffCanvasInstitutionParticipants from './OffCanvasInstitutionParticipants';
-import { IoHome } from "react-icons/io5";
-import { FiLogOut } from "react-icons/fi";
 
 // import { ImHome } from 'react-icons/im';
 // import { IoAddOutline } from "react-icons/io5";
@@ -37,12 +38,12 @@ export default function HomeNavbar({ institutions, userType }) {
 
     return (
         <Navbar expand="lg" className="px-3 flex-row navbar-default" >
-                    <IoHome size="1.2em" color="green"/>
-                    {selectedInstitution ?
-                    <span className="ms-2 text-dark alert-dismissible fade show"> {selectedInstitution.name} </span>
-                    :
-                    <span>&nbsp;&nbsp;<Spinner animation="border" variant="primary" /></span>
-                }
+            <IoHome size="1.2em" color="green" />
+            {selectedInstitution ?
+                <span className="ms-2 text-dark alert-dismissible fade show"> {selectedInstitution.name} </span>
+                :
+                <span>&nbsp;&nbsp;<Spinner animation="border" variant="primary" /></span>
+            }
             {/* <Dropdown className="d-flex align-items-center">
                 <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" >
                     
@@ -80,13 +81,16 @@ export default function HomeNavbar({ institutions, userType }) {
                         <OffCanvasInstitutionParticipants placement="top" institutionid={selectedInstitution._id} />
                     </Nav.Item>
                     : <></>}
+                <Nav.Item className="d-flex mx-1 mx-lg-1 ">
+                    <OffCanvasCodePlayground placement="top" />
+                </Nav.Item>
                 <Dropdown className="mx-lg-1 mx-3 my-1">
-                    <Dropdown.Toggle variant="outline-warning"  type="button" id="dropdown-custom-components" className="btn-grad-orange">
+                    <Dropdown.Toggle variant="outline-warning" type="button" id="dropdown-custom-components" className="btn-grad-orange">
                         {userName}
                     </Dropdown.Toggle>
                     <Dropdown.Menu align={{ lg: 'end' }} >
                         <Button className="dropdown-item" onClick={() => { auth.signout(() => history.push("/login")) }} >
-                            <FiLogOut/>
+                            <FiLogOut />
                             &nbsp;
                             Sign Out
                         </Button>

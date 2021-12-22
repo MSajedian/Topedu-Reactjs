@@ -124,7 +124,7 @@ export default function Home() {
 
     const MyCoursesTabTitle = () => { return (<strong><AiOutlineAppstore size="1.3em" color="blue" />  My Courses </strong>) };
 
-    const codePlaygroundTabTitle = () => { return (<div> 👨‍💻 Code Playground </div>) };
+    // const codePlaygroundTabTitle = () => { return (<div> 👨‍💻 Code Playground </div>) };
 
     const handleSubmitCreateCourse = (event) => {
         event.preventDefault();
@@ -244,7 +244,7 @@ export default function Home() {
                                 }
                             </Row>
                         </Tab>
-                        <Tab eventKey="codePlayground" title={codePlaygroundTabTitle()} tabClassName="shadow-lg" >
+                        {/* <Tab eventKey="codePlayground" title={codePlaygroundTabTitle()} tabClassName="shadow-lg" >
                             <Row xs={1} md={2} className="mt-1 g-4" id="link-2" >
                                 <Col>
                                     <Card onClick={() => (history.push(`/code-playground`))} className="btn box-shadow">
@@ -255,7 +255,7 @@ export default function Home() {
                                     </Card>
                                 </Col>
                             </Row>
-                        </Tab>
+                        </Tab> */}
                     </Tabs>
                     <Modal show={showDeleteCourseModal} onHide={handleCloseDeleteCourseModal} >
                         <Modal.Header closeButton>

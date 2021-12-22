@@ -3,7 +3,7 @@ import { Button, Dropdown, Nav, Navbar } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
-import OffCanvasCodePlayground from './OffCanvasCodePlayground';
+import OffCanvasCodePlayground from '../OffCanvasCodePlayground';
 import OffCanvasCourseParticipants from './OffCanvasCourseParticipants';
 import { AiOutlineAppstore } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
@@ -19,15 +19,16 @@ export default function CoursesNavbar({ userType }) {
             </Link></div>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
-                <Nav navbarScroll > </Nav>
                 <Nav.Item className="d-flex ms-lg-auto mx-lg-1 mx-3 my-1">
-                    <OffCanvasCodePlayground placement="top" />
                 </Nav.Item>
                 {userType === "admin" || userType === "instructor" ?
                     <Nav.Item className="mx-lg-1 mx-3 my-1">
                         <OffCanvasCourseParticipants placement="top" />
                     </Nav.Item>
                     : <></>}
+                <Nav.Item className="d-flex mx-lg-1 mx-3 my-1">
+                    <OffCanvasCodePlayground placement="top" />
+                </Nav.Item>
                 <Dropdown className="mx-3 mx-lg-1 ">
                     <Dropdown.Toggle variant="success" type="button" id="dropdown-custom-components" className="btn-grad-orange me-3">
                         {userName}

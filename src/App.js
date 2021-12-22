@@ -7,7 +7,7 @@ import Login from './components/login/Login'
 import Signup from './components/Signup'
 import Join from './components/Join'
 import Home from './components/home/Home'
-import CodePlayground from './components/courses/CodePlayground'
+// import CodePlayground from './components/courses/CodePlayground'
 import Courses from './components/courses/Courses'
 
 export default function App() {
@@ -22,7 +22,7 @@ export default function App() {
           <Route path="/join/institution/:institutionId/:userId"> <Join /> </Route>
           <PrivateRoute path="/home"> <Home /> </PrivateRoute>
           <PrivateRoute path="/courses/:courseId"> <Courses /> </PrivateRoute>
-          <PrivateRoute path="/code-playground"> <CodePlayground /> </PrivateRoute>
+          {/* <PrivateRoute path="/code-playground"> <CodePlayground /> </PrivateRoute> */}
         </Switch>
       </Router>
     </ProvideAuth >
