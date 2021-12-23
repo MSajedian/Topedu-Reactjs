@@ -128,7 +128,7 @@ export default function MaiOffCanvasInstitutionParticipants({ ...props }) {
   return (
     <>
       <button type="button" className="btn-grad-green" onClick={toggleShow} >
-        <IoIosPeople size="1.4em" />
+        <IoIosPeople size="1.4em" color="green"/>
         &nbsp;
         <span>Institution Participants</span>
       </button>
@@ -143,17 +143,6 @@ export default function MaiOffCanvasInstitutionParticipants({ ...props }) {
         <Offcanvas.Body>
           <Container>
             <Row>
-              {/*<Col>
-                 <Form className="d-flex">
-                  <FormControl
-                    type="SearchForParticipant"
-                    placeholder="Search for participant"
-                    className="me-2"
-                    aria-label="SearchForParticipant"
-                  />
-                  <Button variant="outline-success">Search</Button>
-                </Form> 
-              </Col> */}
               <Col>
                 <button className="btn btn-outline-success d-flex ms-auto align-items-center" onClick={handleShowCreateInvitationModal}>
                   <FcInvite size="1.4em" />
