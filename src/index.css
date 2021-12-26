@@ -41,6 +41,10 @@ code {
   line-height: 1.5em;
 }
 
+.rotate90deg {
+  transform: rotate(90deg);
+}
+
 .navbar-default {
   background-color: white;
 }
