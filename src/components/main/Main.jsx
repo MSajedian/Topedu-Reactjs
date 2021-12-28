@@ -19,19 +19,19 @@ export default function Main() {
     const [valueY, setValueY] = useStateWithLabel(0, "valueY");
 
     // ******** Check Connection between Frontend and Backend ************
-
-    function checkConnection() {
+    function sendEmail() {
         try {
-            fetch(BackendURL + "/users/checkconnection", {
+            fetch(`${BackendURL}/users/sendemailforpersonalpage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name:"someone", emailAddress:"...", message:"visited Topedu" }) // body data type must match "Content-Type" header
             })
-                .then(res => { if (res.status !== 200) { console.log('error connection to the backend') } })
+                .then(res => { if (res.ok) { console.log('error connection to the backend') } })
         } catch (error) { console.log('error:', error) }
     }
 
     useEffect(() => {
-        checkConnection();
+        sendEmail();
         // eslint-disable-next-line
     }, [])
 
