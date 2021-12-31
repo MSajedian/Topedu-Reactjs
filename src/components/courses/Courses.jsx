@@ -3,7 +3,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 import React, { useDebugValue, useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Tab } from 'react-bootstrap';
+import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Tab, Popover, OverlayTrigger } from 'react-bootstrap';
 import { useHistory, useParams } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 import CoursesNavbar from './CoursesNavbar';
@@ -177,21 +177,21 @@ export default function Courses() {
             <Tab.Container id="left-accordions-tabs">
                 <Row className="p-0 m-2">
                     <Col sm={3}>
-                    {userType === "admin" || userType === "instructor" ?
+                        {userType === "admin" || userType === "instructor" ?
                             // admin and Instructor can see this:
                             <>
-                            <div className="text-center course-activity-title-small" >
-                                <Form.Control className="text-center" value={editableCourseTitle} onChange={(e) => {
-                                    setEditableCourseTitle(e.target.value)
-                                    if (course.cover === `https://fakeimg.pl/350x200/333/eae0d0?text=${course.title}`) {
-                                        course.cover = `https://fakeimg.pl/350x200/333/eae0d0?text=${e.target.value}`
-                                    }
-                                    course.title = e.target.value
-                                    setCourse(course)
-                                    updateCourse(false)
-                                }} />
+                                <div className="text-center course-activity-title-small" >
+                                    <Form.Control className="text-center" value={editableCourseTitle} onChange={(e) => {
+                                        setEditableCourseTitle(e.target.value)
+                                        if (course.cover === `https://fakeimg.pl/350x200/333/eae0d0?text=${course.title}`) {
+                                            course.cover = `https://fakeimg.pl/350x200/333/eae0d0?text=${e.target.value}`
+                                        }
+                                        course.title = e.target.value
+                                        setCourse(course)
+                                        updateCourse(false)
+                                    }} />
                                 </div>
-                                </>
+                            </>
                             :
                             // Learner and assistant can see this:
                             // <Form.Control className="text-center" plaintext value={course.title} disabled />
@@ -209,9 +209,9 @@ export default function Courses() {
                                         <Button
                                             className="rounded-circle"
                                             onClick={handleShowChangeCourseImageModal}
-                                            variant="secondary" 
-                                            >
-                                            <ImPencil size="1.1em"/>
+                                            variant="secondary"
+                                        >
+                                            <ImPencil size="1.1em" />
                                         </Button>
                                     </Card.ImgOverlay>
                                 )}
@@ -238,20 +238,42 @@ export default function Courses() {
                             // Learner and assistant can see this:
                             <Card> <Card.Img variant="top" src={course.cover} className="p-1" /> </Card>
                         }
-                        
+
                         {course.flowsAndActivities ?
                             <Accordion>
                                 {course.flowsAndActivities.map((flow, flowIndex) => (
                                     <Accordion.Item eventKey={flow._id} key={`flow._id${flow._id}`}>
                                         {userType === "admin" || userType === "instructor" ?
                                             <Accordion.Header>
-                                                <div className="btn btn-danger button-delete px-2" onClick={() => {
+                                                {/* <div className="btn btn-danger button-delete px-2" onClick={() => {
                                                     course.flowsAndActivities.splice(flowIndex, 1)
                                                     updateCourse(true)
                                                 }}>
-                                                    <BsTrash size="1.2em"/>
-                                                </div>
+                                                    <BsTrash size="1.2em" />
+                                                </div> */}
+                                                <OverlayTrigger
+                                                    trigger="focus"
+                                                    key={`top_flow._id${flow._id}`}
+                                                    placement="top"
+                                                    overlay={
+                                                        <Popover id={`popover-positioned-${"top"}`} >
+                                                            <Popover.Header as="h3">Flow Deletion</Popover.Header>
+                                                            <div className="text-center p-1">
+                                                                <div className="p-1">Do you want to delete this flow?</div>
+                                                                <Button className="btn btn-success me-1" onClick={() => {
+                                                                    course.flowsAndActivities.splice(flowIndex, 1)
+                                                                    updateCourse(true)
+                                                                }}>
+                                                                    Yes
+                                                                </Button>
+                                                                <Button className="btn btn-danger">No</Button>
+                                                            </div>
+                                                        </Popover>
+                                                    }
 
+                                                >
+                                                    <Button className="btn btn-danger button-delete px-2" ><BsTrash size="1.2em" /></Button>
+                                                </OverlayTrigger>
                                                 <Form.Control
                                                     className="border text-center mx-3" plaintext defaultValue={flow.name} onChange={(e) => {
                                                         flow.name = e.target.value
@@ -279,7 +301,7 @@ export default function Courses() {
                                                                                             flow.activities.splice(activityIndex, 1)
                                                                                             updateCourse(true)
                                                                                         }}>
-                                                                                            <BsTrash size="1.2em"/>
+                                                                                            <BsTrash size="1.2em" />
                                                                                         </div>
                                                                                         <Form.Control className="border text-center mx-3 overflow-auto" plaintext defaultValue={activity.name} onChange={(e) => {
                                                                                             activity.name = e.target.value
