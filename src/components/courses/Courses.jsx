@@ -3,7 +3,8 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 import React, { useDebugValue, useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Tab, Popover, OverlayTrigger } from 'react-bootstrap';
+import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Tab, } from 'react-bootstrap';
+// import { Popover, OverlayTrigger } from 'react-bootstrap';
 import { useHistory, useParams } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 import CoursesNavbar from './CoursesNavbar';
@@ -245,13 +246,13 @@ export default function Courses() {
                                     <Accordion.Item eventKey={flow._id} key={`flow._id${flow._id}`}>
                                         {userType === "admin" || userType === "instructor" ?
                                             <Accordion.Header>
-                                                {/* <div className="btn btn-danger button-delete px-2" onClick={() => {
+                                                <div className="btn btn-danger button-delete px-2" onClick={() => {
                                                     course.flowsAndActivities.splice(flowIndex, 1)
                                                     updateCourse(true)
                                                 }}>
                                                     <BsTrash size="1.2em" />
-                                                </div> */}
-                                                <OverlayTrigger
+                                                </div>
+                                                {/* <OverlayTrigger
                                                     trigger="focus"
                                                     key={`top_flow._id${flow._id}`}
                                                     placement="top"
@@ -270,10 +271,12 @@ export default function Courses() {
                                                             </div>
                                                         </Popover>
                                                     }
-
                                                 >
                                                     <Button className="btn btn-danger button-delete px-2" ><BsTrash size="1.2em" /></Button>
-                                                </OverlayTrigger>
+                                                </OverlayTrigger> */}
+
+
+
                                                 <Form.Control
                                                     className="border text-center mx-3" plaintext defaultValue={flow.name} onChange={(e) => {
                                                         flow.name = e.target.value
@@ -296,6 +299,7 @@ export default function Courses() {
                                                                         <Draggable key={`activity._id${activity._id}`} draggableId={activity._id} index={activityIndex}>
                                                                             {(provided) => (
                                                                                 <Nav.Item ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+
                                                                                     <Nav.Link eventKey={activity._id} className="d-flex justify-content-between">
                                                                                         <div className="btn btn-danger button-delete px-2" onClick={() => {
                                                                                             flow.activities.splice(activityIndex, 1)
@@ -303,6 +307,32 @@ export default function Courses() {
                                                                                         }}>
                                                                                             <BsTrash size="1.2em" />
                                                                                         </div>
+
+                                                                                        {/* <Button className="btn btn-danger button-delete px-2" onClick={() => { activity.isShow = true }} key={`button${activity._id}`}>
+                                                                                            <BsTrash size="1.2em" />
+                                                                                        </Button>
+
+                                                                                        <Modal show={activity.isShow} onHide={() => activity.isShow = false} key={`Modal${activity._id}`}>
+                                                                                            <Modal.Header closeButton>
+                                                                                                <Modal.Title>activity Deletion</Modal.Title>
+                                                                                            </Modal.Header>
+                                                                                            <Modal.Body >
+                                                                                                <div className="text-center">Do you want to delete this activity?</div>
+                                                                                                <div className="text-center mt-2 fs-3">{activity.name}</div>
+                                                                                            </Modal.Body>
+                                                                                            <Modal.Footer >
+                                                                                                <Button variant="secondary" onClick={() => activity.isShow = false}>
+                                                                                                    No
+                                                                                                </Button>
+                                                                                                <Button variant="danger" onClick={() => {
+                                                                                                    flow.activities.splice(activityIndex, 1)
+                                                                                                    updateCourse(true)
+                                                                                                }}>
+                                                                                                    Yes
+                                                                                                </Button>
+                                                                                            </Modal.Footer>
+                                                                                        </Modal> */}
+
                                                                                         <Form.Control className="border text-center mx-3 overflow-auto" plaintext defaultValue={activity.name} onChange={(e) => {
                                                                                             activity.name = e.target.value
                                                                                             updateCourse(true)
@@ -312,6 +342,7 @@ export default function Courses() {
                                                                             )}
                                                                         </Draggable>
                                                                     )
+
                                                                 })}
                                                                 {provided.placeholder}
 
@@ -453,7 +484,7 @@ export default function Courses() {
                     </Col>
                 </Row>
             </Tab.Container>
-        </div>
+        </div >
     )
 }
 
