@@ -13,6 +13,8 @@ import { BsTrash } from "react-icons/bs";
 
 const BackendURL = process.env.REACT_APP_BACKEND_REMOTE_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
+
+
 export default function Courses() {
     const history = useHistory();
     const auth = UseAuth();
@@ -27,10 +29,99 @@ export default function Courses() {
     const handleCloseChangeCourseImageModal = () => setShowChangeCourseImageModal(false);
     const handleShowChangeCourseImageModal = () => setShowChangeCourseImageModal(true);
 
+    // const [show, setShow] = useState(false);
+
+
+
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
         useDebugValue(`${name}: ${value}`);
         return [value, setValue];
+    }
+
+    function DeleteFlow({ flowIndex }) {
+        const [show, setShow] = useState(false);
+
+        const handleClose = () => setShow(false);
+        const handleShow = () => setShow(true);
+
+        return (
+            <>
+                <Button className="btn btn-danger button-delete px-2" onClick={handleShow}>
+                    <BsTrash size="1.2em" />
+                </Button>
+
+                <Modal
+                    show={show}
+                    onHide={handleClose}
+                    backdrop="static"
+                    keyboard={false}
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Delete</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body >
+                        <div className="text-center">You will not be able to recover this flow if you delete it. Do you want to delete this flow?</div>
+                        <div className="text-center mt-2 fs-3">
+                            {course.flowsAndActivities[flowIndex].name}
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            No
+                        </Button>
+                        <Button variant="danger" onClick={() => {
+                            course.flowsAndActivities.splice(flowIndex, 1)
+                            updateCourse(true)
+                        }}>
+                            Yes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        );
+    }
+
+    function DeleteActivity({ flowIndex, activityIndex }) {
+        const [show, setShow] = useState(false);
+
+        const handleClose = () => setShow(false);
+        const handleShow = () => setShow(true);
+
+        return (
+            <>
+                <Button className="btn btn-danger button-delete px-2" onClick={handleShow}>
+                    <BsTrash size="1.2em" />
+                </Button>
+                <Modal
+                    show={show}
+                    onHide={handleClose}
+                    backdrop="static"
+                    keyboard={false}
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Activity Deletion</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body >
+                        <div className="text-center">You will not be able to recover this flow if you delete it. Do you want to delete this activity?</div>
+                        <div className="text-center mt-2 fs-3">
+                            {course.flowsAndActivities[flowIndex].activities[activityIndex].name}
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            No
+                        </Button>
+                        <Button variant="danger" onClick={() => {
+                            course.flowsAndActivities[flowIndex].activities.splice(activityIndex, 1)
+                            updateCourse(true)
+                        }}>
+                            Yes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        );
     }
 
     function getNewAccessToken() {
@@ -246,12 +337,14 @@ export default function Courses() {
                                     <Accordion.Item eventKey={flow._id} key={`flow._id${flow._id}`}>
                                         {userType === "admin" || userType === "instructor" ?
                                             <Accordion.Header>
-                                                <div className="btn btn-danger button-delete px-2" onClick={() => {
+                                                {/* <div className="btn btn-danger button-delete px-2" onClick={() => {
                                                     course.flowsAndActivities.splice(flowIndex, 1)
                                                     updateCourse(true)
                                                 }}>
                                                     <BsTrash size="1.2em" />
-                                                </div>
+                                                </div> */}
+                                                <DeleteFlow flowIndex={flowIndex} />
+
                                                 {/* <OverlayTrigger
                                                     trigger="focus"
                                                     key={`top_flow._id${flow._id}`}
@@ -301,38 +394,13 @@ export default function Courses() {
                                                                                 <Nav.Item ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
 
                                                                                     <Nav.Link eventKey={activity._id} className="d-flex justify-content-between">
-                                                                                        <div className="btn btn-danger button-delete px-2" onClick={() => {
+                                                                                        {/* <div className="btn btn-danger button-delete px-2" onClick={() => {
                                                                                             flow.activities.splice(activityIndex, 1)
                                                                                             updateCourse(true)
                                                                                         }}>
                                                                                             <BsTrash size="1.2em" />
-                                                                                        </div>
-
-                                                                                        {/* <Button className="btn btn-danger button-delete px-2" onClick={() => { activity.isShow = true }} key={`button${activity._id}`}>
-                                                                                            <BsTrash size="1.2em" />
-                                                                                        </Button>
-
-                                                                                        <Modal show={activity.isShow} onHide={() => activity.isShow = false} key={`Modal${activity._id}`}>
-                                                                                            <Modal.Header closeButton>
-                                                                                                <Modal.Title>activity Deletion</Modal.Title>
-                                                                                            </Modal.Header>
-                                                                                            <Modal.Body >
-                                                                                                <div className="text-center">Do you want to delete this activity?</div>
-                                                                                                <div className="text-center mt-2 fs-3">{activity.name}</div>
-                                                                                            </Modal.Body>
-                                                                                            <Modal.Footer >
-                                                                                                <Button variant="secondary" onClick={() => activity.isShow = false}>
-                                                                                                    No
-                                                                                                </Button>
-                                                                                                <Button variant="danger" onClick={() => {
-                                                                                                    flow.activities.splice(activityIndex, 1)
-                                                                                                    updateCourse(true)
-                                                                                                }}>
-                                                                                                    Yes
-                                                                                                </Button>
-                                                                                            </Modal.Footer>
-                                                                                        </Modal> */}
-
+                                                                                        </div> */}
+                                                                                        <DeleteActivity flowIndex={flowIndex} activityIndex={activityIndex} />
                                                                                         <Form.Control className="border text-center mx-3 overflow-auto" plaintext defaultValue={activity.name} onChange={(e) => {
                                                                                             activity.name = e.target.value
                                                                                             updateCourse(true)
@@ -350,7 +418,7 @@ export default function Courses() {
                                                         )}
                                                     </Droppable>
                                                 </DragDropContext>
-                                                <Nav.Link className="page-link text-center" onClick={() => {
+                                                <Nav.Link className="page-link text-center mt-2" onClick={() => {
                                                     flow.activities.push({ "name": "New Activity" })
                                                     updateCourse(true)
                                                 }}>
@@ -406,7 +474,7 @@ export default function Courses() {
                     <Col sm={9}>
                         <Tab.Content>
                             {course.flowsAndActivities ? course.flowsAndActivities.map((flow) => (
-                                (flow.activities.map((activity) => (
+                                (flow.activities.map((activity, activityIndex) => (
                                     <Tab.Pane eventKey={activity._id} key={`activityId${activity._id}`} className="mt-2">
                                         <div className="text-center course-activity-title mb-3">{activity.name}</div>
                                         {userType === "admin" || userType === "instructor" ?
@@ -483,7 +551,7 @@ export default function Courses() {
                         </Tab.Content>
                     </Col>
                 </Row>
-            </Tab.Container>
+            </Tab.Container >
         </div >
     )
 }
