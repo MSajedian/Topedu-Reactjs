@@ -1,19 +1,15 @@
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-
 import React, { useDebugValue, useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Tab, } from 'react-bootstrap';
-// import { Popover, OverlayTrigger } from 'react-bootstrap';
+import { Accordion, Button, Card, Col, Form, Modal, Nav, Placeholder, Row, Tab } from 'react-bootstrap';
+import { BsTrash } from "react-icons/bs";
+import { ImPencil } from "react-icons/im";
 import { useHistory, useParams } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 import CoursesNavbar from './CoursesNavbar';
-import { ImPencil } from "react-icons/im";
-import { BsTrash } from "react-icons/bs";
 
 const BackendURL = process.env.REACT_APP_BACKEND_REMOTE_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
-
-
 
 export default function Courses() {
     const history = useHistory();
@@ -61,7 +57,8 @@ export default function Courses() {
                         <Modal.Title>Delete</Modal.Title>
                     </Modal.Header>
                     <Modal.Body >
-                        <div className="text-center">You will not be able to recover this flow if you delete it. Do you want to delete this flow?</div>
+                        <div className="text-center">You will not be able to recover this activity if you delete it.</div>
+                        <div className="text-center">Do you want to delete this activity?</div>
                         <div className="text-center mt-2 fs-3">
                             {course.flowsAndActivities[flowIndex].name}
                         </div>
@@ -103,7 +100,8 @@ export default function Courses() {
                         <Modal.Title>Activity Deletion</Modal.Title>
                     </Modal.Header>
                     <Modal.Body >
-                        <div className="text-center">You will not be able to recover this flow if you delete it. Do you want to delete this activity?</div>
+                        <div className="text-center">You will not be able to recover this activity if you delete it.</div>
+                        <div className="text-center">Do you want to delete this activity?</div>
                         <div className="text-center mt-2 fs-3">
                             {course.flowsAndActivities[flowIndex].activities[activityIndex].name}
                         </div>

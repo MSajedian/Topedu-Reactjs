@@ -5,13 +5,14 @@ import { FcConferenceCall } from 'react-icons/fc';
 import { useHistory, useLocation } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 import LoginNavbar from './LoginNavbar';
+import Button from 'react-bootstrap-button-loader';
+
 
 export default function Login() {
     const [email, setEmail] = useStateWithLabel('', "email");
     const [password, setPassword] = useStateWithLabel('', "password");
-    const [loginButtonClassName, setLoginButtonClassName] = useStateWithLabel("button mx-2", "loginButtonClassName");
-    const [loginButtonText, setLoginButtonText] = useStateWithLabel("Log in", "loginButtonText");
-
+    const [loading, setLoading] = useStateWithLabel(0, "loading");
+    
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
         useDebugValue(`${name}: ${value}`);
@@ -25,15 +26,14 @@ export default function Login() {
     let { from } = location.state || { from: { pathname: "/home" } };
 
     const handleLogin = (event) => {
-        setLoginButtonText("Logging in ...")
-        setLoginButtonClassName("button mx-2 bg-info")
+        setLoading(1)
         event.preventDefault();
         event.stopPropagation();
         auth.signin(email, password, () => {
             history.replace(from);
         });
     };
-
+    
     return (
         <>
             <LoginNavbar />
@@ -58,9 +58,7 @@ export default function Login() {
                                         <Form.Label><BiLock size="1.5em" /> Password</Form.Label>
                                         <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                                     </Form.Group>
-                                    {/* <button type="submit" className="button mx-2" > Login </button> */}
-                                    <button className={loginButtonClassName} type="submit">{loginButtonText}</button>
-
+                                    <Button loading={loading} bsStyle="button" className="button mx-2" type="submit">Log in</Button>
                                 </Form>
                             </Container>
                         </Container>

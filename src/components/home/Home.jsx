@@ -1,11 +1,11 @@
 import React, { useDebugValue, useEffect, useState } from "react";
-import { Button, Card, Col, Container, Form, Modal, Placeholder, Row, Tab, Tabs, Alert } from 'react-bootstrap';
+import { Alert, Button, Card, Col, Container, Form, Modal, Placeholder, Row, Tab, Tabs } from 'react-bootstrap';
+import { AiOutlineAppstore } from "react-icons/ai";
+import { BsTrash } from "react-icons/bs";
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 import HomeNavbar from './HomeNavbar';
-import { AiOutlineAppstore } from "react-icons/ai";
-import { BsTrash } from "react-icons/bs";
 
 const BackendURL = process.env.REACT_APP_BACKEND_REMOTE_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
