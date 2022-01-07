@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Alert, Button, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap';
+import { Alert, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap';
 import { FcConferenceCall } from 'react-icons/fc';
-
 import { useHistory } from "react-router-dom";
-import UseAuth from './auth/UseAuth'
+import UseAuth from './auth/UseAuth';
+import Button from 'react-bootstrap-button-loader';
 
 const BackendURL = process.env.REACT_APP_BACKEND_REMOTE_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
@@ -15,8 +15,7 @@ export default function Signup() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [institutionName, setInstitutionName] = useState('');
-    const [signUpButtonStyle, setSignUpButtonStyle] = useState('primary');
-    const [signUpButtonText, setSignUpButtonText] = useState('Sign up');
+    const [loading, setLoading] = useState(0);
 
     let history = useHistory();
     let auth = UseAuth();
@@ -31,8 +30,7 @@ export default function Signup() {
     const handleSubmitSingupForm = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        setSignUpButtonStyle('info')
-        setSignUpButtonText('Signing up ...')
+        setLoading(1)
         if (password !== confirmPassword) {
             alert("passwords are not matched")
         }
@@ -123,7 +121,7 @@ export default function Signup() {
                                 <Form.Label>Institution Name</Form.Label>
                                 <Form.Control type="text" value={institutionName} onChange={(e) => setInstitutionName(e.target.value)} required />
                             </Form.Group>
-                            <Button type="submit" variant={signUpButtonStyle}>{signUpButtonText}</Button>
+                            <Button loading={loading} bsStyle="button" className="button mx-2" type="submit">Sign up</Button>
                         </Form>
                         : <></>}
                 </Col>
