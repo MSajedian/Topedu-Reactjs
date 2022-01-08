@@ -1,7 +1,8 @@
 import React, { useDebugValue, useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Col, Container, Form, Row } from 'react-bootstrap';
 import { FcConferenceCall } from 'react-icons/fc';
 import { useParams } from "react-router-dom";
+import Button from 'react-bootstrap-button-loader';
 
 // import React, { useContext, createContext, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -17,6 +18,7 @@ export default function Join() {
     const [email, setEmail] = useStateWithLabel('', "email");
     const [password, setPassword] = useStateWithLabel('', "password");
     const [repPassword, setRepPassword] = useStateWithLabel('', "repPassword");
+    const [loading, setLoading] = useStateWithLabel(0, "loading");
 
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
@@ -36,6 +38,7 @@ export default function Join() {
     const signUp = (event) => {
         event.preventDefault();
         event.stopPropagation();
+        setLoading(1)
         if (courseId) joinCourse();
         if (institutionId) joinInstitution();
     };
@@ -51,7 +54,6 @@ export default function Join() {
                 .then((response) => { setEmail(response.email) })
         } catch (error) { console.log('error:', error) }
     };
-
 
     const getUserFromInstitution = () => {
         try {
@@ -126,7 +128,7 @@ export default function Join() {
                             <Form.Label>Repeat Password</Form.Label>
                             <Form.Control type="password" value={repPassword} onChange={(e) => setRepPassword(e.target.value)} required />
                         </Form.Group>
-                        <Button type="submit">Sign up</Button>
+                        <Button loading={loading} bsStyle="button" className="button mx-2" type="submit">Sign up</Button>
                     </Form>
                 </Col>
             </Row>
