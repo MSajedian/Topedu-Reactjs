@@ -1,18 +1,18 @@
-import React, { useState, useDebugValue } from "react";
+import React, { useDebugValue, useEffect, useState } from "react";
 import { Col, Container, Form, Image, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap-button-loader';
 import { BiEnvelope, BiLock } from 'react-icons/bi';
 import { FcConferenceCall } from 'react-icons/fc';
 import { useHistory, useLocation } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 import LoginNavbar from './LoginNavbar';
-import Button from 'react-bootstrap-button-loader';
 
 
 export default function Login() {
     const [email, setEmail] = useStateWithLabel('', "email");
     const [password, setPassword] = useStateWithLabel('', "password");
-    const [loading, setLoading] = useStateWithLabel(0, "loading");
-    
+    const [loading, setLoading] = useStateWithLabel(false, "loading");
+
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
         useDebugValue(`${name}: ${value}`);
@@ -26,14 +26,19 @@ export default function Login() {
     let { from } = location.state || { from: { pathname: "/home" } };
 
     const handleLogin = (event) => {
-        setLoading(1)
+        setLoading(true)
         event.preventDefault();
         event.stopPropagation();
         auth.signin(email, password, () => {
             history.replace(from);
         });
     };
-    
+
+    useEffect(() => {
+        auth.userName ? ( history.replace(from) ) : <></>
+        // eslint-disable-next-line
+    }, [])
+
     return (
         <>
             <LoginNavbar />
@@ -51,7 +56,7 @@ export default function Login() {
                             <Container className="px-5">
                                 <Form onSubmit={handleLogin}>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                                        <Form.Label><BiEnvelope size="1.5em" /> Email Address</Form.Label>
+                                        <Form.Label><BiEnvelope size="1.5em" />Email Address</Form.Label>
                                         <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formBasicPassword">
