@@ -18,7 +18,7 @@ export default function Join() {
     const [email, setEmail] = useStateWithLabel('', "email");
     const [password, setPassword] = useStateWithLabel('', "password");
     const [repPassword, setRepPassword] = useStateWithLabel('', "repPassword");
-    const [loading, setLoading] = useStateWithLabel(0, "loading");
+    const [loading, setLoading] = useStateWithLabel(false, "loading");
 
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
@@ -38,7 +38,7 @@ export default function Join() {
     const signUp = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        setLoading(1)
+        setLoading(true)
         if (courseId) joinCourse();
         if (institutionId) joinInstitution();
     };
