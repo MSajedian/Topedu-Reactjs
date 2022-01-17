@@ -11,7 +11,7 @@ import OffCanvasInstitutionParticipants from './OffCanvasInstitutionParticipants
 // import { ImHome } from 'react-icons/im';
 // import { IoAddOutline } from "react-icons/io5";
 
-export default function HomeNavbar({ institutions, userType }) {
+export default function InstitutionNavbar({ institutions, userType }) {
 
     const userName = useSelector((state) => state.user.userName)
     let history = useHistory();
@@ -58,14 +58,14 @@ export default function HomeNavbar({ institutions, userType }) {
                     {institutions.map((institution, index) => (
                         <div key={`course${index}`} >
                             <p className="px-2 my-0 text-secondary ">Switch Institution</p>
-                            <Link to="/home" className="dropdown-item d-flex align-items-center">
+                            <Link to="/institution" className="dropdown-item d-flex align-items-center">
                                 <ImHome size="1.2em" />
                                 &nbsp;&nbsp;{institution.name}
                             </Link>
                         </div>
                     ))}
                     <Dropdown.Divider />
-                    <div><Link to="/home" className="dropdown-item">
+                    <div><Link to="/institution" className="dropdown-item">
                                 <IoAddOutline size="1.2em" />
                     &nbsp;
                         Create new institution

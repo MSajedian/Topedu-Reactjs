@@ -7,7 +7,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
 import LoginNavbar from './LoginNavbar';
 
-
 export default function Login() {
     const [email, setEmail] = useStateWithLabel('', "email");
     const [password, setPassword] = useStateWithLabel('', "password");
@@ -23,7 +22,7 @@ export default function Login() {
     let location = useLocation();
     let auth = UseAuth();
 
-    let { from } = location.state || { from: { pathname: "/home" } };
+    let { from } = location.state || { from: { pathname: "/institution" } };
 
     const handleLogin = (event) => {
         setLoading(true)

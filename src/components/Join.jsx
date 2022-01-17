@@ -31,7 +31,7 @@ export default function Join() {
 
     const login = () => {
         auth.signin(email, password, () => {
-            history.replace({ pathname: "/home" });
+            history.replace({ pathname: "/institution" });
         });
     };
 

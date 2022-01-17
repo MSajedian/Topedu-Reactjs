@@ -5,11 +5,11 @@ import { BsTrash } from "react-icons/bs";
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import UseAuth from '../auth/UseAuth';
-import HomeNavbar from './HomeNavbar';
+import InstitutionNavbar from './InstitutionNavbar';
 
 const BackendURL = process.env.REACT_APP_BACKEND_REMOTE_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
-export default function Home() {
+export default function Institution() {
     const history = useHistory();
     const auth = UseAuth();
     const userName = useSelector((state) => state.user.userName)
@@ -145,8 +145,8 @@ export default function Home() {
 
     return (
         <>
-            <HomeNavbar institutions={institutions} userType={userType ? userType : ""} />
-            <div className="home-background pt-2">
+            <InstitutionNavbar institutions={institutions} userType={userType ? userType : ""} />
+            <div className="institution-background pt-2">
                 <Container>
                     <div className="d-flex justify-content-center  my-2">
                         <div className="h1"><span className="fst-italic">Hello </span><span className="fst-italic color-0022ff">{userName}</span><span className="fst-italic">, good to see you!</span>👋</div>

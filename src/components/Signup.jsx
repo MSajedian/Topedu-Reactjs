@@ -15,12 +15,12 @@ export default function Signup() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [institutionName, setInstitutionName] = useState('');
-    const [loading, setLoading] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     let history = useHistory();
     let auth = UseAuth();
 
-    let { from } = { from: { pathname: "/home" } };
+    let { from } = { from: { pathname: "/institution" } };
     const login = () => {
         auth.signin(email, password, () => {
             history.replace(from);
@@ -30,7 +30,7 @@ export default function Signup() {
     const handleSubmitSingupForm = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        setLoading(1)
+        setLoading(true)
         if (password !== confirmPassword) {
             alert("passwords are not matched")
         }

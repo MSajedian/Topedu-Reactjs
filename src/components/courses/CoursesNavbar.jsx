@@ -14,7 +14,7 @@ export default function CoursesNavbar({ userType }) {
     const userName = useSelector((state) => state.user.userName)
     return (
         <Navbar expand="lg" className="navbar-default">
-            <div><Link to="/home" className="button rounded mx-3 px-2 py-1">
+            <div><Link to="/institution" className="button rounded mx-3 px-2 py-1">
                 <AiOutlineAppstore size="1.3em" />
             </Link></div>
             <Navbar.Toggle aria-controls="navbarScroll" />

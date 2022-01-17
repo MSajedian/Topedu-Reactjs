@@ -148,7 +148,7 @@ code {
   /* border-style: double; */
 }
 
-.home-background::before {
+.institution-background::before {
   content: "";
   display: block;
   position: absolute;
