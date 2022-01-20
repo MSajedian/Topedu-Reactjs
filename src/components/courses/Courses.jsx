@@ -25,10 +25,6 @@ export default function Courses() {
     const handleCloseChangeCourseImageModal = () => setShowChangeCourseImageModal(false);
     const handleShowChangeCourseImageModal = () => setShowChangeCourseImageModal(true);
 
-    // const [show, setShow] = useState(false);
-
-
-
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
         useDebugValue(`${name}: ${value}`);
@@ -37,7 +33,6 @@ export default function Courses() {
 
     function DeleteFlow({ flowIndex }) {
         const [show, setShow] = useState(false);
-
         const handleClose = () => setShow(false);
         const handleShow = () => setShow(true);
 

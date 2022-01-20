@@ -1,12 +1,9 @@
 import React, { useDebugValue, useEffect, useState } from "react";
 import { Col, Container, Form, Row } from 'react-bootstrap';
-import { FcConferenceCall } from 'react-icons/fc';
-import { useParams } from "react-router-dom";
 import Button from 'react-bootstrap-button-loader';
-
-// import React, { useContext, createContext, useState } from "react";
-import { useHistory } from "react-router-dom";
-import UseAuth from './auth/UseAuth'
+import { FcConferenceCall } from 'react-icons/fc';
+import { useHistory, useParams } from "react-router-dom";
+import UseAuth from './auth/UseAuth';
 
 const BackendURL = process.env.REACT_APP_BACKEND_REMOTE_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 

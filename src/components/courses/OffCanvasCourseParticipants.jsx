@@ -13,7 +13,7 @@ const FrontendURL = process.env.REACT_APP_FRONTEND_REMOTE_URL || process.env.REA
 export default function OffCanvasCourseParticipants({ ...props }) {
   const history = useHistory();
   const { courseId } = useParams();
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useStateWithLabel(false, "show");
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
   const [course, setCourse] = useStateWithLabel({}, "course");
@@ -27,7 +27,7 @@ export default function OffCanvasCourseParticipants({ ...props }) {
   const [isCopied, setIsCopied] = useStateWithLabel(false, "isCopied");
   const [isSent, setIsSent] = useStateWithLabel(false, "isSent");
 
-  const [showCreateInvitationModal, setShowCreateInvitationModal] = useState(false);
+  const [showCreateInvitationModal, setShowCreateInvitationModal] = useStateWithLabel(false, "showCreateInvitationModal");
   const handleCloseCreateInvitationModal = () => setShowCreateInvitationModal(false);
   const handleShowCreateInvitationModal = () => { setShowCreateInvitationModal(true); setCourseInvitationLink(""); setMessageFromServer(""); setCourseInvitatedUser({}) }
 
@@ -36,8 +36,6 @@ export default function OffCanvasCourseParticipants({ ...props }) {
     useDebugValue(`${name}: ${value}`);
     return [value, setValue];
   }
-
-
 
   const handleSubmitCreateInvitation = (event) => {
     event.preventDefault();

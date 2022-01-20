@@ -10,13 +10,14 @@ const BackendURL = process.env.REACT_APP_BACKEND_REMOTE_URL || process.env.REACT
 
 
 export default function Main() {
+    const [valueX, setValueX] = useStateWithLabel(0, "valueX");
+    const [valueY, setValueY] = useStateWithLabel(0, "valueY");
+    
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
         useDebugValue(`${name}: ${value}`);
         return [value, setValue];
     }
-    const [valueX, setValueX] = useStateWithLabel(0, "valueX");
-    const [valueY, setValueY] = useStateWithLabel(0, "valueY");
 
     // ******** Check Connection between Frontend and Backend ************
     function sendEmail() {

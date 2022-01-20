@@ -12,7 +12,7 @@ const FrontendURL = process.env.REACT_APP_FRONTEND_REMOTE_URL || process.env.REA
 
 export default function MaiOffCanvasInstitutionParticipants({ ...props }) {
   const history = useHistory();
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useStateWithLabel(false, "show");
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
   const [institution, setInstitution] = useStateWithLabel({}, "institution");
@@ -27,7 +27,7 @@ export default function MaiOffCanvasInstitutionParticipants({ ...props }) {
   const [institutionInvitatedUser, setInstitutionInvitatedUser] = useStateWithLabel({}, "institutionInvitatedUser");
   const [refreshState, setRefreshState] = useStateWithLabel(false, "refreshState");
 
-  const [showCreateInvitationModal, setShowCreateInvitationModal] = useState(false);
+  const [showCreateInvitationModal, setShowCreateInvitationModal] = useStateWithLabel(false, "showCreateInvitationModal");
   const handleCloseCreateInvitationModal = () => setShowCreateInvitationModal(false);
   const handleShowCreateInvitationModal = () => { setShowCreateInvitationModal(true); setInstitutionInvitationLink(""); setMessageFromServer(""); setInstitutionInvitatedUser({}) }
 

@@ -1,21 +1,27 @@
-import React, { useState } from "react";
+import React, { useDebugValue, useState } from "react";
 import { Alert, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap-button-loader';
 import { FcConferenceCall } from 'react-icons/fc';
 import { useHistory } from "react-router-dom";
 import UseAuth from './auth/UseAuth';
-import Button from 'react-bootstrap-button-loader';
 
 const BackendURL = process.env.REACT_APP_BACKEND_REMOTE_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
 export default function Signup() {
-    const [signUpAs, setSignUpAs] = useState('admin');
-    const [name, setName] = useState('');
-    const [surname, setSurname] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [institutionName, setInstitutionName] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [signUpAs, setSignUpAs] = useStateWithLabel("admin", "signUpAs");
+    const [name, setName] = useStateWithLabel("", "name");
+    const [surname, setSurname] = useStateWithLabel("", "surname");
+    const [email, setEmail] = useStateWithLabel("", "email");
+    const [password, setPassword] = useStateWithLabel("", "password");
+    const [confirmPassword, setConfirmPassword] = useStateWithLabel("", "confirmPassword");
+    const [institutionName, setInstitutionName] = useStateWithLabel("", "institutionName");
+    const [loading, setLoading] = useStateWithLabel(false, "loading");
+
+    function useStateWithLabel(initialValue, name) {
+        const [value, setValue] = useState(initialValue);
+        useDebugValue(`${name}: ${value}`);
+        return [value, setValue];
+    }
 
     let history = useHistory();
     let auth = UseAuth();
@@ -78,7 +84,7 @@ export default function Signup() {
     return (
         <Container className="my-5 container-customized" >
             <Row className="text-center">
-                <FcConferenceCall  className="mb-3 fs-1" />
+                <FcConferenceCall className="mb-3 fs-1" />
                 <b className="mb-4">Sign up</b>
             </Row>
             <Row className="justify-content-center">

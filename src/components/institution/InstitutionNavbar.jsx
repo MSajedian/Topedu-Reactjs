@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useDebugValue, useEffect, useState } from "react";
 import { Button, Dropdown, Nav, Navbar, Spinner } from 'react-bootstrap';
 import { FiLogOut } from "react-icons/fi";
 import { IoHome } from "react-icons/io5";
@@ -16,20 +16,13 @@ export default function InstitutionNavbar({ institutions, userType }) {
     const userName = useSelector((state) => state.user.userName)
     let history = useHistory();
     let auth = UseAuth();
-    const [selectedInstitution, setSelectedInstitution] = useState({});
+    const [selectedInstitution, setSelectedInstitution] = useStateWithLabel({}, "selectedInstitution");
 
-    // const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    //     <Link
-    //         to="/"
-    //         ref={ref}
-    //         onClick={(e) => {
-    //             e.preventDefault();
-    //             onClick(e);
-    //         }}
-    //         className="border border-success rounded button px-2 py-1"
-    //     >{children}
-    //     </Link>
-    // ));
+    function useStateWithLabel(initialValue, name) {
+        const [value, setValue] = useState(initialValue);
+        useDebugValue(`${name}: ${value}`);
+        return [value, setValue];
+    }
 
     useEffect(() => {
         setSelectedInstitution(institutions[0])

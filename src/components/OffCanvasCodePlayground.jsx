@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useDebugValue, useState } from "react";
 import { Offcanvas } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -6,17 +6,24 @@ import Editor from "@monaco-editor/react";
 import { HiOutlineViewBoards } from "react-icons/hi";
 
 export default function OffCanvasCodePlayground({ ...props }) {
-  const [show, setShow] = useState(false);
-  const [view, setView] = useState(4);
+  const [show, setShow] = useStateWithLabel(false, "show");
+  const [view, setView] = useStateWithLabel(4, "view");
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
-  const [srcdocOfIframe, setSrcdocOfIframe] = useState(``)
-  const [htmlTextAreaValue, setHtmlTextAreaValue] = useState(`<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>Document</title>\n</head>\n\n<body>\n<p id='p1'>this is a paragraph</p>\n</body>\n\n</html>`)
-  const [cssTextAreaValue, setCssTextAreaValue] = useState(`p{\ncolor: red\n}`)
-  const [jsTextAreaValue, setJsTextAreaValue] = useState(`let body=document.querySelector('body')\nbody.style.backgroundColor='yellow'`)
+
+  const [srcDocOfIframe, setSrcDocOfIframe] = useStateWithLabel(``, "srcdocOfIframe");
+  const [htmlTextAreaValue, setHtmlTextAreaValue] = useStateWithLabel(`<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>Document</title>\n</head>\n\n<body>\n<p id='p1'>this is a paragraph</p>\n</body>\n\n</html>`, "htmlTextAreaValue");
+  const [cssTextAreaValue, setCssTextAreaValue] = useStateWithLabel(`p{\ncolor: red\n}`, "cssTextAreaValue");
+  const [jsTextAreaValue, setJsTextAreaValue] = useStateWithLabel(`let body=document.querySelector('body')\nbody.style.backgroundColor='yellow'`, "jsTextAreaValue");
+
+  function useStateWithLabel(initialValue, name) {
+    const [value, setValue] = useState(initialValue);
+    useDebugValue(`${name}: ${value}`);
+    return [value, setValue];
+  }
 
   const runCodes = () => {
-    setSrcdocOfIframe(htmlTextAreaValue + '<style>' + cssTextAreaValue + '</style><script>' + jsTextAreaValue + '</script>')
+    setSrcDocOfIframe(htmlTextAreaValue + '<style>' + cssTextAreaValue + '</style><script>' + jsTextAreaValue + '</script>')
   }
   const handleEditorDidMount = (editor, monaco) => {
     // editorRef.current = editor;
@@ -34,7 +41,7 @@ export default function OffCanvasCodePlayground({ ...props }) {
             <HiOutlineViewBoards size="1.5em" />
           </Button>
           <Button variant="secondary" onClick={() => (setView(12))} className="mx-1" >
-            <HiOutlineViewBoards size="1.5em" className="rotate90deg"  />
+            <HiOutlineViewBoards size="1.5em" className="rotate90deg" />
           </Button>
         </Offcanvas.Header>
         <Offcanvas.Body className="pt-0">
@@ -83,7 +90,7 @@ export default function OffCanvasCodePlayground({ ...props }) {
                   height="170px"
                   // ref={onIframeRef}
                   // sandbox="allow-same-origin"
-                  srcDoc={srcdocOfIframe}
+                  srcDoc={srcDocOfIframe}
                 ></iframe>
               </Col>
             </Row>
