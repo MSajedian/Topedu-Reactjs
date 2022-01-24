@@ -205,6 +205,8 @@ code {
 }
 
 .btn-grad-green {
+  max-width: max-content;
+  margin: 3px;
   padding: 7px 16px;
   border-color: rgb(133, 133, 133);
   border-style: solid;
@@ -246,6 +248,8 @@ code {
 }
 
 .btn-grad-orange {
+  max-width: max-content;
+  margin: 3px;
   padding: 7px 16px;
   border-color: rgb(133, 133, 133);
   border-style: solid;

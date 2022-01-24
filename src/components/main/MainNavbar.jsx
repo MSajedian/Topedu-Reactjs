@@ -26,14 +26,11 @@ export default function MainNavbar() {
                     </Link>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
-                <Navbar.Collapse id="navbarScroll">
-                    <Nav
-                        navbarScroll
-                        className="ms-auto px-2"
-                    >
+                <Navbar.Collapse id="navbarScroll ">
+                    <Nav navbarScroll className="ms-auto px-2 align-items-center" >
                         <Link to="/login" className="btn-grad-green">Login</Link>
                     </Nav>
-                    <Nav>
+                    <Nav className="px-2 px-lg-0 align-items-center">
                         <Link to="/signup" className="btn-grad-orange" >Sign up</Link>
                     </Nav>
                     {/* <Form

@@ -67,17 +67,17 @@ export default function InstitutionNavbar({ institutions, userType }) {
             </Dropdown> */}
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
-                <Nav.Item className="d-flex ms-lg-auto mx-1 mx-lg-1 ">
+                <Nav.Item className="d-flex ms-lg-auto mx-1 mx-lg-1 align-items-center">
                 </Nav.Item>
                 {userType === "admin" || userType === "instructor" ?
-                    <Nav.Item className="mx-lg-1 mx-3 my-1">
+                    <Nav.Item className="mx-lg-1 mx-3 my-1 d-flex justify-content-center">
                         <OffCanvasInstitutionParticipants placement="top" institutionid={selectedInstitution._id} />
                     </Nav.Item>
                     : <></>}
-                <Nav.Item className="d-flex mx-1 mx-lg-1 ">
+                <Nav.Item className="d-flex mx-1 mx-lg-1 d-flex justify-content-center">
                     <OffCanvasCodePlayground placement="top" />
                 </Nav.Item>
-                <Dropdown className="mx-lg-1 mx-3 my-1">
+                <Dropdown className="mx-lg-1 mx-3 my-1 d-flex justify-content-center">
                     <Dropdown.Toggle variant="outline-warning" type="button" id="dropdown-custom-components" className="btn-grad-orange">
                         {userName}
                     </Dropdown.Toggle>

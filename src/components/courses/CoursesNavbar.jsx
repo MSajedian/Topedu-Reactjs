@@ -22,14 +22,14 @@ export default function CoursesNavbar({ userType }) {
                 <Nav.Item className="d-flex ms-lg-auto mx-lg-1 mx-3 my-1">
                 </Nav.Item>
                 {userType === "admin" || userType === "instructor" ?
-                    <Nav.Item className="mx-lg-1 mx-3 my-1">
+                    <Nav.Item className="mx-lg-1 mx-3 my-1 d-flex justify-content-center">
                         <OffCanvasCourseParticipants placement="top" />
                     </Nav.Item>
                     : <></>}
-                <Nav.Item className="d-flex mx-lg-1 mx-3 my-1">
+                <Nav.Item className="d-flex mx-lg-1 mx-3 my-1 justify-content-center">
                     <OffCanvasCodePlayground placement="top" />
                 </Nav.Item>
-                <Dropdown className="mx-3 mx-lg-1 ">
+                <Dropdown className="mx-3 mx-lg-1 d-flex justify-content-center">
                     <Dropdown.Toggle variant="success" type="button" id="dropdown-custom-components" className="btn-grad-orange me-3">
                         {userName}
                     </Dropdown.Toggle>

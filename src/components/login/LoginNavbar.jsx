@@ -29,7 +29,7 @@ export default function LoginNavbar() {
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
                         navbarScroll
-                        className="ms-auto px-2"
+                        className="ms-auto px-2 align-items-center"
                     >
                         <Link to="/signup" className="btn-grad-orange" >Sign up</Link>
                     </Nav>
