@@ -8,7 +8,6 @@ import MainNavbar from './MainNavbar';
 
 const BackendURL = process.env.REACT_APP_BACKEND_REMOTE_URL || process.env.REACT_APP_BACKEND_LOCAL_URL
 
-
 export default function Main() {
     const [valueX, setValueX] = useStateWithLabel(0, "valueX");
     const [valueY, setValueY] = useStateWithLabel(0, "valueY");
@@ -39,7 +38,6 @@ export default function Main() {
     return (
         <>
             <MainNavbar />
-
             <section className="hero-section" onMouseMove={(e) => { setValueX(e.pageX); setValueY(e.pageY) }}>
                 <div className="hero-shape">
                     <img src="assets/images/round-shape-4.png" alt="shape" className="hero-round-shape-4 item-moveTwo mt-5" />
@@ -71,7 +69,7 @@ export default function Main() {
                     <Col>
                         <h1 class="lp-v3-hero-heading">Learning experiences made easy, social and interactive</h1>
                         <div class="lp-v3-hero-subheading">Increase learner engagement &amp; knowledge retention in higher education and corporate training settings</div>
-                        <Link to="/signup" className="btn-grad-orange d-inline-block">Sign up for free {' '} 
+                        <Link to="/signup" className="btn-grad-orange d-inline-block px-5 py-3 fs-3">Sign up for free {' '} 
                         <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 16l4-4-4-4M8 12h8" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                         </Link>
                     </Col>
