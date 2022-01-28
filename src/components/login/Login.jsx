@@ -11,6 +11,7 @@ export default function Login() {
     const [email, setEmail] = useStateWithLabel('', "email");
     const [password, setPassword] = useStateWithLabel('', "password");
     const [loading, setLoading] = useStateWithLabel(false, "loading");
+    const [loadingStyle, setLoadingStyle] = useStateWithLabel(`button`, "loadingStyle");
 
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
@@ -26,6 +27,7 @@ export default function Login() {
 
     const handleLogin = (event) => {
         setLoading(true)
+        setLoadingStyle("button-loading")
         event.preventDefault();
         event.stopPropagation();
         auth.signin(email, password, () => {
@@ -55,14 +57,14 @@ export default function Login() {
                             <Container className="px-5">
                                 <Form onSubmit={handleLogin}>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                                        <Form.Label><BiEnvelope size="1.5em" />Email Address</Form.Label>
+                                        <Form.Label><BiEnvelope size="1.5em" /> Email Address</Form.Label>
                                         <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formBasicPassword">
                                         <Form.Label><BiLock size="1.5em" /> Password</Form.Label>
                                         <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                                     </Form.Group>
-                                    <Button loading={loading} bsStyle="button" className="button mx-2" type="submit">Log in</Button>
+                                    <Button loading={loading} bsStyle={loadingStyle} className={loadingStyle} type="submit">Log in</Button>
                                 </Form>
                             </Container>
                         </Container>
