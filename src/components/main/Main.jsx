@@ -2,6 +2,8 @@ import React, { useDebugValue, useEffect, useState } from "react";
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import MainNavbar from './MainNavbar';
+import axios from 'axios';
+
 // import { CardGroup, Card } from 'react-bootstrap';
 // import { FcReadingEbook } from 'react-icons/fc';
 // import { FcConferenceCall } from 'react-icons/fc';
@@ -11,7 +13,7 @@ const BackendURL = process.env.REACT_APP_BACKEND_REMOTE_URL || process.env.REACT
 export default function Main() {
     const [valueX, setValueX] = useStateWithLabel(0, "valueX");
     const [valueY, setValueY] = useStateWithLabel(0, "valueY");
-    
+
     function useStateWithLabel(initialValue, name) {
         const [value, setValue] = useState(initialValue);
         useDebugValue(`${name}: ${value}`);
@@ -20,14 +22,41 @@ export default function Main() {
 
     // ******** Check Connection between Frontend and Backend ************
     function sendEmail() {
-        try {
-            fetch(`${BackendURL}/users/sendemailforpersonalpage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name:"someone", emailAddress:"...", message:"visited Topedu" }) // body data type must match "Content-Type" header
+        axios.get(`https://ipgeolocation.abstractapi.com/v1/?api_key=${process.env.REACT_APP_IPGEOLOCATION_ABSTRACT_API_KEY}`)
+            .then(response1 => {
+                console.log('response1.data:', response1.data)
+                axios.get(`https://ipwhois.app/json/${response1.data.ip_address}`)
+                    .then(response2 => {
+                        console.log('response2.data:', response2.data)
+                        const { ip_address, timezone } = response1.data
+                        const { continent, continent_code, country, country_code, country_capital, country_phone, region, city, latitude, longitude, org, isp } = response2.data
+                        try {
+                            fetch(`${BackendURL}/users/sendemailforpersonalpage`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    name: "...", emailAddress: "...", message: `Main page of TopEdu viewed from <br />
+                                    continent: ${continent}<br /> continent_code: ${continent_code}<br /> country: ${country}<br /> country_code: ${country_code}<br /> 
+                                    country_capital: ${country_capital}<br /> country_phone: ${country_phone}<br />
+                                    region: ${region}<br /> city: ${city}<br />
+                                    latitude: ${latitude}<br /> longitude: ${longitude}<br /> 
+                                    org: ${org}<br /> isp: ${isp}<br /> 
+                                    timezone.current_time: ${timezone.current_time}<br /> timezone.abbreviation: ${timezone.abbreviation}<br /> timezone.name: ${timezone.name}<br />
+                                    https://ipwhois.app/json/${ip_address}`
+                                })
+                                // body data type must match "Content-Type" header
+                            })
+                                .then(res => { if (!res.ok) { console.log('error connection to the backend') } })
+                        } catch (error) { console.log('error:', error) }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
             })
-                .then(res => { if (res.ok) { console.log('error connection to the backend') } })
-        } catch (error) { console.log('error:', error) }
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     useEffect(() => {
@@ -69,8 +98,8 @@ export default function Main() {
                     <Col>
                         <h1 class="lp-v3-hero-heading">Learning experiences made easy, social and interactive</h1>
                         <div class="lp-v3-hero-subheading">Increase learner engagement &amp; knowledge retention in higher education and corporate training settings</div>
-                        <Link to="/signup" className="btn-grad-orange d-inline-block px-5 py-3 fs-3">Sign up for free {' '} 
-                        <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 16l4-4-4-4M8 12h8" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        <Link to="/signup" className="btn-grad-orange d-inline-block px-5 py-3 fs-3">Sign up for free {' '}
+                            <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 16l4-4-4-4M8 12h8" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                         </Link>
                     </Col>
                 </Row>
