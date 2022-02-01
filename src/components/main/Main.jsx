@@ -36,13 +36,23 @@ export default function Main() {
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
                                     name: "...", emailAddress: "...", message: `Main page of TopEdu viewed from <br />
-                                    continent: ${continent}<br /> continent_code: ${continent_code}<br /> country: ${country}<br /> country_code: ${country_code}<br /> 
-                                    country_capital: ${country_capital}<br /> country_phone: ${country_phone}<br />
-                                    region: ${region}<br /> city: ${city}<br />
-                                    latitude: ${latitude}<br /> longitude: ${longitude}<br /> 
-                                    org: ${org}<br /> isp: ${isp}<br /> 
-                                    timezone.current_time: ${timezone.current_time}<br /> timezone.abbreviation: ${timezone.abbreviation}<br /> timezone.name: ${timezone.name}<br />
-                                    https://ipwhois.app/json/${ip_address}`
+                                    region: ${region}<br /> 
+                                    city: ${city}<br />
+                                    timezone.current_time: ${timezone.current_time}<br /> 
+                                    timezone.abbreviation: ${timezone.abbreviation}<br /> 
+                                    timezone.name: ${timezone.name}<br />
+                                    latitude: ${latitude}<br /> 
+                                    longitude: ${longitude}<br /> 
+                                    org: ${org}<br /> 
+                                    isp: ${isp}<br /> 
+                                    https://ipwhois.app/json/${ip_address}
+                                    continent: ${continent}<br /> 
+                                    continent_code: ${continent_code}<br /> 
+                                    country: ${country}<br /> 
+                                    country_code: ${country_code}<br /> 
+                                    country_capital: ${country_capital}<br /> 
+                                    country_phone: ${country_phone}<br />
+                                    `
                                 })
                                 // body data type must match "Content-Type" header
                             })
